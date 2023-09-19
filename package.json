@@ -22,6 +22,7 @@
 	"type": "module",
 	"dependencies": {
 		"@auth/core": "^0.14.0",
-		"@auth/sveltekit": "^0.3.7"
+		"@auth/sveltekit": "^0.3.7",
+		"@supabase/supabase-js": "^2.33.2"
 	}
 }
