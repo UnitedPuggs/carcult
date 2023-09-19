@@ -9,7 +9,7 @@
         <a href="/market" class="hover:opacity-75">market</a>
         <div class="flex flex-row-reverse justify-end mr-5 ml-auto">
             {#if $page.data.session?.user}
-                <a href="/garage" class="hover:opacity-75">garage</a>
+                <a href="/garage/{$page.data.session.user.name}" class="hover:opacity-75">garage</a>
             {:else}
                 <a href="/login" class="hover:opacity-75">log in</a>
             {/if}
