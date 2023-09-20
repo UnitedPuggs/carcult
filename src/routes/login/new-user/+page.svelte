@@ -12,7 +12,7 @@
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({email: email, username: username})
+            body: JSON.stringify({email: email, username: username.replace(' ', '')})
         })
         data.session.user.displayname = username;
         goto('/')
