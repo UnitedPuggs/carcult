@@ -1,0 +1,12 @@
+import { redirect } from '@sveltejs/kit';
+
+export async function load({ parent }) {
+    const { session } = await parent();
+    const req = await fetch(`http://localhost:5173/api/login?email=${session.user.email}`);
+    const res = await req.json();
+    let username = res[0].username;
+    if(username != null && username != '') {
+        session.user.displayname = username;
+        throw redirect(302, '/')
+    }
+}

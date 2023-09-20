@@ -1,12 +1,12 @@
-import { supabase } from '../../../lib/supabase.js';
+import { supabase } from '$lib/supabase.js';
 
-export async function GET({ locals }) {
-    const session = await locals.getSession();
-    let {data: user, error} = await supabase
+export async function GET({ url }) {
+    const email = url.searchParams.get('email')
+
+    const {data: user, error} = await supabase
     .from('users')
     .select('*')
-    .eq('email', session.user.email)
-    console.log(session.user.email)
+    .eq('email', email)
 
     if(error)
         return new Response(JSON.stringify(error));

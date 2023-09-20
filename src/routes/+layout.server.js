@@ -1,4 +1,4 @@
-export async function load(event){ 
+export async function load(event) { 
     return {
         session: event.locals.getSession(),
     }

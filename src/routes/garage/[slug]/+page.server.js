@@ -1,14 +1,12 @@
 import { supabase } from '$lib/supabase'
 
-export async function load({ params, locals }) {
-    const session = await locals.getSession();
+export async function load({ params }) {
 
     let { data: garage, error } = await supabase
     .from('garage')
     .select('*')
-    .eq('username', session.user.name)
+    .eq('username', params.slug)
 
-    console.log()
     if(error)
         return {"load": error};
 
