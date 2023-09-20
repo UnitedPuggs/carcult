@@ -5,7 +5,7 @@ export async function PATCH({ request }) {
 
     const { error } = await supabase
     .from('users')
-    .update({username: username})
+    .update({username: username.value.replace(' ', '')})
     .eq('email', email);
 
     if(error)
