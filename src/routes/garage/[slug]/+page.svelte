@@ -10,8 +10,8 @@
     <title>{short.username}'s garage</title>
 </svelte:head>
 
-<div class="flex flex-row flex-nowrap">
-    <div class="flex flex-col justify-start items-start max-w-[200px] min-w-[200px] md:max-w-xs md:min-w-[20rem] h-[93.2vh] md:w-[calc(100vh_-_3.5rem)] p-2 border-white border-2">
+<div class="flex flex-row flex-nowrap ">
+    <div class="flex flex-col justify-start items-start max-w-[200px] min-w-[200px] md:max-w-xs md:min-w-[20rem] min-h-[calc(100vh_-_3.5rem)] p-2 border-white border-2">
         <div class="flex flex-col justify-center items-center mx-auto">
             <img src="/assets/Hulk_Hogan.jpg" alt="/assets/Hulk_Hogan.jpg" class="rounded-full border-white border-4 md:mt-6" width="150" height="150"/>
             <h1 class="text-2xl mt-2">{short.username}</h1>
@@ -30,12 +30,16 @@
         </div>
     </div>
     <!-- Vehicle info/images from garage_vehicle_info table -->
-    <div class="flex flex-wrap flex-col items-center justify-start mx-auto">
+    <div class="grow">
         {#if shorter}
             {#each shorter as info}
                 <VehicleBox main_image={info.image_urls[0]} vehicle_name={info.vehicle_name} desc={info.description}/>
             {/each}
         {/if}
-        <a href="{$page.url.pathname}/add-car" class="hover:opacity-75">add car</a>
+        <a href="{$page.url.pathname}/add-car" 
+        class="flex hover:opacity-75 border-2 border-white min-h-[200px] max-h-[200px] grow text-3xl font-bold justify-center items-center mx-auto"
+        >
+        +
+        </a>
     </div>
 </div>
