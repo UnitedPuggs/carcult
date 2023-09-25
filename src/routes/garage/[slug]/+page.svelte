@@ -36,10 +36,12 @@
                 <VehicleBox main_image={info.image_urls[0]} vehicle_name={info.vehicle_name} desc={info.description}/>
             {/each}
         {/if}
-        <a href="{$page.url.pathname}/add-car" 
-        class="flex hover:opacity-75 border-2 border-white min-h-[200px] max-h-[200px] grow text-3xl font-bold justify-center items-center mx-auto"
-        >
-        +
-        </a>
+        {#if $page.data.session?.user.displayname == short.username}
+            <a href="{$page.url.pathname}/add-car" 
+            class="flex hover:opacity-75 border-2 border-white min-h-[200px] max-h-[200px] grow text-3xl font-bold justify-center items-center mx-auto"
+            >
+            +
+            </a>
+        {/if}
     </div>
 </div>
