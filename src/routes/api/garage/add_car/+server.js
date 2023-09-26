@@ -1,5 +1,9 @@
 import { supabase } from '$lib/supabase.js'
 
+/*
+Pretty sure this endpoint can be removed
+*/
+
 export async function POST({ request }) {
     const { vehicle_name, image_urls } = await request.json();
 
