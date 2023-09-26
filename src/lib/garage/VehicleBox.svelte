@@ -2,6 +2,7 @@
     export let main_image;
     export let vehicle_name;
     export let desc;
+    export let info_id;
 
     if(main_image.includes("undefined"))
         main_image = "https://knnxtkccpetpqxmvcxmu.supabase.co/storage/v1/object/public/garage_photos/Hulk_Hogan.jpg"

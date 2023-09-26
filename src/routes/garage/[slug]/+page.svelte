@@ -2,24 +2,69 @@
     import { page } from '$app/stores'
     import VehicleBox from '$lib/garage/VehicleBox.svelte'
     export let data;
+
+    let file;
+    let bio;
+    let pfp = data.garage[0].pfp_url; //Doesn't work with short for whatever reasons
+    let temp_pfp;
+    let edit_mode = false;
+
     $: short = data.garage[0];
     $: shorter = data.garage_info;
+
+    if(pfp.length == 0) {
+        pfp = "/assets/Hulk_Hogan.jpg";
+        pfp = pfp;
+    }
+
+
+    async function toggle_edit() {
+        edit_mode = !edit_mode
+    }
+
+    const uploaded_file = (e) => {
+        let img = e.target.files[0];
+        let reader = new FileReader();
+        reader.readAsDataURL(img);
+        reader.onload = e => {
+            temp_pfp = e.target.result;
+        };
+    }
 </script>
 
 <svelte:head>
     <title>{short.username}'s garage</title>
 </svelte:head>
 
-<div class="flex flex-row flex-nowrap ">
-    <div class="flex flex-col justify-start items-start max-w-[200px] min-w-[200px] md:max-w-xs md:min-w-[20rem] min-h-[calc(100vh_-_3.5rem)] p-2 border-white border-2">
+<div class="flex flex-row flex-nowrap">
+    <div class="max-w-[200px] min-w-[200px] md:max-w-xs md:min-w-[20rem] min-h-[calc(100vh_-_3.5rem)] p-2 border-white border-2">
+        {#if $page.data.session?.user.displayname == short.username}
+            <div class="flex flex-col justify-start items-start">
+                <button class="hover:opacity-75" on:click={toggle_edit}>edit</button>
+                {#if edit_mode}
+                    <button class="hover:opacity-75">save</button>
+                {/if}
+            </div>
+        {/if}
         <div class="flex flex-col justify-center items-center mx-auto">
-            <img src="/assets/Hulk_Hogan.jpg" alt="/assets/Hulk_Hogan.jpg" class="rounded-full border-white border-4 md:mt-6" width="150" height="150"/>
+            {#if !edit_mode}
+                <img src={pfp} alt="your profile pic" class="rounded-full border-white border-4 md:mt-6 w-[150px] h-[146.22px]" width="150" height="150"/>
+            {:else}
+            <label>
+                <input type="file" class="hidden" bind:value={file} on:change={(e) => uploaded_file(e)} />
+                <img src={temp_pfp} alt="" class="rounded-full border-4 border-white w-[150px] h-[146.22px] cursor-pointer">
+            </label>
+            {/if}
             <h1 class="text-2xl mt-2">{short.username}</h1>
             <h1 class="font-semibold mt-12 text-xl">Joined:</h1>
             <span>{short.created.substring(0, 10)}</span>
             <h1 class="font-semibold mt-12 text-xl">Bio:</h1>
             {#if short.bio}
-                <span>{short.bio}</span>
+                {#if !edit_mode}
+                    <span>{short.bio}</span>
+                {:else}
+                    <textarea class="p-1 text-black -mb-8" placeholder="your bio here" bind:value={bio}></textarea>
+                {/if}
             {/if}
             <h1 class="font-semibold mt-12 text-xl">Owner of:</h1>
             {#if shorter}
@@ -33,7 +78,7 @@
     <div class="grow">
         {#if shorter}
             {#each shorter as info}
-                <VehicleBox main_image={info.image_urls[0]} vehicle_name={info.vehicle_name} desc={info.description}/>
+                <VehicleBox main_image={info.image_urls[0]} vehicle_name={info.vehicle_name} desc={info.description} info_id={info.id}/>
             {/each}
         {/if}
         {#if $page.data.session?.user.displayname == short.username}
