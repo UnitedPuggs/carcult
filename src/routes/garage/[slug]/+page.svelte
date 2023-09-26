@@ -1,6 +1,6 @@
 <script>
     import { page } from '$app/stores'
-    import { invalidate, invalidateAll } from '$app/navigation';
+    import { invalidateAll } from '$app/navigation';
     import VehicleBox from '$lib/garage/VehicleBox.svelte'
     export let data;
 
@@ -84,9 +84,11 @@
             {/if}
             <h1 class="font-semibold mt-12 text-xl">Owner of:</h1>
             {#if shorter}
-                {#each shorter as vehicles}
-                    <span>{vehicles.vehicle_name}</span>
-                {/each}
+                <div class="flex flex-col text-center">
+                    {#each shorter as vehicles}
+                        <span>{vehicles.vehicle_name}</span>
+                    {/each}
+                </div>
             {/if}
         </div>
     </div>

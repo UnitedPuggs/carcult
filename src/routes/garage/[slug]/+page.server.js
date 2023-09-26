@@ -18,6 +18,5 @@ export async function load({ params }) {
     if(garage_error)
         return {"load": garage_error}
     
-    //yeah, dunno if this is the best way to get it done, but it does get it done
     return {garage: garage, garage_info: garage_vehicle_info}
 }
