@@ -22,7 +22,8 @@ The first fully-functioning feature of carcult. Either the most or least difficu
 Users can add "vehicles" to their garage, which includes a name, main image, and description. These work as links to a more detailed vehicle page.
 Users are also able to change their profile picture and bio :)
 **todo:**
-That whole detailed vehicle page, still working on the design :)
+- That whole detailed vehicle page, still working on the design :)
+- Add some form of followers/following
 ![image](https://github.com/UnitedPuggs/carcult/assets/48199805/2f6aff6c-22b6-43fb-b292-06d691330ccf)
 ![image](https://github.com/UnitedPuggs/carcult/assets/48199805/8f5daff2-9e1d-41d8-9b18-c386da044e90)
 
