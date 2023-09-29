@@ -1,4 +1,4 @@
-![image](https://github.com/UnitedPuggs/carcult/assets/48199805/670753b1-d41f-405c-9856-07568d01e8b1)# carcult
+# carcult
 ## the next best thing for finding car meets
 Created by car enthusiasts, for car enthusiasts. The aim of the passion project is to connect the enthusiast with the meet. 
 
