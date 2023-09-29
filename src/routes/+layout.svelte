@@ -1,5 +1,9 @@
 <script>
     import "../app.css";
-  </script>
-  
-  <slot />
+    import Navbar from "../lib/Navbar.svelte";
+</script>
+
+<Navbar />
+<body class="bg-black font-mono text-white">
+    <slot />
+</body>
