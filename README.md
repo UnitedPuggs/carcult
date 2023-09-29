@@ -24,6 +24,7 @@ Users are also able to change their profile picture and bio :)
 **todo:**
 - That whole detailed vehicle page, still working on the design :)
 - Add some form of followers/following
-![image](https://github.com/UnitedPuggs/carcult/assets/48199805/2f6aff6c-22b6-43fb-b292-06d691330ccf)
-![image](https://github.com/UnitedPuggs/carcult/assets/48199805/8f5daff2-9e1d-41d8-9b18-c386da044e90)
+![image](https://github.com/UnitedPuggs/carcult/assets/48199805/302db703-6a5c-4627-a099-b6bb277f40dd)
+![image](https://github.com/UnitedPuggs/carcult/assets/48199805/749ad751-cf0d-49f6-8df6-1e75da7f92b5)
+
 
