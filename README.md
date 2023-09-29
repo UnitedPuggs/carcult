@@ -10,3 +10,21 @@ We want to facilitate the interaction between host and enthusiast from the most 
 Built by Eddie Poulson (the world's poorest philantropist and vehicle collector) and Akim Rayskiy (rocket scientist and professional python engineer) using 
 SvelteKit for just about everything, Auth.js to make logging in easy and secure, TailwindCSS to make things look pretty, and Supabase Database and Storage for 
 data retention.
+
+## features 
+- A garage that users are able to personalize with their cars, a fun profile picture, and a little bit about themselves ☑
+- The actual meeting component, which is more or less just a built-by-hand calendar component ☐
+- A forum for users to talk about cars and car-related stuff ☐
+- Another go at creating a marketplace for vehicles/vehicle parts ☐
+
+### garage
+The first fully-functioning feature of carcult. Either the most or least difficult part of the project and it looks like it's leaning towards most.
+Users can add "vehicles" to their garage, which includes a name, main image, and description. These work as links to a more detailed vehicle page.
+Users are also able to change their profile picture and bio :)
+**todo:**
+- That whole detailed vehicle page, still working on the design :)
+- Add some form of followers/following
+![image](https://github.com/UnitedPuggs/carcult/assets/48199805/302db703-6a5c-4627-a099-b6bb277f40dd)
+![image](https://github.com/UnitedPuggs/carcult/assets/48199805/749ad751-cf0d-49f6-8df6-1e75da7f92b5)
+
+

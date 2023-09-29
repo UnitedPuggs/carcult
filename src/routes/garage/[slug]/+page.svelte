@@ -75,11 +75,11 @@
                 {#if !edit_mode}
                     <span class="md:max-w-[15rem] text-center">{short.bio}</span>
                 {:else}
-                    <textarea class="p-1 text-black -mb-8" placeholder="your bio here" bind:value={short.bio}></textarea>
+                    <textarea class="p-1 text-black -mb-8" placeholder="your bio here" bind:value={bio}></textarea>
                 {/if}
             {:else}
                 {#if edit_mode}
-                    <textarea class="p-1 text-black -mb-8" placeholder="your bio here" bind:value={short.bio}></textarea>
+                    <textarea class="p-1 text-black -mb-8" placeholder="your bio here" bind:value={bio}></textarea>
                 {/if}
             {/if}
             <h1 class="font-semibold mt-12 text-xl">Owner of:</h1>
