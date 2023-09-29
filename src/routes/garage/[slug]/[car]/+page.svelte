@@ -1,4 +1,5 @@
 <script>
+    import { page } from '$app/stores'
     export let data;
 
     $: short = data.garage_info[0];
@@ -18,5 +19,7 @@
         <legend class="ml-2 font-bold">description</legend>
         <p class="p-2">{short.description}</p>
     </fieldset>
-    <button class="mt-2 hover:opacity-75" on:click={() => delete_vehicle(short.id)}>delete</button>
+    {#if $page.data.session?.user.displayname == short.username}
+        <button class="mt-2 hover:opacity-75" on:click={() => delete_vehicle(short.id)}>delete</button>
+    {/if}
 </div>

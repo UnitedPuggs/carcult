@@ -10,6 +10,18 @@ export async function POST({ request, locals }) {
     let url = session.user.displayname + "/pfp-" + image.name;
 
     if(image) {
+        const { data: list, list_error } = await supabase
+        .storage
+        .from('profile_photos')
+        .list(`${session.user.displayname}`)
+
+        const file_to_remove = list.map((pics) => `${session.user.displayname}/${pics.name}`)
+
+        const { remove_data, remove_error } = await supabase
+        .storage
+        .from('profile_photos')
+        .remove(file_to_remove)
+
         const { upload_data, error } = await supabase
         .storage
         .from('profile_photos')
