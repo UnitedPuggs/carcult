@@ -1,5 +1,4 @@
 # carcult
-======
 ## the next best thing for finding car meets
 Created by car enthusiasts, for car enthusiasts. The aim of the passion project is to connect the enthusiast with the meet. 
 
