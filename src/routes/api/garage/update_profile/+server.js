@@ -8,10 +8,8 @@ export async function POST({ request, locals }) {
     const bio = formdata.get("bio")
 
     let url = session.user.displayname + "/pfp-" + image.name;
-    console.log(image.name)
 
-    if(image && typeof image.name != 'undefined') {
-        console.log("silly")
+    if(image && typeof image != 'undefined') {
         const { data: list, list_error } = await supabase
         .storage
         .from('profile_photos')

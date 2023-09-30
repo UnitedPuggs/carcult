@@ -5,14 +5,12 @@
     export let data;
 
     let file;
-    let bio = data.garage[0].bio;
+    let bio = data.garage[0].bio; //This shit is jank, but it works
     let temp_pfp;
     let edit_mode = false;
 
     $: short = data.garage[0];
     $: shorter = data.garage_info;
-
-    
 
     async function toggle_edit() {
         edit_mode = !edit_mode
@@ -68,6 +66,14 @@
             </label>
             {/if}
             <h1 class="text-2xl mt-2">{short.username}</h1>
+            <!-- Let's see if this might worth it -->
+            <section class="flex-wrap max-w-[15rem] mt-2">
+                <span>{short.followers.length} followers</span>
+                <span>{short.following.length} following</span>
+            </section>
+            {#if $page.data.session?.user.displayname != short.username && $page.data.session?.user}
+                <button class="border-2 px-2 py-1 rounded-md mt-4 hover:opacity-75">follow</button>
+            {/if}
             <h1 class="font-semibold mt-12 text-xl">Joined:</h1>
             <span>{short.created.substring(0, 10)}</span>
             <h1 class="font-semibold mt-12 text-xl">Bio:</h1>
