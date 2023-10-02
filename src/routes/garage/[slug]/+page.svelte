@@ -102,7 +102,7 @@
     <div class="grow">
         {#if shorter}
             {#each shorter as info}
-                <VehicleBox main_image={info.image_urls[0]} vehicle_name={info.vehicle_name} desc={info.description} info_id={info.id}/>
+                <VehicleBox main_image={info.image_urls[0]} vehicle_name={info.vehicle_name} vehicle_slug={info.short_vehicle_name} desc={info.description} info_id={info.id}/>
             {/each}
         {/if}
         {#if $page.data.session?.user.displayname == short.username}
