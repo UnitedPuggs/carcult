@@ -21,10 +21,11 @@ data retention.
 The first fully-functioning feature of carcult. Either the most or least difficult part of the project and it looks like it's leaning towards most.
 Users can add "vehicles" to their garage, which includes a name, main image, and description. These work as links to a more detailed vehicle page.
 Users are also able to change their profile picture and bio :)
+
 **todo:**
-- That whole detailed vehicle page, still working on the design :)
 - Add some form of followers/following
 ![image](https://github.com/UnitedPuggs/carcult/assets/48199805/302db703-6a5c-4627-a099-b6bb277f40dd)
 ![image](https://github.com/UnitedPuggs/carcult/assets/48199805/749ad751-cf0d-49f6-8df6-1e75da7f92b5)
+![image](https://github.com/UnitedPuggs/carcult/assets/48199805/7ec0afa6-4df6-43e7-a9a9-7438bbc486b1)
 
 
