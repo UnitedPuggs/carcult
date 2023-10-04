@@ -6,8 +6,8 @@
     export let info_id;
     export let vehicle_slug;
 
-    // if(main_image.includes("undefined"))
-    //     main_image = "https://knnxtkccpetpqxmvcxmu.supabase.co/storage/v1/object/public/garage_photos/Hulk_Hogan.jpg"
+    if(typeof main_image == 'undefined')
+        main_image = "https://knnxtkccpetpqxmvcxmu.supabase.co/storage/v1/object/public/garage_photos/Hulk_Hogan.jpg"
 </script>
 
 <a href="{$page.url.pathname}/{vehicle_slug}">
