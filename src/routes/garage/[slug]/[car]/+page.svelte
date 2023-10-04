@@ -159,11 +159,19 @@
             <button class="text-2xl hover:opacity-75" on:click={close_gallery}>x</button>
         </div>
         <div class="flex">
-        <button class="text-2xl px-4 hover:opacity-75" on:click={prev_image}>&lt;</button>
-        <div style="background-image: url('{curr_gallery_img}');" class="bg-cover bg-no-repeat border-2 border-white">
+        {#if curr_gallery_idx > 0}
+            <button class="text-2xl px-4 hover:opacity-75" on:click={prev_image}>&lt;</button>
+        {:else}
+            <span class="invisible text-2xl px-4">!</span>
+        {/if}
+        <div style="background-image: url('{curr_gallery_img}');" class="bg-cover bg-no-repeat border-2 border-white select-none">
             <img src={curr_gallery_img} alt="" class="w-[1296px] h-[732px] object-contain backdrop-blur-md"/>
         </div>
-        <button class="text-2xl px-4 hover:opacity-75" on:click={next_image}>&gt;</button>
+        {#if curr_gallery_idx < short.image_urls.length - 1}
+            <button class="text-2xl px-4 hover:opacity-75" on:click={next_image}>&gt;</button>
+        {:else}
+            <span class="invisible text-2xl px-4">!</span>
+        {/if}
         </div>
     </dialog>
     
