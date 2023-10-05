@@ -9,10 +9,11 @@ export const actions = {
         const image = formdata.get('file');
         const model = formdata.get('car');
         const desc = formdata.get('desc');
+       
 
-        let url = session.user.displayname + "/" + image.name;
+        let url = session.user.displayname + "/" + model.replace(/\s+/g, '').trim() + "/" + image.name;
         
-        if(image.name != 'undefined') {
+        if(typeof image != 'undefined') {
             const { data, error } = await supabase
             .storage
             .from('garage_photos')
@@ -39,7 +40,7 @@ export const actions = {
         const { car_data, car_error } = await supabase
         .from('garage_vehicle_info')
         .insert([
-            { vehicle_name: model, username: session.user.displayname, image_urls: public_url, description: desc }
+            { vehicle_name: model, short_vehicle_name: model.replace(/\s+/g, '').trim(), username: session.user.displayname, image_urls: public_url, description: desc }
         ])
         .select()
 
