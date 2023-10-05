@@ -38,8 +38,8 @@ export async function DELETE({ request }) {
         if(delete_error)
             return new Response(JSON.stringify(delete_error))
 
-    if(error)
-        return new Response(JSON.stringify(error))
+        if(error)
+            return new Response(JSON.stringify(error))
     }
     images = [];
     return new Response(JSON.stringify(garage_vehicle_info))
