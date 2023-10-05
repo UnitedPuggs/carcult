@@ -9,7 +9,7 @@ export async function POST({ request, locals }) {
 
     let url = session.user.displayname + "/pfp-" + image.name;
 
-    if(image && typeof image != 'undefined') {
+    if(image && typeof image.name !== "undefined") {
         const { data: list, list_error } = await supabase
         .storage
         .from('profile_photos')

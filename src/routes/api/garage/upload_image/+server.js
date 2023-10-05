@@ -10,7 +10,7 @@ export async function POST({ request, locals }) {
 
     let url = session.user.displayname + "/" + vehc + "/" + image.name + "-" + crypto.randomUUID();
 
-    if(image && typeof image != 'undefined') {
+    if(image && typeof image.name !== 'undefined') {
         const { upload_data, error } = await supabase
         .storage
         .from('garage_photos')
@@ -33,13 +33,14 @@ export async function POST({ request, locals }) {
         .eq('id', id);
         
         let img_urls = image_data[0].image_urls;
-        img_urls.push(data.publicUrl)
+        img_urls.unshift(data.publicUrl)
         
         const { update_urls, update_error } = await supabase
         .from('garage_vehicle_info')
         .update({ image_urls: img_urls })
         .eq('id', id)
         .select();
+        return new Response(JSON.stringify({message: "image uploaded"}))
     }
-    return new Response(JSON.stringify({message: "image uploaded"}))
+    return new Response(JSON.stringify({error: "no image"}))
 }

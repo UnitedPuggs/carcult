@@ -9,6 +9,8 @@
     let temp_pfp;
     let edit_mode = false;
 
+    $: follow_status = data.is_following[0];
+
     $: short = data.garage[0];
     $: shorter = data.garage_info;
 
@@ -40,6 +42,14 @@
             temp_pfp = e.target.result;
         };
     }
+
+    async function follow_user(follower, followed) {
+        await fetch('/api/garage/follow_user', {
+            method: "POST",
+            body: JSON.stringify({follower, followed})
+        })
+        invalidateAll();
+    }
 </script>
 
 <svelte:head>
@@ -67,12 +77,12 @@
             {/if}
             <h1 class="text-2xl mt-2">{short.username}</h1>
             <!-- Let's see if this might worth it -->
-            <section class="flex-wrap max-w-[15rem] mt-2">
-                <span>{short.followers.length} followers</span>
-                <span>{short.following.length} following</span>
+            <section class="flex-wrap max-w-[7rem] md:max-w-[15rem] mt-2 text-center">
+                <a href="{$page.url.pathname}/followers">{short.follower_count} followers</a>
+                <a href="{$page.url.pathname}/following">{short.following_count} following</a>
             </section>
-            {#if $page.data.session?.user.displayname != short.username && $page.data.session?.user}
-                <button class="border-2 px-2 py-1 rounded-md mt-4 hover:opacity-75">follow</button>
+            {#if $page.data.session?.user.displayname != short.username && $page.data.session?.user && typeof follow_status === 'undefined'}
+                <button class="border-2 px-2 py-1 rounded-md mt-4 hover:opacity-75" on:click={() => follow_user($page.data.session.user.displayname, $page.params.slug)}>follow</button>
             {/if}
             <h1 class="font-semibold mt-12 text-xl">Joined:</h1>
             <span>{short.created.substring(0, 10)}</span>
@@ -88,8 +98,8 @@
                     <textarea class="p-1 text-black -mb-8" placeholder="your bio here" bind:value={bio}></textarea>
                 {/if}
             {/if}
-            <h1 class="font-semibold mt-12 text-xl">Owner of:</h1>
-            {#if shorter}
+            {#if shorter.length > 0}
+                <h1 class="font-semibold mt-12 text-xl">Owner of:</h1>
                 <div class="flex flex-col text-center">
                     {#each shorter as vehicles}
                         <span>{vehicles.vehicle_name}</span>
