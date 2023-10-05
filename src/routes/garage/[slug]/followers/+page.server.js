@@ -1,6 +1,7 @@
 import { supabase } from '$lib/supabase.js'
 
 export async function load({ params }) {
+    //refer to following/+page.server.js for comments. code is literally copy-pasted
     let { data: garage_followers, error } = await supabase
     .from('garage_followers')
     .select('follower')
@@ -14,8 +15,8 @@ export async function load({ params }) {
 
     let { data: garage, garage_error } = await supabase
     .from('garage')
-    .select('pfp_url')
+    .select('username, pfp_url')
     .in('username', usernames)
 
-    return { garage_followers: garage_followers, garage: garage }
+    return { garage: garage }
 }

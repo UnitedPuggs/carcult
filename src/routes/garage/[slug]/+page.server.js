@@ -15,14 +15,13 @@ export async function load({ params, locals }) {
     .from('garage_vehicle_info')
     .select('*')
     .eq('username', params.slug);
-
+    
     let { data: is_following, follower_error } = await supabase
     .from('garage_followers')
     .select('*')
-    .eq('follower', session.user.displayname)
+    .eq('follower', session?.user.displayname)
     .eq('followed', params.slug)
     
-
     if(garage_error)
         return {"load": garage_error};
     

@@ -50,6 +50,14 @@
         })
         invalidateAll();
     }
+    
+    async function unfollow_user(id) {
+        await fetch('/api/garage/unfollow_user', {
+            method: "DELETE",
+            body: JSON.stringify({id})
+        })
+        invalidateAll();
+    }
 </script>
 
 <svelte:head>
@@ -76,13 +84,15 @@
             </label>
             {/if}
             <h1 class="text-2xl mt-2">{short.username}</h1>
-            <!-- Let's see if this might worth it -->
+            <!-- Let's see if this might be worth it -->
             <section class="flex-wrap max-w-[7rem] md:max-w-[15rem] mt-2 text-center">
                 <a href="{$page.url.pathname}/followers">{short.follower_count} followers</a>
                 <a href="{$page.url.pathname}/following">{short.following_count} following</a>
             </section>
             {#if $page.data.session?.user.displayname != short.username && $page.data.session?.user && typeof follow_status === 'undefined'}
                 <button class="border-2 px-2 py-1 rounded-md mt-4 hover:opacity-75" on:click={() => follow_user($page.data.session.user.displayname, $page.params.slug)}>follow</button>
+            {:else if $page.data.session?.user.displayname != short.username && $page.data.session?.user && typeof follow_status !== 'undefined'}
+                <button class="border-2 px-2 py-1 rounded-md mt-4 hover:opacity-75" on:click={() => unfollow_user(follow_status.id)}>unfollow</button>
             {/if}
             <h1 class="font-semibold mt-12 text-xl">Joined:</h1>
             <span>{short.created.substring(0, 10)}</span>
@@ -108,6 +118,7 @@
             {/if}
         </div>
     </div>
+
     <!-- Vehicle info/images from garage_vehicle_info table -->
     <div class="grow">
         {#if shorter}
@@ -116,6 +127,7 @@
             {/each}
         {/if}
         {#if $page.data.session?.user.displayname == short.username}
+            <!-- need to move functionality from this to navbar -->
             <a href="{$page.url.pathname}/add-car" 
             class="flex hover:opacity-75 border-2 border-white min-h-[200px] max-h-[200px] grow text-3xl font-bold justify-center items-center mx-auto">
             + <!-- hello there :) -->
