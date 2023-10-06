@@ -10,10 +10,10 @@ export const actions = {
         const model = formdata.get('car');
         const desc = formdata.get('desc');
        
-
         let url = session.user.displayname + "/" + model.replace(/\s+/g, '').trim() + "/" + image.name;
         
-        if(typeof image != 'undefined') {
+        if(image && image.name != "undefined") {
+            console.log(image.name)
             const { data, error } = await supabase
             .storage
             .from('garage_photos')
@@ -24,11 +24,9 @@ export const actions = {
             if(error)
                 return { error };
         } else {
-            url = "default.jpg"
+            url = "default.jpg" //we're using the default image stored in the garage_photos bucket if no image is found
         }
 
-
-        
         const { data } = supabase
         .storage
         .from('garage_photos')
@@ -36,7 +34,6 @@ export const actions = {
 
         const public_url = [String(data.publicUrl)];
 
-        
         const { car_data, car_error } = await supabase
         .from('garage_vehicle_info')
         .insert([
