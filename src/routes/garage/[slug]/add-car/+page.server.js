@@ -18,7 +18,7 @@ export const actions = {
             .storage
             .from('garage_photos')
             .upload(url, image, {
-                cacheControl: '3600',
+                cacheControl: '15552000',
                 upsert: true,
             });
             if(error)

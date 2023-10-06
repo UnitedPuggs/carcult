@@ -15,7 +15,7 @@ export async function POST({ request, locals }) {
         .storage
         .from('garage_photos')
         .upload(url, image, {
-            cacheControl: '300',
+            cacheControl: '15552000',
             upsert: true,
         })
 
