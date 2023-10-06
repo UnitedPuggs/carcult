@@ -141,7 +141,7 @@
     <img src={short.image_urls[0]} alt="your cool car" class="w-[512px] h-auto max-h-[296px] object-cover border-2 border-white"/>
     <h2 class="font-bold text-xl">description</h2>
     {#if !edit_mode}
-        <p class="p-1">{short.description}</p>
+        <p class="p-1 whitespace-pre-wrap" contenteditable="false">{short.description}</p>
     {:else}
         <textarea bind:value={desc} class="text-black p-1"></textarea>
     {/if}

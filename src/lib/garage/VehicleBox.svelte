@@ -18,7 +18,7 @@
                 <span class="text-2xl font-bold md:pr-32 md:pl-4">{vehicle_name}</span>
             </div>
             {#if desc} 
-                <p class="md:pl-4">{desc}</p>
+                <p class="md:pl-4 whitespace-pre-wrap">{desc}</p>
             {/if}
         </div>
     </div>
