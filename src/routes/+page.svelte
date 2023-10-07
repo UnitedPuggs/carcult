@@ -1,5 +1,4 @@
 <script>
-    import Calendar from "../lib/Calendar.svelte";
 </script>
 
 <svelte:head>

@@ -1,5 +1,5 @@
 <script>
-    import Calendar from "../../lib/Calendar.svelte";
+    import Calendar from "$lib/meets/Calendar.svelte";
 </script>
 
 <Calendar />
