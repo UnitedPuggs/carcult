@@ -145,9 +145,9 @@
     <img src={short.image_urls[0]} alt="your cool car" class="w-[512px] h-auto max-h-[296px] object-cover border-2 border-white"/>
     <h2 class="font-bold text-xl">description</h2>
     {#if !edit_mode}
-        <p class="p-1 whitespace-pre-wrap" contenteditable="false">{short.description}</p>
+        <p class="p-1 whitespace-pre-wrap">{short.description}</p> <!-- Had a contenteditable here. Don't think I need it? -->
     {:else}
-        <textarea bind:value={desc} class="text-black p-1"></textarea>
+        <textarea bind:value={desc} class="text-black p-1 h-60 w-96"></textarea>
     {/if}
 
     {#if $page.data.session?.user.displayname == short.username}
@@ -156,7 +156,7 @@
                 <button class="text-2xl hover:opacity-75" on:click={close_modal}>x</button>
             </div>
             <label class="my-2">
-                <input type="file" id="file" name="file" bind:value={file} class="hidden" on:change={(e) => uploaded_file(e)} /> <!-- Might need some styling on this bad boy -->            
+                <input type="file" id="file" name="file" bind:value={file} class="hidden" on:change={(e) => uploaded_file(e)} multiple /> <!-- Might need some styling on this bad boy -->            
                 {#if file}
                     <img src={file} alt="upload your car" class="border-4 border-white w-[512px] h-[296px] object-cover cursor-pointer"/>
                 {:else}
@@ -169,8 +169,8 @@
             <button class="mt-2 mx-2 px-1 hover:opacity-75 justify-start" on:click={open_modal}>add image</button>
             <button class="mt-2 mx-2 px-1 hover:opacity-75" on:click={toggle_edit}>edit</button>
             {#if edit_mode}
-                <button class="mt-2 mx-2 px-1" on:click={open_delete_prompt}>remove</button>
-                <button class="mt-2 mx-2 px-1" on:click={save_desc}>save</button>
+                <button class="mt-2 mx-2 px-1 hover:opacity-75" on:click={open_delete_prompt}>remove</button>
+                <button class="mt-2 mx-2 px-1 hover:opacity-75" on:click={save_desc}>save</button>
             {/if}
         </div>
     {/if}

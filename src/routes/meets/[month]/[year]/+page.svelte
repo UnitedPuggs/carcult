@@ -1,12 +1,12 @@
 <script>
     import { onMount } from "svelte";
-    import { page } from '$app/stores'
     import { goto, invalidateAll } from '$app/navigation'
-    import CalendarEvents from "./CalendarEvents.svelte";
+    import CalendarEvents from "$lib/meets/CalendarEvents.svelte";
+    export let data;
 
-    export let ref_date;
-    export let events;
+    $: events = data.events
 
+    let ref_date = new Date();
     let date;
     let month_str;
     let curr_year;
@@ -35,7 +35,8 @@
         for(let i = 1; i <= days; ++i) {
             calendar_days.push(i);
         }
-        invalidateAll()
+    
+        goto(`/meets/${month + 1}/2023`)
     }
 
     onMount(() => {
@@ -43,12 +44,15 @@
     })
 </script>
 
+<svelte:head>
+    <title>{month_str} meets</title>
+</svelte:head>
+
 <div class="justify-center items-center text-center mt-10 text-white">
     <div class="flex flex-row justify-center items-center text-center">
         <button on:click={() => {
             calendar_days = [];
             get_current_calendar(--curr_month);
-            goto("/meets/09/2023")
         }}>
         &lt;-
         </button>
