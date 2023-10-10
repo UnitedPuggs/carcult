@@ -48,7 +48,9 @@
     <title>{month_str} meets</title>
 </svelte:head>
 
-<div class="justify-center items-center text-center mt-10 text-white">
+<div>
+    <a href="/meets/create" class="m-2 inline-block hover:opacity-75">create event</a>
+    <div class="mt-8">
     <div class="flex flex-row justify-center items-center text-center">
         <button on:click={() => {
             calendar_days = [];
@@ -77,5 +79,6 @@
                 <CalendarEvents day={day} date={date} {events} />
             {/each}
         </div>
+    </div>
     </div>
 </div>
