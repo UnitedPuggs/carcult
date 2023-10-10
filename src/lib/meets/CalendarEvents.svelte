@@ -7,7 +7,9 @@
     
     $: today_events = events.filter(event => {
         return event.event_date == event_date;
-    }).map(event => event.event_name)
+    }).map(event => {
+        return { event: event.event_name, slug: event.slug }
+    })
 
     
     let extra_style = ""
@@ -19,12 +21,12 @@
     <span class="sticky top-0 bg-black z-50">{day}</span>
     {#if today_events}
         {#each today_events as event}
-        <button 
-        on:click={() => alert(event)} 
+        <a 
+        href="/meets/{event.slug}"
         class="hover:opacity-75 border rounded-sm mx-1 my-0.5 bg-white text-black text-lg font-bold"
         >
-            {event}
-        </button>
+            {event.event}
+        </a>
     {/each}
     {/if}
 </div>

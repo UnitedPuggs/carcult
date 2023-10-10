@@ -1,6 +1,6 @@
 <script>
     import { onMount } from "svelte";
-    import { goto, invalidateAll } from '$app/navigation'
+    import { goto } from '$app/navigation'
     import CalendarEvents from "$lib/meets/CalendarEvents.svelte";
     export let data;
 
@@ -62,7 +62,7 @@
             get_current_calendar(++curr_month);
         }}>-&gt;</button>
     </div>
-    <div class="flex flex-col justify-center items-center mx-auto rounded-sm w-[85rem]  p-1 overflow-y-auto overflow-x-hidden">
+    <div class="flex flex-col justify-center items-center mx-auto rounded-sm w-[85rem] p-1 overflow-y-auto overflow-x-hidden">
         <section class="grid grid-cols-7 grid-rows-1 mx-auto border border-white w-[84rem] sticky top-0 bg-black z-50">
             <span>Sunday</span>
             <span>Monday</span>
@@ -72,7 +72,7 @@
             <span>Friday</span>
             <span>Saturday</span>
         </section>
-        <div class="grid grid-cols-7 px-1 h-[40rem]">
+        <div class="grid grid-cols-7 px-1 h-auto">
             {#each calendar_days as day}
                 <CalendarEvents day={day} date={date} {events} />
             {/each}
