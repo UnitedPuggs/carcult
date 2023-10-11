@@ -1,6 +1,7 @@
 <script>
     import { onMount } from "svelte";
     import { goto } from '$app/navigation'
+    import { page } from '$app/stores'
     import CalendarEvents from "$lib/meets/CalendarEvents.svelte";
     export let data;
 
@@ -49,7 +50,9 @@
 </svelte:head>
 
 <div>
-    <a href="/meets/create" class="m-2 inline-block hover:opacity-75">create event</a>
+    {#if $page.data.session?.user.role >= 1}
+        <a href="/meets/create" class="m-2 inline-block hover:opacity-75">create event</a>
+    {/if}
     <div class="mt-8">
     <div class="flex flex-row justify-center items-center text-center">
         <button on:click={() => {

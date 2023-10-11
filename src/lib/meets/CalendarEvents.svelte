@@ -6,7 +6,7 @@
     $: event_date = new Date(date.getFullYear(), date.getMonth(), day).toISOString().slice(0, 10);
     
     $: today_events = events.filter(event => {
-        return event.event_date == event_date;
+        return event.event_date.substring(0, 10) == event_date;
     }).map(event => {
         return { event: event.event_name, slug: event.slug }
     })
