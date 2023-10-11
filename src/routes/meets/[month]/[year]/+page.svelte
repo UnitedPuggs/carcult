@@ -15,7 +15,8 @@
     let prev_month_days;
     let calendar_days = [];
 
-    let curr_month = ref_date.getMonth();
+    //Just gets the month from [month] param
+    let curr_month = parseInt($page.params.month) - 1;
 
     const daysInMonth = (year, month) => new Date(year, month, 0).getDate()
 
@@ -41,7 +42,7 @@
     }
 
     onMount(() => {
-        get_current_calendar(ref_date.getMonth());
+        get_current_calendar(curr_month);
     })
 </script>
 
@@ -68,7 +69,7 @@
         }}>-&gt;</button>
     </div>
     <div class="flex flex-col justify-center items-center mx-auto rounded-sm w-[85rem] p-1 overflow-y-auto overflow-x-hidden">
-        <section class="grid grid-cols-7 grid-rows-1 mx-auto border border-white w-[84rem] sticky top-0 bg-black z-50">
+        <section class="grid grid-cols-7 grid-rows-1 mx-auto border border-white w-[84rem] sticky top-0 bg-black z-50 text-center">
             <span>Sunday</span>
             <span>Monday</span>
             <span>Tuesday</span>
