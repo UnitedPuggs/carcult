@@ -9,10 +9,10 @@
 </svelte:head>
 
 <div class="bg-[url('/assets/test.jpg')] bg-no-repeat bg-center bg-cover bg-scroll">
-<div class="flex flex-col justify-center items-center backdrop-blur py-10">
-    <h1 class="text-3xl font-bold">{events.event_name}</h1>
-    <p class="text-lg">hosted by <strong><a href="/garage/{events.host}" class="underline hover:no-underline">{events.host}</a></strong></p>
-    <p>on {events.event_date.substring(0, 10)} @ {events.event_date.substring(11)}</p>
-    <p class="p-1 whitespace-pre-wrap md:max-w-xl">{events.description}</p>
-</div>
+    <div class="flex flex-col justify-center items-center backdrop-blur py-10">
+        <h1 class="text-3xl font-bold">{events.event_name}</h1>
+        <p class="text-lg">hosted by <strong><a href="/garage/{events.host}" class="underline hover:no-underline">{events.host}</a></strong></p>
+        <p>on {events.event_date.substring(0, 10)} @ {events.event_date.substring(11)}</p>
+        <p class="p-1 whitespace-pre-wrap md:max-w-xl">{events.description}</p>
+    </div>
 </div>
