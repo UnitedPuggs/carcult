@@ -5,7 +5,7 @@
     let date = new Date();
 </script>
 
-<nav class="sticky top-0 bg-black z-50">
+<nav class="sticky top-0 bg-black z-[100]">
     <div class="border border-white text-mono text-white p-4 gap-2 flex flex-col md:flex-row flex-wrap md:h-14 bg-black">
         <a href="/" class="text-xl hover:opacity-75 transition ease-in-out hover:scale-90">carcult</a>
         <a href="/meets/{date.getMonth() + 1}/{date.getFullYear()}" class="hover:opacity-75">meets</a>
