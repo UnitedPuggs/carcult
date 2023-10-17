@@ -8,8 +8,7 @@
     let checked = false;
 
     const min_date = new Date().toLocaleString('sv').slice(0, 10) + "T00:00"
-    const max_date = new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toISOString().slice(0, 16);
-    console.log(min_date)
+    const max_date = new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toLocaleString('sv').slice(0, 10) + "T23:59";
     
     async function create_event() {
         await fetch('/api/meets/create_meet', {
@@ -28,10 +27,9 @@
 <div class="flex flex-col justify-center items-center mt-10">
     <h1 class="text-2xl font-bold">create your event</h1>
     <label for="event_name">event name</label>
-    <input name="event_name" type="text" bind:value={event_name} maxlength="25" required class="text-black p-1" placeholder="event name here">
+    <input name="event_name" type="text" bind:value={event_name} maxlength="25" required class="text-black px-0.5 py-1" placeholder="event name here">
     <label for="date">date</label>
-    <input name="date" type="datetime-local" bind:value={date} required class="text-black" min={min_date}>
-    <h1>{date}</h1>
+    <input name="date" type="datetime-local" bind:value={date} required class="text-black" min={min_date} max={max_date}>
     <label class="pt-4">
         repeat?
         <input type="checkbox" bind:checked={checked}>
@@ -39,7 +37,7 @@
     {#if checked}
         <!-- repeat every week -->
         <label for="end-date">end date</label>
-        <input type="datetime-local" class="text-black" name="end-date">
+        <input type="datetime-local" class="text-black" name="end-date" min={min_date} max={max_date}>
 
         <fieldset class="border-white border">
             
