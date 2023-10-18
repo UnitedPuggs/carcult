@@ -18,7 +18,7 @@
 
 <div class="border border-white flex flex-col h-32 w-48 {extra_style} overflow-y-auto">
     <!--<h1>{curr_date}</h1>-->
-    <span class="sticky top-0 bg-black z-50">{day}</span>
+    <span class="sticky top-0 bg-black z-50 pl-1">{day}</span>
     {#if today_events}
         {#each today_events as event}
         <a 

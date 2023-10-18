@@ -8,7 +8,7 @@
     <title>{events.event_name} by {events.host}</title>
 </svelte:head>
 
-<div class="bg-[url('/assets/test.jpg')] bg-no-repeat bg-center bg-cover bg-scroll">
+<div class="bg-[url('/assets/test.jpg')] bg-no-repeat bg-center bg-cover bg-scroll border-b border-white">
     <div class="flex flex-col justify-center items-center backdrop-blur py-10">
         <h1 class="text-3xl font-bold">{events.event_name}</h1>
         <p class="text-lg">hosted by <strong><a href="/garage/{events.host}" class="underline hover:no-underline">{events.host}</a></strong></p>

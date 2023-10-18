@@ -7,7 +7,6 @@
 
     $: events = data.events
 
-    let ref_date = new Date();
     let date;
     let month_str;
     let curr_year;
@@ -16,11 +15,26 @@
     let calendar_days = [];
 
     //Just gets the month from [month] param
-    let curr_month = parseInt($page.params.month) - 1;
+    $: curr_month = parseInt($page.params.month) - 1;
+    $: curr_year = parseInt($page.params.year)
+    $: ref_date = new Date(curr_year, curr_month)
 
     const daysInMonth = (year, month) => new Date(year, month, 0).getDate()
 
     async function get_current_calendar(month) {
+        //If we go over december, increment into jan the next year basically
+        if(month == 12) {
+            ref_date.setFullYear(++curr_year);
+            month = 0;
+            curr_month = 0;
+        }
+        //If we go under jan, decrement into the last year
+        if(month == -1) {
+            ref_date.setFullYear(--curr_year);
+            month = 11;
+            curr_month = 11;
+        }
+
         date = new Date(ref_date.getFullYear(), month, 1);
         month_str = date.toLocaleString(undefined, { month: 'long' })
         curr_year = date.getFullYear();
@@ -38,7 +52,7 @@
             calendar_days.push(i);
         }
     
-        goto(`/meets/${month + 1}/2023`)
+        goto(`/meets/${month + 1}/${curr_year}`)
     }
 
     onMount(() => {
