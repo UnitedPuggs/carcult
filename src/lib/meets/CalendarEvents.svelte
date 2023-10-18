@@ -2,7 +2,7 @@
     export let day;
     export let date;
     export let events;
-    
+
     $: event_date = new Date(date.getFullYear(), day.month, day.curr_day).toISOString().slice(0, 10);
     $: today_events = events.filter(event => {
         return event.event_date.substring(0, 10) == event_date;

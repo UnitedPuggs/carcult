@@ -1,6 +1,6 @@
 <script>
     import { onMount } from "svelte";
-    import { goto, invalidateAll } from '$app/navigation'
+    import { goto, invalidate } from '$app/navigation'
     import { page } from '$app/stores'
     import CalendarEvents from "$lib/meets/CalendarEvents.svelte";
     export let data;
@@ -8,15 +8,15 @@
     $: events = data.events
 
     let date;
-    let month_str;
+    $: month_str = ref_date.toLocaleString(undefined, { month: 'long' });
     let curr_year;
     let first_day;
     let prev_month_days;
-    let calendar_days = [];
+    $: calendar_days = [];
 
-    let today = new Date();
+    const today = new Date();
 
-    //Just gets the month from [month] param
+    //Just gets the month from [month] param and year from the [year] param
     $: curr_month = parseInt($page.params.month) - 1;
     $: curr_year = parseInt($page.params.year)
     $: ref_date = new Date(curr_year, curr_month)
@@ -39,9 +39,8 @@
 
         date = new Date(ref_date.getFullYear(), month, 1);
         month_str = date.toLocaleString(undefined, { month: 'long' })
-        curr_year = date.getFullYear();
+        curr_year = ref_date.getFullYear();
         const days = daysInMonth(date.getFullYear(), date.getMonth() + 1)
-
         first_day = new Date(date.getFullYear(), date.getMonth(), 1).getDay();
 
         prev_month_days = new Date(date.getFullYear(), date.getMonth(), 0).getDate(); 
@@ -53,12 +52,16 @@
         for(let i = 1; i <= days; ++i) {
             calendar_days.push({month: curr_month, curr_day: i, extra_style: ""});
         }
-    
+
         goto(`/meets/${month + 1}/${curr_year}`)
     }
 
-    function goto_today() {
-        goto(`/meets/${today.getMonth() + 1}/${today.getFullYear()}`)
+    async function goto_today() {
+        curr_month = today.getMonth();
+        curr_year = today.getFullYear();
+        ref_date = new Date(curr_year, curr_month);
+        calendar_days = [];
+        get_current_calendar(curr_month)
     }
 
     onMount(() => {
@@ -67,7 +70,7 @@
 </script>
 
 <svelte:head>
-    <title>{month_str} meets</title>
+    <title>{month_str.toLowerCase()} meets</title>
 </svelte:head>
 
 <div>
@@ -83,8 +86,11 @@
         &lt;-
         </button>
         <section>
-            <h1 class="text-2xl p-2 -mb-3">{month_str} {curr_year}</h1>
-            <button on:click={goto_today} class="pb-4 hover:opacity-75">today</button>
+            <h1 class="text-2xl p-2 -mb-3 w-52">{month_str} {curr_year}</h1>
+            <button on:click={() => {
+                goto_today()
+            }} class="pb-4 hover:opacity-75">
+            today</button>
         </section>
         <button on:click={() => {
             calendar_days = [];
