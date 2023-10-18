@@ -14,7 +14,8 @@
             },
             body: JSON.stringify({email: email, username: username.replace(' ', '')})
         })
-        data.session.user.displayname = username;
+        data.session.user.displayname = username.replace(' ', '');
+        data.session.user.role = 0;
         goto('/')
     }
 </script>
