@@ -16,7 +16,7 @@
     $: end_date_sub = new Date(end_date)
 
     const min_date = new Date().toLocaleString('sv').slice(0, 10) + "T00:00"
-    const max_date = new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toLocaleString('sv').slice(0, 10) + "T23:59";
+    const max_date = new Date(new Date().setFullYear(new Date().getFullYear() + 5)).toLocaleString('sv').slice(0, 10) + "T23:59";
     
     async function create_meet() {
         await fetch('/api/meets/create_meet', {

@@ -1,6 +1,6 @@
 <script>
     import { onMount } from "svelte";
-    import { goto } from '$app/navigation'
+    import { goto, invalidateAll } from '$app/navigation'
     import { page } from '$app/stores'
     import CalendarEvents from "$lib/meets/CalendarEvents.svelte";
     export let data;
@@ -13,6 +13,8 @@
     let first_day;
     let prev_month_days;
     let calendar_days = [];
+
+    let today = new Date();
 
     //Just gets the month from [month] param
     $: curr_month = parseInt($page.params.month) - 1;
@@ -45,14 +47,18 @@
         prev_month_days = new Date(date.getFullYear(), date.getMonth(), 0).getDate(); 
 
         for(let i = first_day; i > 0; --i) {
-            calendar_days.push(prev_month_days - (i - 1));
+            calendar_days.push({month: curr_month - 1, curr_day: prev_month_days - (i - 1), extra_style: "opacity-60"});
         }
 
         for(let i = 1; i <= days; ++i) {
-            calendar_days.push(i);
+            calendar_days.push({month: curr_month, curr_day: i, extra_style: ""});
         }
     
         goto(`/meets/${month + 1}/${curr_year}`)
+    }
+
+    function goto_today() {
+        goto(`/meets/${today.getMonth() + 1}/${today.getFullYear()}`)
     }
 
     onMount(() => {
@@ -76,7 +82,10 @@
         }}>
         &lt;-
         </button>
-            <h1 class="text-2xl p-2">{month_str} {curr_year}</h1>
+        <section>
+            <h1 class="text-2xl p-2 -mb-3">{month_str} {curr_year}</h1>
+            <button on:click={goto_today} class="pb-4 hover:opacity-75">today</button>
+        </section>
         <button on:click={() => {
             calendar_days = [];
             get_current_calendar(++curr_month);
