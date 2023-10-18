@@ -17,11 +17,11 @@ async function get_username(email) {
     return users;
 }
 
-async function get_role(username) {
+async function get_role(email) {
     const { data: roles, error } = await supabase
     .from('roles')
     .select('role')
-    .eq('username', username)
+    .eq('email', email)
 
     if(error)
         return error;
@@ -44,7 +44,7 @@ export const handle = SvelteKitAuth(async (event) => {
                 let displayname = await user[0].username;
                 session.user.displayname = displayname;
 
-                const role = await get_role(session.user.displayname)
+                const role = await get_role(session.user.email)
                 let user_role = await role[0].role;
                 session.user.role = user_role;
                 return session;
