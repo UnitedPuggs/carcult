@@ -1,5 +1,4 @@
 <script>
-    import Calendar from "../lib/Calendar.svelte";
 </script>
 
 <svelte:head>
@@ -8,5 +7,7 @@
 </svelte:head>
 
 <body class="font-mono bg-black">
-    <h1 class="text-white">hi :)</h1>
+    <div class="flex justify-center items-center">
+        <h1 class="text-3xl font-bold pt-10">carcult landing page</h1>
+    </div>
 </body>

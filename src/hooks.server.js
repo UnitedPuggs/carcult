@@ -17,6 +17,18 @@ async function get_username(email) {
     return users;
 }
 
+async function get_role(username) {
+    const { data: roles, error } = await supabase
+    .from('roles')
+    .select('role')
+    .eq('username', username)
+
+    if(error)
+        return error;
+
+    return roles;
+}
+
 export const handle = SvelteKitAuth(async (event) => {
     const authOptions = {
         providers: [Discord({clientId: DISCORD_CLIENT_ID, clientSecret: DISCORD_CLIENT_SECRET}), Google({clientId: GOOGLE_CLIENT_ID, clientSecret: GOOGLE_CLIENT_SECRET})],
@@ -31,6 +43,10 @@ export const handle = SvelteKitAuth(async (event) => {
                 const user = await get_username(session.user.email);
                 let displayname = await user[0].username;
                 session.user.displayname = displayname;
+
+                const role = await get_role(session.user.displayname)
+                let user_role = await role[0].role;
+                session.user.role = user_role;
                 return session;
             }
         },

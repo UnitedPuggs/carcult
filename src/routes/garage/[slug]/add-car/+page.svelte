@@ -30,7 +30,7 @@
                     <img src="/assets/image_upload.png" alt="upload your car" class="border-4 border-white w-[512px] h-[296px] object-none cursor-pointer"/>
                 {/if}
             </label>
-            <textarea class="text-black rounded-sm" id="desc" name="desc" placeholder="description here"></textarea>
+            <textarea class="text-black rounded-sm px-0.5 py-1" id="desc" name="desc" placeholder="description here"></textarea>
             <input type="submit" value="add" class="hover:opacity-75 cursor-pointer">
         </form>
     </div>

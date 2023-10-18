@@ -15,7 +15,7 @@ export async function POST({ request, locals }) {
         .storage
         .from('garage_photos')
         .upload(url, image, {
-            cacheControl: '300',
+            cacheControl: '15552000',
             upsert: true,
         })
 
@@ -33,7 +33,7 @@ export async function POST({ request, locals }) {
         .eq('id', id);
         
         let img_urls = image_data[0].image_urls;
-        img_urls.unshift(data.publicUrl)
+        img_urls.push(data.publicUrl)
         
         const { update_urls, update_error } = await supabase
         .from('garage_vehicle_info')

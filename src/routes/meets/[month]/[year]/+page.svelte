@@ -1,0 +1,111 @@
+<script>
+    import { onMount } from "svelte";
+    import { goto, invalidateAll } from '$app/navigation'
+    import { page } from '$app/stores'
+    import CalendarEvents from "$lib/meets/CalendarEvents.svelte";
+    export let data;
+
+    $: events = data.events
+
+    let date;
+    let month_str;
+    let curr_year;
+    let first_day;
+    let prev_month_days;
+    let calendar_days = [];
+
+    let today = new Date();
+
+    //Just gets the month from [month] param
+    $: curr_month = parseInt($page.params.month) - 1;
+    $: curr_year = parseInt($page.params.year)
+    $: ref_date = new Date(curr_year, curr_month)
+
+    const daysInMonth = (year, month) => new Date(year, month, 0).getDate()
+
+    async function get_current_calendar(month) {
+        //If we go over december, increment into jan the next year basically
+        if(month == 12) {
+            ref_date.setFullYear(++curr_year);
+            month = 0;
+            curr_month = 0;
+        }
+        //If we go under jan, decrement into the last year
+        if(month == -1) {
+            ref_date.setFullYear(--curr_year);
+            month = 11;
+            curr_month = 11;
+        }
+
+        date = new Date(ref_date.getFullYear(), month, 1);
+        month_str = date.toLocaleString(undefined, { month: 'long' })
+        curr_year = date.getFullYear();
+        const days = daysInMonth(date.getFullYear(), date.getMonth() + 1)
+
+        first_day = new Date(date.getFullYear(), date.getMonth(), 1).getDay();
+
+        prev_month_days = new Date(date.getFullYear(), date.getMonth(), 0).getDate(); 
+
+        for(let i = first_day; i > 0; --i) {
+            calendar_days.push({month: curr_month - 1, curr_day: prev_month_days - (i - 1), extra_style: "opacity-60"});
+        }
+
+        for(let i = 1; i <= days; ++i) {
+            calendar_days.push({month: curr_month, curr_day: i, extra_style: ""});
+        }
+    
+        goto(`/meets/${month + 1}/${curr_year}`)
+    }
+
+    function goto_today() {
+        goto(`/meets/${today.getMonth() + 1}/${today.getFullYear()}`)
+    }
+
+    onMount(() => {
+        get_current_calendar(curr_month);
+    })
+</script>
+
+<svelte:head>
+    <title>{month_str} meets</title>
+</svelte:head>
+
+<div>
+    {#if $page.data.session?.user.role >= 1}
+        <a href="/meets/create" class="m-2 inline-block hover:opacity-75">create event</a>
+    {/if}
+    <div class="mt-8">
+    <div class="flex flex-row justify-center items-center text-center">
+        <button on:click={() => {
+            calendar_days = [];
+            get_current_calendar(--curr_month);
+        }}>
+        &lt;-
+        </button>
+        <section>
+            <h1 class="text-2xl p-2 -mb-3">{month_str} {curr_year}</h1>
+            <button on:click={goto_today} class="pb-4 hover:opacity-75">today</button>
+        </section>
+        <button on:click={() => {
+            calendar_days = [];
+            get_current_calendar(++curr_month);
+        }}>-&gt;</button>
+    </div>
+    <div class="flex flex-col justify-center items-center mx-auto rounded-sm w-[85rem] p-1 overflow-y-auto overflow-x-hidden">
+        <section class="grid grid-cols-7 grid-rows-1 mx-auto border border-white w-[84rem] sticky top-0 bg-black z-50 text-center">
+            <span>Sunday</span>
+            <span>Monday</span>
+            <span>Tuesday</span>
+            <span>Wednesday</span>
+            <span>Thursday</span>
+            <span>Friday</span>
+            <span>Saturday</span>
+        </section>
+        <div class="grid grid-cols-7 px-1 h-auto">
+            {#each calendar_days as day}
+                <CalendarEvents day={day} date={date} {events} />
+            {/each}
+        </div>
+    </div>
+    </div>
+</div>
