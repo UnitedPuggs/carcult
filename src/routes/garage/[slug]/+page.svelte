@@ -96,8 +96,8 @@
             {/if}
             <h1 class="font-semibold mt-12 text-xl">Joined:</h1>
             <span>{short.created.substring(0, 10)}</span>
-            <h1 class="font-semibold mt-12 text-xl">Bio:</h1>
             {#if short.bio}
+                <h1 class="font-semibold mt-12 text-xl">Bio:</h1>
                 {#if !edit_mode}
                     <span class="md:max-w-[15rem] text-center">{short.bio}</span>
                 {:else}
@@ -105,6 +105,7 @@
                 {/if}
             {:else}
                 {#if edit_mode}
+                    <h1 class="font-semibold mt-12 text-xl">Bio:</h1>
                     <textarea class="p-1 text-black -mb-8" placeholder="your bio here" bind:value={bio}></textarea>
                 {/if}
             {/if}

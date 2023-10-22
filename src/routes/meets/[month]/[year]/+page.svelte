@@ -77,7 +77,7 @@
     {#if $page.data.session?.user.role >= 1}
         <a href="/meets/create" class="m-2 inline-block hover:opacity-75">create event</a>
     {/if}
-    <div class="mt-8">
+    <div class="mt-6">
     <div class="flex flex-row justify-center items-center text-center">
         <button on:click={() => {
             calendar_days = [];

@@ -7,7 +7,6 @@
     let edit_mode = false;
 
     let desc = data.garage_info[0].description;
-    let img_edit_styles;
 
     let curr_gallery_img = "";
     $: curr_gallery_idx = short.image_urls.indexOf(curr_gallery_img);
@@ -23,20 +22,18 @@
         goto(`/garage/${short.username}`)
     }
 
-    async function remove_image(url) {
+    async function remove_image() {
+        let img_to_remove = curr_gallery_img;
         await fetch('/api/garage/remove_image', {
             method: "DELETE",
-            body: JSON.stringify({id: short.id, url: url, imgs: short.image_urls})
+            body: JSON.stringify({id: short.id, url: img_to_remove, imgs: short.image_urls})
         })
+        close_gallery();
         invalidateAll();
     }
 
     async function toggle_edit() {
         edit_mode = !edit_mode;
-        if(edit_mode)
-            img_edit_styles = "hover:hidden delay-0";
-        else
-            img_edit_styles = "";
     }
 
     async function open_modal() {
@@ -106,7 +103,7 @@
     }
 
     async function set_main_img() {
-        let temp = data.garage_info[0].image_urls[0];
+        let temp = data.garage_info[0].image_urls[0]; //why did I not use short here?
         short.image_urls[0] = short.image_urls[curr_gallery_idx];
         short.image_urls[curr_gallery_idx] = temp;
         await fetch('/api/garage/update_main_img', {
@@ -181,17 +178,13 @@
         {#each short.image_urls as pics}
         <button 
         on:click={() => { 
-            if(edit_mode) { 
-                remove_image(pics) 
-            } else {
-                open_gallery()
-                curr_gallery_img = pics;
-            }
+            open_gallery()
+            curr_gallery_img = pics;
         }
         } 
-        class="bg-[url('/assets/Hulk_Hogan.jpg')] border border-white"
+        class="border border-white"
         >
-            <img src={pics} alt="gallery" class="w-[300px] h-[170px] object-cover border border-white {img_edit_styles}" />
+            <img src={pics} alt="gallery" class="w-[300px] h-[170px] object-cover border border-white" />
         </button>
         {/each}
     </section>
@@ -216,7 +209,10 @@
         {/if}
         </div>
         {#if $page.data.session?.user.displayname == short.username}
-            <button class="hover:opacity-75" on:click={set_main_img}>set as main</button>
+        <section class="flex flex-col">
+            <button class="hover:opacity-75 md:w-fit mx-auto" on:click={set_main_img}>set as main</button>
+            <button class="hover:opacity-75 md:w-fit mx-auto" on:click={remove_image}>remove image</button>
+        </section>
         {/if}
     </dialog>
     

@@ -14,6 +14,9 @@
         <div class="flex flex-row-reverse justify-end md:mr-5 ml-auto">
             {#if $page.data.session?.user}
                 <button on:click={() => signOut()} class="hover:opacity-75 mb-1">log out</button>
+                {#if $page.data.session.user.role > 0}
+                <a href="/garage/{$page.data.session.user.displayname}/my-meets" class="mr-4 hover:opacity-75">my events</a>
+                {/if}
                 <a href="/garage/{$page.data.session.user.displayname}" class="hover:opacity-75 mr-4">garage</a>
             {:else}
                 <a href="/login" class="hover:opacity-75">log in</a>
