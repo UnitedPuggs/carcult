@@ -6,6 +6,9 @@
     let end_date;
     let description;
     let event_name;
+    
+    let bg_img;
+    let meet_slug;
 
     let checked = false;
     let repeat_week = false;
@@ -24,6 +27,21 @@
                 method: "POST",
                 body: JSON.stringify({meets: [{host: $page.data.session.user.displayname, event_name, event_date: date, description}]})
             })
+            .then(meet_data => meet_data.json())
+            .then(data => {
+                meet_slug = data[0].slug;
+                meet_slug = meet_slug;
+            })
+            
+            const form_data = new FormData();
+            form_data.append('bg', bg_img)
+            form_data.append('slug', meet_slug);
+
+            await fetch('/api/meets/create_meet/add_bg_img', {
+                method: "POST",
+                body: form_data,
+            });
+
             let split_date = date.split('-')
             goto(`/meets/${split_date[1]}/${split_date[0]}`)
         }
@@ -64,6 +82,12 @@
             goto(`/meets/${split_date[1]}/${split_date[0]}`)
         }
     }
+
+    const upload_background = (e) => {
+        let img = e.target.files[0];
+        bg_img = img;
+        console.log(bg_img)
+    }
 </script>
 
 <svelte:head>
@@ -73,39 +97,40 @@
 <div class="mt-10">
     <h1 class="text-2xl font-bold text-center">create your event</h1>
     <form class="flex flex-col justify-center items-center">
-    <label for="event_name">event name</label>
-    <input name="event_name" type="text" bind:value={event_name} maxlength="25" required class="text-black px-0.5 py-1" placeholder="event name here">
-    <label for="date" class="pt-2">date</label>
-    <input name="date" type="datetime-local" bind:value={date} required class="text-black" min={min_date} max={max_date}>
-    <label class="pt-4">
-        repeat?
-        <input type="checkbox" bind:checked={checked}>
-    </label>
-    {#if checked}
-        <!-- repeat every week -->
-        <label for="end-date" class="pt-2">end date</label>
-        <input type="datetime-local" class="text-black" name="end-date" min={min_date} max={max_date} bind:value={end_date} required>
-        <div class="flex flex-rows gap-4 pt-2">
-            <label>
-                repeat weekly
-                <input type="checkbox" bind:checked={repeat_week}>
-            </label>
-            <label>
-                repeat monthly
-                <input type="checkbox" bind:checked={repeat_month}>
-            </label>
-            <label>
-                repeat yearly
-                <input type="checkbox" bind:checked={repeat_year}>
-            </label>
-        </div>
-    {/if}
-    <label for="desc" class="pt-2">description</label>
-    <textarea name="desc" class="text-black p-1 w-96 h-48" bind:value={description} placeholder="description here" required></textarea>
-    {#if repeat_week || repeat_month || repeat_year}
-        <button on:click={ create_repeated_meet }>submit</button>
-    {:else}
-        <button on:click={ create_meet }>submit</button>
-    {/if}
+        <label for="event_name">event name</label>
+        <input name="event_name" type="text" bind:value={event_name} maxlength="25" required class="text-black px-0.5 py-1" placeholder="event name here">
+        <label for="date" class="pt-2">date</label>
+        <input name="date" type="datetime-local" bind:value={date} required class="text-black" min={min_date} max={max_date}>
+        <input type="file" class="pt-2" bind:value={bg_img} on:change={(e) => upload_background(e)}>
+        <label class="pt-2">
+            repeat?
+            <input type="checkbox" bind:checked={checked}>
+        </label>
+        {#if checked}
+            <!-- repeat every week -->
+            <label for="end-date" class="pt-2">end date</label>
+            <input type="datetime-local" class="text-black" name="end-date" min={min_date} max={max_date} bind:value={end_date} required>
+            <div class="flex flex-rows gap-4 pt-2">
+                <label>
+                    repeat weekly
+                    <input type="checkbox" bind:checked={repeat_week}>
+                </label>
+                <label>
+                    repeat monthly
+                    <input type="checkbox" bind:checked={repeat_month}>
+                </label>
+                <label>
+                    repeat yearly
+                    <input type="checkbox" bind:checked={repeat_year}>
+                </label>
+            </div>
+        {/if}
+        <label for="desc" class="pt-2">description</label>
+        <textarea name="desc" class="text-black p-1 w-96 h-48" bind:value={description} placeholder="description here" required></textarea>
+        {#if repeat_week || repeat_month || repeat_year}
+            <button on:click={ create_repeated_meet }>submit</button>
+        {:else}
+            <button on:click={ create_meet }>submit</button>
+        {/if}
     </form>
 </div>

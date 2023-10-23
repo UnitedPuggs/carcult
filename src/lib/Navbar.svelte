@@ -6,7 +6,7 @@
 </script>
 
 <nav class="sticky top-0 bg-black z-[100]">
-    <div class="border border-white text-mono text-white p-4 gap-2 flex flex-col md:flex-row flex-wrap md:h-24 bg-black justify-center items-center">
+    <div class="border border-white text-mono text-white p-4 gap-4 flex flex-col md:flex-row flex-wrap md:h-24 bg-black justify-center items-center">
         <a href="/" class="text-xl hover:opacity-75 transition ease-in-out hover:scale-110"><img src="/assets/logo.png" alt="click me" class="w-16 h-16 rounded-full"></a>
         <a href="/meets/{date.getMonth() + 1}/{date.getFullYear()}" class="hover:opacity-75">meets</a>
         <a href="/market" class="hover:opacity-75">market</a>
