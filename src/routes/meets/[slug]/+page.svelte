@@ -3,11 +3,13 @@
     export let data;
 
     let edit_mode = false;
+    
     let description = data.events[0].description;
     let event_name = data.events[0].event_name;
     let event_date = data.events[0].event_date;
-    let text_width;
-    let text_height;
+
+    let text_width = 0;
+    let text_height = 0;
 
     $: events = data.events[0];
 
@@ -38,11 +40,10 @@
 <svelte:head>
     <title>{events.event_name} by {events.host}</title>
 </svelte:head>
-
-<div class="bg-[url('/assets/test.jpg')] bg-no-repeat bg-center bg-cover bg-scroll border-b border-white">
+<div class="bg-no-repeat bg-center bg-cover bg-scroll border-b border-white" style="background-image: url('{events.bg_img}')">
     <div class="flex flex-col justify-center items-center backdrop-blur py-10">
             <!-- would it be better to essentially just copy-paste this all into one big if/else instead of littering this with if/else statements? -->
-            {#if !edit_mode}
+        {#if !edit_mode}
             <h1 class="text-3xl font-bold">{events.event_name}</h1>
             <p class="text-lg">hosted by <strong><a href="/garage/{events.host}" class="underline hover:no-underline">{events.host}</a></strong></p>
             <p>on {events.event_date.substring(0, 10)} @ {events.event_date.substring(11)}</p>
