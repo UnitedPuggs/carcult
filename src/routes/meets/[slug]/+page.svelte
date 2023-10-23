@@ -1,4 +1,5 @@
 <script>
+    import { page } from '$app/stores'
     import { goto, invalidateAll } from '$app/navigation';
     export let data;
 
@@ -59,11 +60,13 @@
         {/if}
     </div>
 </div>
-<div class="flex flex-col mt-2 gap-2">
-    <button class="hover:opacity-75 md:w-fit md:mx-auto" on:click={ toggle_edit_mode }>edit</button>
-    {#if edit_mode}
-        <button class="hover:opacity-75 md:w-fit md:mx-auto" on:click={ update_meet }>save</button>
-    {/if}
-    <!-- probably a good idea to have a double-checker -->
-    <button class="hover:opacity-75 md:w-fit md:mx-auto" on:click={ delete_meet }>delete event</button>
-</div>
+{#if $page.data.session?.user.displayname == events.host}
+    <div class="flex flex-col mt-2 gap-2">
+        <button class="hover:opacity-75 md:w-fit md:mx-auto" on:click={ toggle_edit_mode }>edit</button>
+        {#if edit_mode}
+            <button class="hover:opacity-75 md:w-fit md:mx-auto" on:click={ update_meet }>save</button>
+        {/if}
+        <!-- probably a good idea to have a double-checker -->
+        <button class="hover:opacity-75 md:w-fit md:mx-auto" on:click={ delete_meet }>delete event</button>
+    </div>
+{/if}
