@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer compoennts {
+    .w-wo-scroll {
+        width: calc(100vw - (100vw - 100%));
+    }
+}

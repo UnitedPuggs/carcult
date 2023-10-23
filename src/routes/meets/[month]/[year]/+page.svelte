@@ -77,41 +77,50 @@
     {#if $page.data.session?.user.role >= 1}
         <a href="/meets/create" class="m-2 inline-block hover:opacity-75">create event</a>
     {/if}
-    <div class="mt-8">
-    <div class="flex flex-row justify-center items-center text-center">
-        <button on:click={() => {
-            calendar_days = [];
-            get_current_calendar(--curr_month);
-        }}>
-        &lt;-
-        </button>
-        <section>
-            <h1 class="text-2xl p-2 -mb-3 w-52">{month_str} {curr_year}</h1>
+    <div class="mt-6">
+        <div class="flex flex-row justify-center items-center text-center">
             <button on:click={() => {
-                goto_today()
-            }} class="pb-4 hover:opacity-75">
-            today</button>
-        </section>
-        <button on:click={() => {
-            calendar_days = [];
-            get_current_calendar(++curr_month);
-        }}>-&gt;</button>
-    </div>
-    <div class="flex flex-col justify-center items-center mx-auto rounded-sm w-[85rem] p-1 overflow-y-auto overflow-x-hidden">
-        <section class="grid grid-cols-7 grid-rows-1 mx-auto border border-white w-[84rem] sticky top-0 bg-black z-50 text-center">
-            <span>Sunday</span>
-            <span>Monday</span>
-            <span>Tuesday</span>
-            <span>Wednesday</span>
-            <span>Thursday</span>
-            <span>Friday</span>
-            <span>Saturday</span>
-        </section>
-        <div class="grid grid-cols-7 px-1 h-auto">
-            {#each calendar_days as day}
-                <CalendarEvents day={day} date={date} {events} />
-            {/each}
+                calendar_days = [];
+                get_current_calendar(--curr_month);
+            }}
+            class="select-none"
+            >
+            &lt;-
+            </button>
+            <section>
+                <h1 class="text-2xl p-2 -mb-3 w-52">{month_str} {curr_year}</h1>
+                <button on:click={() => {
+                    goto_today()
+                }} 
+                class="pb-4 hover:opacity-75 select-none"
+                >
+                today
+                </button>
+            </section>
+            <button on:click={() => {
+                calendar_days = [];
+                get_current_calendar(++curr_month);
+            }}
+            class="select-none"
+            >
+            -&gt;
+        </button>
         </div>
-    </div>
+        <div class="flex flex-col justify-center items-center mx-auto rounded-sm w-[85rem] p-1 overflow-y-auto overflow-x-hidden">
+            <section class="grid grid-cols-7 grid-rows-1 mx-auto border border-white w-[84rem] sticky top-0 bg-black z-50 text-center">
+                <span>Sunday</span>
+                <span>Monday</span>
+                <span>Tuesday</span>
+                <span>Wednesday</span>
+                <span>Thursday</span>
+                <span>Friday</span>
+                <span>Saturday</span>
+            </section>
+            <div class="grid grid-cols-7 px-1 h-auto">
+                {#each calendar_days as day}
+                    <CalendarEvents day={day} date={date} {events} />
+                {/each}
+            </div>
+        </div>
     </div>
 </div>
