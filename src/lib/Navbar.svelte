@@ -11,6 +11,7 @@
         <a href="/meets/{date.getMonth() + 1}/{date.getFullYear()}" class="hover:opacity-75">meets</a>
         <a href="/market" class="hover:opacity-75">market</a>
         <a href="/forum" class="hover:opacity-75">forum</a>
+        <a href="/users" class="hover:opacity-75">users</a>
         <div class="flex flex-row-reverse justify-end md:mr-5 ml-auto">
             {#if $page.data.session?.user}
                 <button on:click={() => signOut()} class="hover:opacity-75 mb-1">log out</button>

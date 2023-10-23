@@ -1,4 +1,7 @@
 <script>
+    /*
+        Kind of an odd route to have this at, but I feel like the garage is very much user-oriented features
+    */
     import Events from '$lib/garage/Events.svelte';
     import { page }  from '$app/stores'
 

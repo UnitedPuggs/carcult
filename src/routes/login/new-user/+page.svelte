@@ -21,7 +21,7 @@
 </script>
 
 <div class="flex flex-col justify-center items-center mt-4">
-    <label for="display_name" class="font-bold">Choose a username:</label>
+    <label for="display_name" class="font-bold">create your username:</label>
     <form class="flex flex-col">
         <input id="display_name" type="text" placeholder="username here" class="rounded-sm py-0.5 px-1 text-black mt-1" required bind:value={username}>
         <input type="submit" class="mt-2 font-bold hover:opacity-75" value="Submit" on:click={assign_username}>
