@@ -6,4 +6,7 @@
     .w-wo-scroll {
         width: calc(100vw - (100vw - 100%));
     }
+    .text-stroke {
+        text-shadow: 0 0 4px #000000
+    }
 }

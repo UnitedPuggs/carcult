@@ -41,15 +41,16 @@
 <svelte:head>
     <title>{events.event_name} by {events.host}</title>
 </svelte:head>
+
 <div class="bg-no-repeat bg-center bg-cover bg-scroll border-b border-white" style="background-image: url('{events.bg_img}')">
     <div class="flex flex-col justify-center items-center backdrop-blur py-10">
-            <!-- would it be better to essentially just copy-paste this all into one big if/else instead of littering this with if/else statements? -->
+        <!-- would it be better to essentially just copy-paste this all into one big if/else instead of littering this with if/else statements? -->
         {#if !edit_mode}
-            <h1 class="text-3xl font-bold">{events.event_name}</h1>
-            <p class="text-lg">hosted by <strong><a href="/garage/{events.host}" class="underline hover:no-underline">{events.host}</a></strong></p>
-            <p>on {events.event_date.substring(0, 10)} @ {events.event_date.substring(11)}</p>
+            <h1 class="text-3xl font-bold text-stroke">{events.event_name}</h1>
+            <p class="text-lg text-stroke">hosted by <strong><a href="/garage/{events.host}" class="underline hover:no-underline">{events.host}</a></strong></p>
+            <p class="text-stroke">on {events.event_date.substring(0, 10)} @ {events.event_date.substring(11)}</p>
             <!-- kinda drunk, but this bind shit is kinda based -->
-            <p class="p-1 whitespace-pre-wrap md:max-w-xl" bind:clientHeight={text_height} bind:clientWidth={text_width}>{events.description}</p>
+            <p class="p-1 whitespace-pre-wrap md:max-w-xl text-stroke" bind:clientHeight={text_height} bind:clientWidth={text_width}>{events.description}</p>
         {:else} <!-- referring to that first comment, yes it's much cleaner -->
             <input type="text" placeholder={event_name} class="text-3xl font-bold text-black" bind:value={event_name}>
             <p class="text-lg">hosted by <strong><a href="/garage/{events.host}" class="underline hover:no-underline">{events.host}</a></strong></p>
