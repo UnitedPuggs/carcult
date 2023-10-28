@@ -128,11 +128,19 @@
                     <span>Sat</span>
                 {/if}
             </section>
-            <div class="grid grid-cols-7 px-1 h-auto w-screen">
-                {#each calendar_days as day}
-                    <CalendarEvents day={day} date={date} {events} />
-                {/each}
-            </div>
+            {#if width > 700}
+                <div class="grid grid-cols-7 px-1 h-auto">
+                    {#each calendar_days as day}
+                        <CalendarEvents day={day} date={date} {events} />
+                    {/each}
+                </div>
+            {:else}
+                <div class="grid grid-cols-7 px-1 h-auto w-screen">
+                    {#each calendar_days as day}
+                        <CalendarEvents day={day} date={date} {events} />
+                    {/each}
+                </div>
+            {/if}
         </div>
     </div>
 </div>
