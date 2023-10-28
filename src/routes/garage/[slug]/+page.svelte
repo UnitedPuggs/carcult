@@ -67,7 +67,7 @@
 <div class="flex flex-row flex-nowrap">
     <div class="w-[150px] lg:max-w-xs lg:min-w-[20rem] min-h-[calc(100vh_-_3.5rem)] p-2 border-white border-2">
         {#if $page.data.session?.user.displayname == short.username}
-            <div class="flex justify-between lg:flex-col justify-start items-start">
+            <div class="flex justify-between lg:flex-col lg:justify-start items-start">
                 <button class="hover:opacity-75" on:click={toggle_edit}>edit</button>
                 {#if edit_mode}
                     <button class="hover:opacity-75" on:click={update_profile}>save</button>

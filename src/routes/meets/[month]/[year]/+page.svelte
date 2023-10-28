@@ -108,27 +108,27 @@
             -&gt;
         </button>
         </div>
-        <div class="flex flex-col justify-center items-center mx-auto rounded-sm w-[412px] lg:w-[85rem] p-1 overflow-y-auto overflow-x-hidden">
-            <section class="grid grid-cols-7 mx-auto border border-white w-[380px] lg:w-[84rem] sticky top-0 bg-black z-50 text-center text-xs lg:text-base">
+        <div class="flex flex-col justify-center items-center mx-auto rounded-sm w-full lg:w-[85rem] p-1 overflow-y-auto overflow-x-hidden">
+            <section class="grid grid-cols-7 mx-auto border border-white w-full lg:w-[84rem] sticky top-0 bg-black z-50 text-center text-xs lg:text-base">
                 {#if width > 700}
-                <span>Sunday</span>
-                <span>Monday</span>
-                <span>Tuesday</span>
-                <span>Wednesday</span>
-                <span>Thursday</span>
-                <span>Friday</span>
-                <span>Saturday</span>
+                    <span>Sunday</span>
+                    <span>Monday</span>
+                    <span>Tuesday</span>
+                    <span>Wednesday</span>
+                    <span>Thursday</span>
+                    <span>Friday</span>
+                    <span>Saturday</span>
                 {:else}
-                <span>Sun</span>
-                <span>Mon</span>
-                <span>Tues</span>
-                <span>Wed</span>
-                <span>Thurs</span>
-                <span>Fri</span>
-                <span>Sat</span>
+                    <span>Sun</span>
+                    <span>Mon</span>
+                    <span>Tues</span>
+                    <span>Wed</span>
+                    <span>Thurs</span>
+                    <span>Fri</span>
+                    <span>Sat</span>
                 {/if}
             </section>
-            <div class="grid grid-cols-7 px-1 h-auto">
+            <div class="grid grid-cols-7 px-1 h-auto w-screen">
                 {#each calendar_days as day}
                     <CalendarEvents day={day} date={date} {events} />
                 {/each}
