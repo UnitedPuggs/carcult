@@ -19,7 +19,7 @@
         {#each today_events as event}
             <a 
             href="/meets/{event.slug}"
-            class="hover:opacity-75 border rounded-sm mx-1 my-0.5 bg-white text-black text-xs lg:text-lg font-bold"
+            class="hover:opacity-75 border rounded-sm mx-1 my-0.5 bg-white text-black text-xs lg:text-lg font-bold text-ellipsis overflow-x-hidden"
             >
                 {event.event}
             </a>
