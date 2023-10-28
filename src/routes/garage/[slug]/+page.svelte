@@ -65,9 +65,9 @@
 </svelte:head>
 
 <div class="flex flex-row flex-nowrap">
-    <div class="max-w-[200px] min-w-[200px] md:max-w-xs md:min-w-[20rem] min-h-[calc(100vh_-_3.5rem)] p-2 border-white border-2">
+    <div class="w-[150px] lg:max-w-xs lg:min-w-[20rem] min-h-[calc(100vh_-_3.5rem)] p-2 border-white border-2">
         {#if $page.data.session?.user.displayname == short.username}
-            <div class="flex flex-col justify-start items-start">
+            <div class="flex justify-between lg:flex-col lg:justify-start items-start">
                 <button class="hover:opacity-75" on:click={toggle_edit}>edit</button>
                 {#if edit_mode}
                     <button class="hover:opacity-75" on:click={update_profile}>save</button>
@@ -76,16 +76,16 @@
         {/if}
         <div class="flex flex-col justify-center items-center mx-auto">
             {#if !edit_mode}
-                <img src={short.pfp_url} alt="your profile pic" class="rounded-full border-white border-4 md:mt-6 w-[150px] h-[146.22px]" width="150" height="150"/>
+                <img src={short.pfp_url} alt="your profile pic" class="rounded-full border-white border-4 lg:mt-6 w-[100px] h-[94.22px] lg:w-[150px] lg:h-[146.22px]" width="150" height="150"/>
             {:else}
             <label>
                 <input type="file" class="hidden" bind:value={temp_pfp} on:change={(e) => uploaded_file(e)} />
-                <img src={temp_pfp} alt="" class="rounded-full border-4 border-white w-[150px] h-[146.22px] cursor-pointer">
+                <img src={temp_pfp} alt="" class="rounded-full border-4 border-white w-[100px] h-[94.22px] lg:w-[150px] lg:h-[146.22px] cursor-pointer">
             </label>
             {/if}
-            <h1 class="text-2xl mt-2">{short.username}</h1>
+            <h1 class="text-xl font-semibold lg:text-2xl mt-2">{short.username}</h1>
             <!-- Let's see if this might be worth it -->
-            <section class="flex-wrap max-w-[7rem] md:max-w-[15rem] mt-2 text-center">
+            <section class="flex-wrap max-w-[7rem] lg:max-w-[15rem] mt-2 text-center">
                 <a href="{$page.url.pathname}/followers">{short.follower_count} followers</a>
                 <a href="{$page.url.pathname}/following">{short.following_count} following</a>
             </section>
@@ -99,14 +99,14 @@
             {#if short.bio}
                 <h1 class="font-semibold mt-12 text-xl">Bio:</h1>
                 {#if !edit_mode}
-                    <span class="md:max-w-[15rem] text-center">{short.bio}</span>
+                    <span class="lg:max-w-[15rem] text-center">{short.bio}</span>
                 {:else}
-                    <textarea class="p-1 text-black -mb-8" placeholder="your bio here" bind:value={bio}></textarea>
+                    <textarea class="p-1 text-black lg:-mb-8 w-full" placeholder="your bio here" bind:value={bio}></textarea>
                 {/if}
             {:else}
                 {#if edit_mode}
                     <h1 class="font-semibold mt-12 text-xl">Bio:</h1>
-                    <textarea class="p-1 text-black -mb-8" placeholder="your bio here" bind:value={bio}></textarea>
+                    <textarea class="p-1 text-black lg:-mb-8 w-full" placeholder="your bio here" bind:value={bio}></textarea>
                 {/if}
             {/if}
             {#if shorter.length > 0}

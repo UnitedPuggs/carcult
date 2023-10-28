@@ -148,16 +148,16 @@
     {/if}
 
     {#if $page.data.session?.user.displayname == short.username}
-        <dialog id="upload-photo" class="bg-black text-white text-center">
+        <dialog id="upload-photo" class="bg-transparent text-white text-center backdrop:backdrop-blur-sm">
             <div class="justify-start text-left">
                 <button class="text-2xl hover:opacity-75" on:click={close_modal}>x</button>
             </div>
             <label class="my-2">
                 <input type="file" id="file" name="file" bind:value={file} class="hidden" on:change={(e) => uploaded_file(e)} multiple /> <!-- Might need some styling on this bad boy -->            
                 {#if file}
-                    <img src={file} alt="upload your car" class="border-4 border-white w-[512px] h-[296px] object-cover cursor-pointer"/>
+                    <img src={file} alt="upload your car" class="border-4  border-white w-[512px] h-[296px] object-cover cursor-pointer"/>
                 {:else}
-                    <img src="/assets/image_upload.png" alt="upload your car" class="border-4 border-white w-[512px] h-[296px] object-none cursor-pointer"/>
+                    <img src="/assets/image_upload.png" alt="upload your car" class="border-4 bg-black border-white w-[512px] h-[296px] object-none cursor-pointer"/>
                 {/if}
             </label>
             <button class="text-xl hover:opacity-75" on:click={upload_image}>upload</button>
@@ -189,7 +189,7 @@
         {/each}
     </section>
     
-    <dialog id="gallery" class="bg-black text-white text-center backdrop:backdrop-blur-sm">
+    <dialog id="gallery" class="bg-transparent text-white text-center backdrop:backdrop-blur-sm">
         <div class="justify-start text-left">
             <button class="text-2xl hover:opacity-75" on:click={close_gallery}>x</button>
         </div>
