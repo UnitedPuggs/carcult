@@ -12,7 +12,7 @@
 {#if $page.data.session?.user.displayname == $page.params.slug}
 <div>
     {#each short as event}
-        <Events event_name={event.event_name} event_date={event.event_date} slug={event.slug} />
+        <Events event_name={event.event_name} event_date={event.event_date} slug={event.slug} bg_img={event.bg_img} />
     {/each}
 </div>
 {:else}

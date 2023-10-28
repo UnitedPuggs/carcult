@@ -15,10 +15,10 @@
 </script>
 
 <div class="flex flex-col mt-10">
-    <div class="flex flex-row justify-center items-center gap-4">
+    <form class="flex flex-row justify-center items-center gap-4">
         <input type="search" class="text-black px-1 py-0.5" placeholder="username here" bind:value={username_search}>
-        <button class="hover:opacity-75" on:click={search_users}>search</button>
-    </div>
+        <input type="submit" class="hover:opacity-75 cursor-pointer" on:click={search_users} value="search">
+    </form>
     {#if users_found}
         <div class="flex flex-col mt-4">
             {#each users_found as user}
