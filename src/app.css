@@ -9,4 +9,7 @@
     .text-stroke {
         text-shadow: 0 0 4px #000000
     }
+    .box-shadow:hover {
+        box-shadow: 5px 5px 0px white;
+    }
 }
