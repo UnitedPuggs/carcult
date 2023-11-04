@@ -1,5 +1,7 @@
 <script>
-
+    import { page } from '$app/stores'
+    import MarketItem from '$lib/market/MarketItem.svelte';
+    export let data;
 </script>
 
 <svelte:head>
@@ -22,11 +24,23 @@
             <option>miaba</option>
         </select>
 
-        <label class="font-bold text-xl">price</label>
-        <div class="flex gap-2">
+        <label class="font-bold text-xl" for="price-range">price</label>
+        <div class="flex gap-2" id="price-range">
             <input type="number" step=100 class="bg-gray-800 w-24 px-1" placeholder="min" min=0>
             <span>to</span>
             <input type="number" step=100 class="bg-gray-800 w-24 px-1" placeholder="max" min=0>
         </div>
+        {#if $page.data.session?.user}
+            <a class="mt-4 border-2 p-4 border-white bg-gray-800 hover:opacity-80 text-center" href="/market/create">create new listing</a>
+        {/if}
+    </div>
+    <div class="grid grid-cols-5 p-2 gap-4">
+        {#await data.streamed.marketplace_listings}
+            <p>loading marketplace listings...</p>
+        {:then result}
+            {#each result as listing}
+                <MarketItem item_name={listing.item_name} price={listing.price} />
+            {/each}
+        {/await}
     </div>
 </div>

@@ -25,5 +25,5 @@ export async function load({ params, locals }) {
     if(garage_error)
         return {"load": garage_error};
     
-    return { garage: garage, garage_info: garage_vehicle_info, is_following: is_following };
+    return { garage: garage, streamed: { garage_info: garage_vehicle_info }, is_following: is_following };
 }
