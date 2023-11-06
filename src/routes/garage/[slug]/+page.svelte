@@ -12,7 +12,7 @@
     $: follow_status = data.is_following[0];
 
     $: short = data.garage[0];
-    $: shorter = data.garage_info;
+    $: shorter = data.streamed.garage_info;
 
     async function toggle_edit() {
         edit_mode = !edit_mode
@@ -65,7 +65,7 @@
 </svelte:head>
 
 <div class="flex flex-row flex-nowrap">
-    <div class="w-[150px] lg:max-w-xs lg:min-w-[20rem] min-h-[calc(100vh_-_3.5rem)] p-2 border-white border-2">
+    <div class="w-[150px] lg:max-w-xs lg:min-w-[20rem] min-h-[calc(100vh_-_6rem)] p-2 border-white border-2">
         {#if $page.data.session?.user.displayname == short.username}
             <div class="flex justify-between lg:flex-col lg:justify-start items-start">
                 <button class="hover:opacity-75" on:click={toggle_edit}>edit</button>
@@ -122,11 +122,15 @@
 
     <!-- Vehicle info/images from garage_vehicle_info table -->
     <div class="grow">
-        {#if shorter}
-            {#each shorter as info}
-                <VehicleBox main_image={info.image_urls[0]} vehicle_name={info.vehicle_name} vehicle_slug={info.short_vehicle_name} desc={info.description} info_id={info.id}/>
-            {/each}
-        {/if}
+        {#await data.streamed.garage_info}
+            <p class="text-center">loading cars...</p>
+        {:then garage_info}
+            {#if garage_info}
+                {#each garage_info as info}
+                    <VehicleBox main_image={info.image_urls[0]} vehicle_name={info.vehicle_name} vehicle_slug={info.short_vehicle_name} desc={info.description} info_id={info.id}/>
+                {/each}
+            {/if}
+        {/await}
         {#if $page.data.session?.user.displayname == short.username}
             <!-- need to move functionality from this to navbar -->
             <a href="{$page.url.pathname}/add-car" 

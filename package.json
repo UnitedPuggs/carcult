@@ -1,6 +1,6 @@
 {
 	"name": "carcult",
-	"version": "0.5.0",
+	"version": "0.75.0",
 	"private": true,
 	"scripts": {
 		"dev": "vite dev",
@@ -25,6 +25,7 @@
 		"@auth/supabase-adapter": "^0.1.4",
 		"@auth/sveltekit": "^0.3.9",
 		"@supabase/auth-helpers-sveltekit": "^0.10.3",
-		"@supabase/supabase-js": "^2.38.0"
+		"@supabase/supabase-js": "^2.38.0",
+		"random-words": "^2.0.0"
 	}
 }
