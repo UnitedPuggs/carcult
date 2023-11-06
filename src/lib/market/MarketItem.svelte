@@ -6,8 +6,8 @@
 </script>
 
 <!-- need to wrap this in an anchor once I've got slug pages -->
-<div class="w-72 h-72 border-4 border-white">
-    <section class="w-full h-48 border-2 border-b-gray-400 bg-gradient-to-r from-purple-500 to-pink-500">
+<div class="w-40 lg:w-72 h-48 lg:h-72 border-4 border-white">
+    <section class="w-full h-32 lg:h-48 border-2 border-b-gray-400 bg-red-500">
         image here
     </section>
     <section class="flex flex-col text-center">

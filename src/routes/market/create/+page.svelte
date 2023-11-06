@@ -33,7 +33,7 @@
         </form>
     </div>
     <div class="flex justify-center items-center mx-auto" id="seller-preview">
-        <div class="border-2 border-white w-[46rem] h-[45rem] p-4">
+        <div class="border-2 border-white w-[46rem] lg:h-[45rem] p-4">
             <h1 class="font-bold text-lg pb-2">preview</h1>
             <div class="flex border-2 border-white rounded-md">
                 <section class="border-r border-gray-400 w-[24rem] h-[40rem] rounded-l-md bg-gray-800 text-center">
