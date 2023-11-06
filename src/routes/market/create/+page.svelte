@@ -8,12 +8,31 @@
     let price;
     let description;
 
+    let files;
+
     async function create_listing() {
+        const form_data = new FormData()
+
+        form_data.append('title', title)
+        form_data.append('price', price)
+        form_data.append('description', description)
+
+        //mfw append can't add an entire list with append
+        for(let i = 0; i < files.length; ++i) {
+            form_data.append('images', files[i])
+        }
+
         await fetch("/api/market/create_listing", {
             method: "POST",
-            body: JSON.stringify({ title: title, price: price, description: description })
+            body: form_data
         })
+
         goto("/market")
+    }
+
+    const upload_images = (e) => {
+        let images = e.target.files;
+        files = images;
     }
 </script>
 
@@ -29,6 +48,7 @@
             <input bind:value={title} class="bg-gray-800 border border-white p-2 rounded-sm" placeholder="title" required>
             <input bind:value={price} type="number" class="bg-gray-800 border border-white p-2 rounded-sm" placeholder="price" required>
             <textarea bind:value={description} class="bg-gray-800 border border-white p-2 rounded-sm h-64" placeholder="description" required></textarea>
+            <input type="file" multiple accept="image/*" on:change={upload_images} required>
             <input type="submit" value="create listing" class="bg-gray-700 border border-white p-2 rounded-sm hover:opacity-80 hover:cursor-pointer">
         </form>
     </div>

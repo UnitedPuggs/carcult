@@ -31,15 +31,15 @@
             <input type="number" step=100 class="bg-gray-800 w-24 px-1" placeholder="max" min=0>
         </div>
         {#if $page.data.session?.user}
-            <a class="mt-4 border-2 p-4 border-white bg-gray-800 hover:opacity-80 text-center" href="/market/create">create new listing</a>
+            <a class="mt-4 border-2 p-4 border-white bg-gray-800 hover:opacity-80 text-center transition-all active:scale-90" href="/market/create">create new listing</a>
         {/if}
     </div>
-    <div class="grid grid-cols-2 lg:grid-cols-4 p-2 gap-4">
+    <div class="grid grid-cols-2 lg:grid-cols-4 p-2 gap-4 justify-items-center">
         {#await data.streamed.marketplace_listings}
             <p>loading marketplace listings...</p>
         {:then result}
             {#each result as listing}
-                <MarketItem item_name={listing.item_name} price={listing.price} />
+                <MarketItem item_name={listing.item_name} price={listing.price} slug={listing.id} cover_pic={listing.listing_pics[0]}/>
             {/each}
         {/await}
     </div>
