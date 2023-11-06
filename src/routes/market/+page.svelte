@@ -2,6 +2,12 @@
     import { page } from '$app/stores'
     import MarketItem from '$lib/market/MarketItem.svelte';
     export let data;
+
+    let search_term;
+
+    async function search_market() {
+
+    }
 </script>
 
 <svelte:head>
@@ -11,8 +17,8 @@
 <div class="flex lg:flex-row flex-col">
     <div class="flex flex-col border-2 border-white lg:min-h-[calc(100vh_-_6rem)] w-wo-scroll lg:w-64 p-2">
         <h1 class="font-bold text-2xl">Marketplace</h1>
-        <form>
-            <input type="input" class="bg-gray-800 border border-white px-0.5 py-1 mb-4 w-full" placeholder="search marketplace">
+        <form on:submit={search_market}>
+            <input type="input" class="bg-gray-800 border border-white px-0.5 py-1 mb-4 w-full" placeholder="search marketplace" bind:value={search_term}>
         </form>
         
         <label for="make-opts" class="font-bold text-xl">make</label>
@@ -34,7 +40,7 @@
             <a class="mt-4 border-2 p-4 border-white bg-gray-800 hover:opacity-80 text-center transition-all active:scale-90" href="/market/create">create new listing</a>
         {/if}
     </div>
-    <div class="grid grid-cols-2 lg:grid-cols-4 p-2 gap-4 justify-items-center">
+    <div class="grid grid-cols-2 lg:grid-cols-5 p-2 gap-4 justify-items-center w-full h-full">
         {#await data.streamed.marketplace_listings}
             <p>loading marketplace listings...</p>
         {:then result}
