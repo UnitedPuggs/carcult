@@ -7,13 +7,14 @@
 
 <!-- need to wrap this in an anchor once I've got slug pages -->
 <a href="/market/{slug}" class="hover:opacity-75">
-    <div class="w-40 lg:w-72 h-48 lg:h-72 border-2 border-white">
-        <section class="w-full h-32 lg:h-48 border-2 border-b-gray-400 flex items-center ">
+    <div class="w-40 lg:w-72 h-60 lg:h-72 border-2 border-white max-h-72">
+        <section class="w-full h-32 lg:h-48 border-2 border-b-gray-400 flex items-center">
             <img src={cover_pic} alt="cover" class="w-full h-full object-cover">
         </section>
-        <section class="flex flex-col text-center">
-            <span class="font-bold text-xl">${price}</span>
-            <span class="text-lg">{item_name}</span>
+        <!-- super weird behavior when using h-full on this section for some reason -->
+        <section class="flex flex-col text-center text-ellipsis overflow-x-hidden h-[108px] lg:h-[92px]">
+            <span class="font-bold text-xl top-0 sticky bg-black z-50">${price}</span>
+            <span class="text-lg break-all">{item_name}</span>
         </section>
     </div>
 </a>

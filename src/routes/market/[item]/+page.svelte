@@ -15,56 +15,72 @@
         curr_img = data.marketplace_listings[0].listing_pics[--curr_img_idx]
         curr_img = curr_img
     }
+
+    async function click_image_set(pic) {
+        curr_img = pic
+        curr_img = curr_img
+    }
+
+    let width;
 </script>
 
 <svelte:head>
     <title>marketplace - {market.item_name}</title>
 </svelte:head>
 
-<div class="flex flex-col lg:flex-row">
+<div class="flex flex-col lg:flex-row" bind:clientWidth={width}>
     <div class="flex justify-center items-center w-full bg-no-repeat bg-cover" style="background-image: url('{curr_img}')">
         <div class="flex flex-row justify-center items-center mx-auto w-full h-full backdrop-blur-md p-1">
-            {#if curr_img_idx > 0}
-                <button
-                class="w-6 lg:w-20 lg:ml-4 mr-auto text-lg lg:text-3xl rounded-full px-3.5 py-0.5 lg:px-6 lg: lg:py-4 border-2 border-gray-400 bg-white text-black font-bold hover:opacity-75" 
-                on:click={prev_img}>
-                    &lt
-                </button>
-            {:else}
-                <button class="w-6 lg:w-20 invisible lg:ml-4 mr-auto px-4">&lt-</button>
+            {#if width > 700}
+                {#if curr_img_idx > 0}
+                    <button
+                    class="w-4 lg:w-20 ml-0 mr-auto text-lg lg:text-3xl rounded-full px-3.5 py-0.5 lg:px-6 lg:py-4 border-2 border-gray-400 bg-white text-black font-bold hover:opacity-75 select-none" 
+                    on:click={prev_img}>
+                        &lt
+                    </button>
+                {:else}
+                    <button class="w-4 lg:w-20 invisible ml-0 mr-auto px-3.5 py-0.5 lg:px-6 lg:py-4">&lt</button>
+                {/if}
             {/if}
-            <div class="flex flex-col">
-                <img src={curr_img} alt="hogan" class="rounded-sm w-[20rem] lg:w-fit lg:max-w-4xl max-h-96">
-                <section class="flex justify-center gap-4 p-4">
+            <!-- this is/was div hell -->
+            <div class="flex flex-col h-96 lg:h-full items-center justify-center">
+                <div class="flex justify-center items-center h-full">
+                    <img src={curr_img} alt="listing" class="rounded-sm w-fit lg:max-w-4xl max-h-72 lg:max-h-[40rem] select-none">
+                </div>
+                <section class="flex justify-center gap-4 p-4 w-full mt-auto mb-0">
                     {#each market.listing_pics as pic}
-                        <div class="flex items-center bg-transparent p-0.5">
+                    <button on:click={() => click_image_set(pic)}>
+                        <div class="flex justify-center items-center bg-transparent p-0.5">
                             {#if curr_img == pic}
-                                <img src={pic} alt="car" class="w-full h-full object-cover lg:w-16 rounded-md">
+                                <img src={pic} alt="car" class="object-cover w-10 h-10 lg:w-16 lg:h-16 rounded-md">
                             {:else}
-                                <img src={pic} alt="car" class="w-full h-full object-cover lg:w-16 opacity-50 rounded-md">
+                                <img src={pic} alt="car" class="object-cover w-10 h-10 lg:w-16 lg:h-16 opacity-50 rounded-md">
                             {/if}
                         </div>
+                    </button>
                     {/each}
                 </section>
             </div>
-            {#if curr_img_idx < market.listing_pics.length - 1}
-                <button 
-                class="w-6 lg:w-20 lg:mr-4 ml-auto text-lg lg:text-3xl rounded-full px-3.5 py-0.5 lg:px-6 lg: lg:py-4 border-2 border-gray-400 bg-white text-black font-bold hover:opacity-75" 
-                on:click={next_img}>
-                    &gt;
-                </button>
-            {:else}
-                <button class="w-6 lg:w-20 invisible lg:mr-4 ml-auto px-4">-></button>
+            {#if width > 700}
+                {#if curr_img_idx < market.listing_pics.length - 1}
+                    <button 
+                    class="w-4 lg:w-20 mr-0 ml-auto text-lg lg:text-3xl rounded-full px-3.5 py-0.5 lg:px-6 lg:py-4 border-2 border-gray-400 bg-white text-black font-bold hover:opacity-75 select-none" 
+                    on:click={next_img}>
+                        &gt;
+                    </button>
+                {:else}
+                    <button class="w-4 lg:w-20 invisible mr-0 ml-auto px-3.5 py-0.5 lg:px-6 lg:py-4">&gt;</button>
+                {/if}
             {/if}
         </div>
     </div>
     <div class="flex flex-col border-l border-gray-600 w-full lg:w-[30rem] min-h-[calc(100vh_-_6rem)] ml-auto mr-0 bg-gray-800 p-2">
-        <h1 class="text-2xl font-bold">{market.item_name}</h1>
+        <h1 class="text-2xl font-bold break-all">{market.item_name}</h1>
         <h2 class="text-lg">${market.price}</h2>
         <h3 class="text-sm text-gray-500">listed on {market.created_at.substring(0, 10)}</h3>
         <!-- would probably want to include message buttons here -->
         <h1 class="text-xl font-bold pt-2">description</h1>
-        <span class="max-h-[30rem] overflow-y-auto border border-gray-600 p-1 rounded-md whitespace-pre-wrap">{market.item_description}</span>
+        <span class="max-h-[30rem] min-h-[24rem] overflow-y-auto border border-gray-600 p-1 rounded-md whitespace-pre-wrap">{market.item_description}</span>
         <h1 class="text-xl font-bold pt-10">seller info</h1>
         <section class="flex items-center gap-4 py-1">
             <a href="/garage/{market.seller}">
@@ -72,6 +88,6 @@
             </a>
                 <span class="text-xl font-bold">{market.seller}</span>
         </section>
-        <span class="text-sm text-gray-500">joined in {user.created.substring(0, 7)}</span>
+        <span class="text-sm text-gray-500">joined on {user.created.substring(0, 7)}</span>
     </div>
 </div>

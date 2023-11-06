@@ -60,7 +60,7 @@
                     This is a preview
                 </section>
                 <section class="flex flex-col p-2 break-words rounded-md">
-                    <h2 class="text-lg font-bold">{title ? title : 'title'}</h2>
+                    <h2 class="text-lg font-bold w-[254px] max-h-20 overflow-y-auto">{title ? title : 'title'}</h2>
                     <h3 class="text-sm font-bold">{price ? `$${price}` : 'price'}</h3>
                     <h2 class="font-bold pt-8 text-lg">description</h2>
                     <span class="w-[254px] max-h-80 overflow-y-auto">{description ? description : 'description appears here'}</span>
