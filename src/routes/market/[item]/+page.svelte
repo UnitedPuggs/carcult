@@ -84,7 +84,7 @@
         <h1 class="text-xl font-bold pt-10">seller info</h1>
         <section class="flex items-center gap-4 py-1">
             <a href="/garage/{market.seller}">
-                <img src={user.pfp_url} alt="seller" class="rounded-full w-16">
+                <img src={user.pfp_url} alt="seller" class="rounded-full w-16 h-16">
             </a>
                 <span class="text-xl font-bold">{market.seller}</span>
         </section>

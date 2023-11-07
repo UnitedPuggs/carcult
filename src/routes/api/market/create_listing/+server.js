@@ -10,7 +10,12 @@ async function upload_image(id, file) {
         cacheControl: '15552000'
     })
 
-    return data.path;
+    if(error) {
+        console.log(error)
+        return;
+    } else {
+        return data.path;
+    }
 }
 
 

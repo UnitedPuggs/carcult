@@ -9,6 +9,7 @@
     let description;
 
     let files;
+    let preview_files = [];
 
     async function create_listing() {
         const form_data = new FormData()
@@ -31,8 +32,20 @@
     }
 
     const upload_images = (e) => {
+        preview_files = []
+
         let images = e.target.files;
         files = images;
+        Object.keys(images).forEach(i => {
+            const file = images[i];
+            const reader = new FileReader();
+            reader.readAsDataURL(file)
+            reader.onload = e => {
+                preview_files.unshift(e.target.result)
+                preview_files = preview_files
+            }
+        })
+        preview_files = preview_files
     }
 </script>
 
@@ -48,7 +61,14 @@
             <input bind:value={title} class="bg-gray-800 border border-white p-2 rounded-sm" placeholder="title" required>
             <input bind:value={price} type="number" class="bg-gray-800 border border-white p-2 rounded-sm" placeholder="price" required>
             <textarea bind:value={description} class="bg-gray-800 border border-white p-2 rounded-sm h-64" placeholder="description" required></textarea>
-            <input type="file" multiple accept="image/*" on:change={upload_images} required>
+            <input 
+                type="file" 
+                multiple 
+                accept="image/*" 
+                on:change={upload_images} 
+                required 
+                class="file:bg-gray-800 file:text-white file:border-0  file:rounded-full file:p-2 file:hover:opacity-75 file:hover:cursor-pointer file:font-bold"
+            >
             <input type="submit" value="create listing" class="bg-gray-700 border border-white p-2 rounded-sm hover:opacity-80 hover:cursor-pointer">
         </form>
     </div>
@@ -56,8 +76,18 @@
         <div class="border-2 border-white w-[46rem] lg:h-[45rem] p-4">
             <h1 class="font-bold text-lg pb-2">preview</h1>
             <div class="flex border-2 border-white rounded-md">
-                <section class="border-r border-gray-400 w-[24rem] h-[40rem] rounded-l-md bg-gray-800 text-center">
-                    This is a preview
+                <section class="border-r border-gray-400 w-[24rem] h-[40rem] rounded-l-md bg-gray-800 text-center flex flex-col items-center justify-center">
+                    {#if preview_files.length > 0}
+                        <div class="flex justify-center items-center h-full">
+                            <img src={preview_files[0]} alt="" />
+                        </div>
+                        <div class="flex gap-4 max-w-[24rem] p-4 flex-wrap items-center justify-center mt-auto mb-0">
+                            {#each preview_files as preview}
+                                    <img src={preview} alt="meow" class="object-cover w-10 h-10 lg:w-16 lg:h-16 rounded-md"/>
+                            {/each}
+                        </div>
+                    
+                    {/if}
                 </section>
                 <section class="flex flex-col p-2 break-words rounded-md">
                     <h2 class="text-lg font-bold w-[254px] max-h-20 overflow-y-auto">{title ? title : 'title'}</h2>
