@@ -4,6 +4,14 @@
     export let data;
 
     let search_term;
+    //funny little workaround, but it stays 0 once the user starts touching stuff
+    let min_price = 0 ? min_price : "";
+    let max_price = 0 ? max_price : "";
+
+    $: {
+        if(search_term == "")
+            search_market()
+    }
 
     async function search_market() {
         const req = await fetch(`/api/market/search_market?q=${search_term}`)
@@ -13,7 +21,7 @@
         data.streamed.marketplace_listings = res    
         //Plus if the result returns a lot of shit, it might be best to just #await it in the html instead for loading purposes
 
-        //Could also make search into something [slugified], but idk about that
+        //Could also make search into something [slugified], but idk about that since it'd require some funkery
     }
 </script>
 
@@ -27,24 +35,16 @@
         <form on:submit={search_market}>
             <input type="input" class="bg-gray-800 border border-white px-0.5 py-1 mb-4 w-full" placeholder="search marketplace" bind:value={search_term}>
         </form>
-        
-        <label for="make-opts" class="font-bold text-xl">make</label>
-        <select class="bg-gray-800" id="make-opts">
-            <option>matsuda</option>
-        </select>
-        <label for="model-opts" class="font-bold text-xl">model</label>
-        <select class="bg-gray-800" id="model-opts">
-            <option>miaba</option>
-        </select>
 
-        <label class="font-bold text-xl" for="price-range">price</label>
+        <h1 class="font-bold text-xl">price</h1>
         <div class="flex gap-2" id="price-range">
-            <input type="number" step=100 class="bg-gray-800 w-24 px-1" placeholder="min" min=0>
+            <input type="number" step=100 class="bg-gray-800 w-24 px-1" placeholder="min" min=0 bind:value={min_price}>
             <span>to</span>
-            <input type="number" step=100 class="bg-gray-800 w-24 px-1" placeholder="max" min=0>
+            <input type="number" step=100 class="bg-gray-800 w-24 px-1" placeholder="max" min=0 bind:value={max_price}>
         </div>
         {#if $page.data.session?.user}
             <a class="mt-4 border-2 p-4 border-white bg-gray-800 hover:opacity-80 text-center transition-all active:scale-90" href="/market/create">create new listing</a>
+            <a class="mt-4 p-4 bg-gray-800 hover:opacity-80 text-center transition-all active:scale-90 rounded-sm" href="/market/selling">selling</a>
         {/if}
     </div>
     <div class="grid grid-cols-2 lg:grid-cols-[repeat(auto-fill,minmax(300px,1fr))] p-2 gap-4 justify-items-center w-full h-full">

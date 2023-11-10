@@ -2,6 +2,7 @@ import { supabase } from '$lib/supabase.js'
 
 let images = [];
 
+//this shit is so jank, just use list like in /market/delete_listing
 async function parse_url(images_urls) {
     for(let i = 0; i < images_urls.length; i++) {
         if(images_urls[i].substr(80) != "default.jpg")

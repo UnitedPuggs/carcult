@@ -16,7 +16,7 @@
             {#if $page.data.session?.user}
                 <a href="/garage/{$page.data.session.user.displayname}" class="hover:opacity-75">garage</a>
                 {#if $page.data.session.user.role > 0}
-                <a href="/garage/{$page.data.session.user.displayname}/my-meets" class=" hover:opacity-75">my events</a>
+                <a href="/garage/{$page.data.session.user.displayname}/my-meets" class=" hover:opacity-75">my meets</a>
                 {/if}
                 <button on:click={() => signOut()} class="hover:opacity-75 mb-1">log out</button>
             {:else}

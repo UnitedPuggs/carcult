@@ -7,6 +7,7 @@ export async function GET({ url }) {
     .from('marketplace_listings')
     .select('id, item_name, price, listing_pics')
     .ilike('item_name', `%${search_term}%`)
+    .order('created_at', { ascending: false })
 
     if(error)
         return new Response(error)
