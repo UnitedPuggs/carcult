@@ -1,6 +1,6 @@
 <script>
     import { page } from '$app/stores'
-/* seller - item_name - price - listing_pics */
+    /* seller - item_name - price - listing_pics */
     export let data;
     
     let width;
@@ -9,12 +9,9 @@
     let price = data.marketplace_listings[0].price;
     let description = data.marketplace_listings[0].item_description;
 
-    let files;
+    let files = [];
     let preview_files = Array.from(data.marketplace_listings[0].listing_pics);
     let filtering_files = data.marketplace_listings[0].listing_pics;
-
-    $: filtered_files = preview_files.filter(x => !filtering_files.includes(x))
-
     //don't wanna reupload images that already exist on the listing, but we do wanna display them
 
     const upload_images = (e) => {
@@ -31,6 +28,30 @@
         })
         preview_files = preview_files
     }
+
+    async function update_listing() {
+        const form_data = new FormData();
+
+        form_data.append('id', $page.params.id)
+        form_data.append('title', title)
+        form_data.append('price', price)
+        form_data.append('description', description)
+
+        //this is kinda jank since the preview images are gonna differ from the actual uploaded images, but whatever this needs to be fixed
+        //just don't have the time :)
+        for(let i = 0; i < files.length; ++i) {
+            form_data.append('images', files[i])
+        }
+
+        for(let i = 0; i < filtering_files.length; ++i) {
+            form_data.append('img_arr', filtering_files[i])
+        }
+
+        await fetch('/api/market/update_listing', {
+            method: "PATCH",
+            body: form_data
+        })
+    }
 </script>
 
 <svelte:head>
@@ -41,7 +62,7 @@
     <div class="border-2 border-white w-full lg:w-72 min-h-[calc(100vh_-_6rem)] p-2" id="seller-controls">
         <a href="/market/selling" class="text-xl font-bold">&lt;-</a>
         <h1 class="font-bold text-xl mt-2">item for sale</h1>
-        <form class="flex flex-col gap-2">
+        <form class="flex flex-col gap-2" on:submit={update_listing}>
             <input bind:value={title} class="bg-gray-800 border border-white p-2 rounded-sm" placeholder="title" required>
             <input bind:value={price} type="number" class="bg-gray-800 border border-white p-2 rounded-sm" placeholder="price" required min=0>
             <textarea bind:value={description} class="bg-gray-800 border border-white p-2 rounded-sm h-64" placeholder="description" required></textarea>
@@ -49,8 +70,7 @@
                 type="file" 
                 multiple 
                 accept="image/*" 
-                on:change={upload_images}
-                required 
+                on:change={upload_images} 
                 class="file:bg-gray-800 file:text-white file:border-0  file:rounded-full file:p-2 file:hover:opacity-75 file:hover:cursor-pointer file:font-bold"
             >
             <input type="submit" value="update listing" class="bg-gray-700 border border-white p-2 rounded-sm hover:opacity-80 hover:cursor-pointer">
