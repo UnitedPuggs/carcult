@@ -25,9 +25,9 @@
             'postgres_changes',
             { event: 'INSERT', schema: 'public', table: 'marketplace_messages', filter: `chat_id=eq.${$page.params.chatid}` },
             (payload) => {
-                chat_messages.push(Object({send_user: $page.data.session.user.displayname, message_content: payload.new.message_content}))
+                chat_messages.push(Object({send_user: payload.new.send_user, message_content: payload.new.message_content}))
                 chat_messages = chat_messages
-                console.log(payload.new.message_content)
+                console.log(chat_messages)
             }
         )
         .subscribe()
