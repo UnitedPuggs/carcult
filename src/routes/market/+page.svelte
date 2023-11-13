@@ -9,12 +9,16 @@
     let max_price = 0 ? max_price : "";
 
     $: {
-        if(search_term == "")
+        if(search_term == "") {
+            //this is so janky
+            min_price = ""
+            max_price = ""
             search_market()
+        }
     }
 
     async function search_market() {
-        const req = await fetch(`/api/market/search_market?q=${search_term}`)
+        const req = await fetch(`/api/market/search_market?q=${search_term}&min=${min_price}&max=${max_price}`)
         const res = await req.json()
         //I feel like this isn't the best way to do this since I don't know behavior when there's a lot of data
         //Like, maybe it might cause breaks with MarketItem components?
