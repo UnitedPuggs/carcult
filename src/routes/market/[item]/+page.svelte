@@ -37,7 +37,7 @@
             })
         })
         const res = await req.json()
-        goto(`/market/chat/${res.chat_id}`)
+        goto(`/market/chats/${res.chat_id}`)
     }
 </script>
 
@@ -101,7 +101,7 @@
         {#if market.seller != $page.data.session?.user.displayname && data.marketplace_messages.length == 0 && $page.data.session?.user}
             <button on:click={send_message}>send message</button>
         {:else if data.marketplace_messages.length > 0}
-            <button on:click={() => goto(`/market/chat/${data.marketplace_messages[0].chat_id}`)}>check chat</button>
+            <button on:click={() => goto(`/market/chats/${data.marketplace_messages[0].chat_id}`)}>check chat</button>
         {/if}
         <h1 class="text-xl font-bold pt-10">seller info</h1>
         <section class="flex items-center gap-4 py-1">

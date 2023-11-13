@@ -77,7 +77,7 @@
             {#if chat.send_user == $page.data.session.user.displayname}
                 <ChatMessage message_content={chat.message_content} send_user={chat.send_user} chat_style="bg-gray-800 border-gray-400" div_style="ml-auto mr-0" />
             {:else}
-                <ChatMessage message_content={chat.message_content} send_user={chat.send_user} chat_style="bg-blue-800 border-blue-400" div_style="" />
+                <ChatMessage message_content={chat.message_content} send_user={chat.send_user} chat_style="bg-red-800 border-red-600" div_style="" />
             {/if}
         {/each}
     </div>

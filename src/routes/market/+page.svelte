@@ -48,6 +48,7 @@
         </div>
         {#if $page.data.session?.user}
             <a class="mt-4 border-2 p-4 border-white bg-gray-800 hover:opacity-80 text-center transition-all active:scale-90" href="/market/create">create new listing</a>
+            <a class="mt-4 p-4 border-2 border-white bg-gray-800 hover:opacity-80 text-center transition-all active:scale-90 rounded-sm" href="/market/chats">chats</a>
             <a class="mt-4 p-4 bg-gray-800 hover:opacity-80 text-center transition-all active:scale-90 rounded-sm" href="/market/selling">selling</a>
         {/if}
     </div>
