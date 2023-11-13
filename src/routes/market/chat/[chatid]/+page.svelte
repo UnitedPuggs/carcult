@@ -65,10 +65,14 @@
 	};
 </script>
 
-<div class="flex flex-col justify-center items-center border border-white w-fit mx-auto p-4 rounded-lg mt-14">
+<svelte:head>
+    <title>marketplace | {listing_data.item_name} from {listing_data.seller}</title>
+</svelte:head>
+
+<div class="flex flex-col justify-center items-center border border-white w-full lg:w-fit mx-auto p-4 rounded-lg mt-14">
     <h1 class="font-bold text-2xl">{listing_data.item_name}</h1>
     <h2 class="text-gray-400">sold by {listing_data.seller}</h2>
-    <div class="flex flex-col h-[30rem] w-[40rem] gap-2 border-2 border-white overflow-y-auto p-2 rounded-sm mt-2" use:scrollToBottom={chat_messages}>
+    <div class="flex flex-col h-[30rem] w-full lg:w-[40rem] gap-2 border-2 border-white overflow-y-auto p-2 rounded-sm mt-2" use:scrollToBottom={chat_messages}>
         {#each chat_messages as chat}
             {#if chat.send_user == $page.data.session.user.displayname}
                 <ChatMessage message_content={chat.message_content} send_user={chat.send_user} chat_style="bg-gray-800 border-gray-400" div_style="ml-auto mr-0" />
@@ -78,7 +82,7 @@
         {/each}
     </div>
     <form on:submit={send_message} class="flex flex-col mt-4">
-        <input class="p-2 w-[40rem] bg-gray-800" bind:value={message} placeholder="message here" bind:this={input_ref} />
+        <input class="p-2 lg:w-[40rem] w-full bg-gray-800" bind:value={message} placeholder="message here" bind:this={input_ref} />
         <input type="submit" value="send" class="hover:opacity-75 hover:cursor-pointer" />
     </form> 
 </div>
