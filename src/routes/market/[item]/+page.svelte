@@ -100,7 +100,7 @@
         <span class="max-h-[30rem] min-h-[24rem] overflow-y-auto border border-gray-600 p-1 rounded-md whitespace-pre-wrap">{market.item_description}</span>
         {#if market.seller != $page.data.session?.user.displayname && data.marketplace_messages.length == 0 && $page.data.session?.user}
             <button on:click={send_message}>send message</button>
-        {:else if data.marketplace_messages.length > 0}
+        {:else if data.marketplace_messages.length > 0 && market.seller != $page.data.session?.user.displayname}
             <button on:click={() => goto(`/market/chats/${data.marketplace_messages[0].chat_id}`)}>check chat</button>
         {/if}
         <h1 class="text-xl font-bold pt-10">seller info</h1>

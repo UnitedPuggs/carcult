@@ -16,6 +16,16 @@ export async function POST({ request }) {
     }])
     .select()
 
+    const { err } = await supabase
+    .from('marketplace_buyers')
+    .insert([{
+        chat_id, 
+        buyer: send_user
+    }])
+    
+    if(err)
+        return new Response(err)
+
     if(error)
         return new Response(error)
     else

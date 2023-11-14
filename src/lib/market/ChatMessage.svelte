@@ -6,6 +6,6 @@
 </script>
 
 <div class="flex flex-col {div_style}">
-    <span class="border-2 rounded-md p-2 max-w-[15rem] {chat_style}">{message_content}</span>
+    <span class="border-2 rounded-md p-2 w-80 {chat_style}">{message_content}</span>
     <span class="text-xs text-gray-300 {div_style}">{send_user}</span>
 </div>

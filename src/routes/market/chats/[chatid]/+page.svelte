@@ -71,7 +71,8 @@
 
 <div class="flex flex-col justify-center items-center border border-white w-full lg:w-fit mx-auto p-4 rounded-lg mt-14">
     <h1 class="font-bold text-2xl">{listing_data.item_name}</h1>
-    <h2 class="text-gray-400">sold by {listing_data.seller}</h2>
+    <h2 class="font-bold text-xl">${listing_data.price}</h2>
+    <h3 class="text-gray-400">sold by {listing_data.seller}</h3>
     <div class="flex flex-col h-[30rem] w-full lg:w-[40rem] gap-2 border-2 border-white overflow-y-auto p-2 rounded-sm mt-2" use:scrollToBottom={chat_messages}>
         {#each chat_messages as chat}
             {#if chat.send_user == $page.data.session.user.displayname}

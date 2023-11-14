@@ -9,7 +9,7 @@ export async function load({ params }) {
 
     let { data: marketplace_listings, listing_err } = await supabase
     .from('marketplace_listings')
-    .select('seller, item_name, listing_pics')
+    .select('seller, item_name, listing_pics, price')
     .eq('id', marketplace_messages[0].listing_id)
 
     if(error)
