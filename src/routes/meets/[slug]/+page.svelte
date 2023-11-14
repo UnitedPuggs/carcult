@@ -68,6 +68,6 @@
             <button class="hover:opacity-75 md:w-fit md:mx-auto" on:click={ update_meet }>save</button>
         {/if}
         <!-- probably a good idea to have a double-checker -->
-        <button class="hover:opacity-75 md:w-fit md:mx-auto" on:click={ delete_meet }>delete event</button>
+        <button class="hover:opacity-75 md:w-fit md:mx-auto" on:click={ delete_meet }>delete meet</button>
     </div>
 {/if}

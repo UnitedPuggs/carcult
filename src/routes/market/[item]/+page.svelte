@@ -1,5 +1,10 @@
 <script>
+    import { goto } from '$app/navigation'
+    import { page } from '$app/stores'
+
     export let data;
+    let width;
+
     $: market = data.marketplace_listings[0]
     $: user = data.garage[0]
 
@@ -21,7 +26,19 @@
         curr_img = curr_img
     }
 
-    let width;
+    async function send_message() {
+        const req = await fetch('/api/market/first_contact', {
+            method: "POST",
+            body: JSON.stringify({
+                listing_id: market.id, 
+                send_user: $page.data.session.user.displayname, 
+                receive_user: market.seller,
+                message_content: "I'm interested in your item 😊"
+            })
+        })
+        const res = await req.json()
+        goto(`/market/chats/${res.chat_id}`)
+    }
 </script>
 
 <svelte:head>
@@ -81,10 +98,15 @@
         <!-- would probably want to include message buttons here -->
         <h1 class="text-xl font-bold pt-2">description</h1>
         <span class="max-h-[30rem] min-h-[24rem] overflow-y-auto border border-gray-600 p-1 rounded-md whitespace-pre-wrap">{market.item_description}</span>
+        {#if market.seller != $page.data.session?.user.displayname && data.marketplace_messages.length == 0 && $page.data.session?.user}
+            <button on:click={send_message}>send message</button>
+        {:else if data.marketplace_messages.length > 0 && market.seller != $page.data.session?.user.displayname}
+            <button on:click={() => goto(`/market/chats/${data.marketplace_messages[0].chat_id}`)}>check chat</button>
+        {/if}
         <h1 class="text-xl font-bold pt-10">seller info</h1>
         <section class="flex items-center gap-4 py-1">
             <a href="/garage/{market.seller}">
-                <img src={user.pfp_url} alt="seller" class="rounded-full w-16">
+                <img src={user.pfp_url} alt="seller" class="rounded-full w-16 h-16 ">
             </a>
                 <span class="text-xl font-bold">{market.seller}</span>
         </section>
