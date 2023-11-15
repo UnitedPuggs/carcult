@@ -6,9 +6,9 @@
 </script>
 
 <!-- need to wrap this in an anchor once I've got slug pages -->
-<a href="/market/{slug}" class="hover:opacity-75">
-    <div class="w-40 lg:w-72 h-60 lg:h-72 border-2 border-white max-h-72">
-        <section class="w-full h-32 lg:h-48 border-2 border-b-gray-400 flex items-center">
+<a href="/market/{slug}" class="hover:opacity-75 w-full">
+    <div class="w-full lg:w-full h-60 lg:h-72 border-2 border-white max-h-72">
+        <section class="w-full h-32 lg:h-48 border-b-2 border-gray-500 flex items-center">
             <img src={cover_pic} alt="cover" class="w-full h-full object-cover">
         </section>
         <!-- super weird behavior when using h-full on this section for some reason -->

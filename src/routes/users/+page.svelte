@@ -18,6 +18,10 @@
     }
 </script>
 
+<svelte:head>
+    <title>carcult | user search</title>
+</svelte:head>
+
 <div class="flex flex-col mt-10">
     <form class="flex flex-row justify-center items-center gap-4" on:submit={search_users}>
         <input type="search" class="text-black px-1 py-0.5" placeholder="username here" bind:value={username_search}>

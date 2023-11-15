@@ -70,6 +70,9 @@
 </svelte:head>
 
 <div class="flex flex-col justify-center items-center border border-white w-full lg:w-fit mx-auto p-4 rounded-lg mt-14">
+    <section class="ml-0 mr-auto">
+        <a href="/market/chats" class="text-xl hover:opacity-75">&lt;-</a>
+    </section>
     <h1 class="font-bold text-2xl">{listing_data.item_name}</h1>
     <h2 class="font-bold text-xl">${listing_data.price}</h2>
     <h3 class="text-gray-400">sold by {listing_data.seller}</h3>
