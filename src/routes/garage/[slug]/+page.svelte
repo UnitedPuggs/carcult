@@ -79,7 +79,7 @@
                 <img src={short.pfp_url} alt="your profile pic" class="rounded-full border-white border-4 lg:mt-6 w-[100px] h-[94.22px] lg:w-[150px] lg:h-[146.22px]" width="150" height="150"/>
             {:else}
             <label>
-                <input type="file" class="hidden" bind:value={temp_pfp} on:change={(e) => uploaded_file(e)} />
+                <input type="file" class="hidden" accept="image/*" bind:value={temp_pfp} on:change={(e) => uploaded_file(e)} />
                 <img src={temp_pfp} alt="" class="rounded-full border-4 border-white w-[100px] h-[94.22px] lg:w-[150px] lg:h-[146.22px] cursor-pointer">
             </label>
             {/if}

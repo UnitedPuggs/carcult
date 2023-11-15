@@ -1,6 +1,26 @@
 <script>
     import PostCard from '$lib/forum/PostCard.svelte';
+    import { invalidateAll } from '$app/navigation'
+
     export let data;
+    let thread_maker = false;
+    let title;
+    let content;
+
+    function toggle_thread_maker() {
+        thread_maker = true;
+    }
+
+    async function create_thread() {
+        await fetch('/api/forum/create_thread', {
+            method: "POST",
+            body: JSON.stringify({ title, content })
+        })
+        title = null;
+        content = null;
+        thread_maker = false;
+        invalidateAll();
+    }
 </script>
 
 <svelte:head>
@@ -10,7 +30,18 @@
 <div class="flex flex-col mt-10">
     <div>
         <!-- think I might take some inspo from how 4chan does new posts -->
-        <a href="" class="p-2">create new thread</a>
+        {#if !thread_maker}
+            <button class="p-2" on:click={toggle_thread_maker}>create new thread</button>
+        {:else} 
+            <div class="border border-white w-fit mx-auto">
+                <form class="flex flex-col gap-2 justify-center items-center p-2 text-black w-96" on:submit={create_thread}>
+                    <input type="text" placeholder="title" required class="w-full p-1" bind:value={title} />
+                    <textarea placeholder="content" required class="w-full h-48 p-1" bind:value={content}></textarea>
+                    <!-- might also allow for attachments here -->
+                    <input type="submit" class="text-white" value="create thread"/>
+                </form>
+            </div>
+        {/if}
     </div>
     <section class="border-2 bg-white text-black m-2">
         <h1 class="p-2 underline text-2xl font-bold">threads</h1>
