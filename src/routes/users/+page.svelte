@@ -23,14 +23,19 @@
 </svelte:head>
 
 <div class="flex flex-col mt-10">
-    <form class="flex flex-row justify-center items-center gap-4" on:submit={search_users}>
-        <input type="search" class="text-black px-1 py-0.5" placeholder="username here" bind:value={username_search}>
-        <input type="submit" class="hover:opacity-75 cursor-pointer" value="search">
+    <form class="flex flex-row justify-center items-center gap-2 border p-2 rounded-sm w-fit mx-auto" on:submit={search_users}>
+        <input type="search" class="text-black p-1" placeholder="username here" bind:value={username_search}>
+        <input type="submit" class="hover:opacity-75 active:scale-90 cursor-pointer bg-gray-800 border p-1 rounded-sm" value="search">
     </form>
     {#if users_found.length > 0}
         <div class="flex flex-col mt-4">
             {#each users_found as user}
-                <UserCard username={user.username} pfp_url={user.pfp_url}/>
+                <UserCard 
+                username={user.username} 
+                pfp_url={user.pfp_url}
+                followers={user.follower_count}
+                following={user.following_count}
+                />
             {/each}
         </div>
     {:else if !found_flag}

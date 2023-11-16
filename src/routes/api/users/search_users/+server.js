@@ -5,7 +5,7 @@ export async function GET({ url }) {
 
     let { data: users, error } = await supabase
     .from('garage')
-    .select('username, pfp_url')
+    .select('username, pfp_url, follower_count, following_count')
     .ilike('username', `%${username}%`)
 
     if(error)
