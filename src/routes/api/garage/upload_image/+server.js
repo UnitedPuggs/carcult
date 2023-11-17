@@ -8,7 +8,7 @@ export async function POST({ request, locals }) {
     const vehc = form_data.get("vehc_short");
     const image = form_data.get("file");
 
-    let url = session.user.displayname + "/" + vehc + "/" + image.name + "-" + crypto.randomUUID();
+    let url = `${session.user.displayname}/${vehc}/${crypto.randomUUID()}-${image.name}`;
 
     if(image && typeof image.name !== 'undefined') {
         const { upload_data, error } = await supabase

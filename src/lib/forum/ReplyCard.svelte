@@ -18,14 +18,14 @@
 </script>
 
 <div class="flex flex-col h-fit">
-    <section class="p-1 border">
-        <span>{created_at.substring(0, 10)} {created_at.substring(11, 16)}</span>
+    <section class="p-1 border bg-white">
+        <span class="text-black">{created_at.substring(0, 10)} {created_at.substring(11, 16)}</span>
     </section>
-    <div class="flex">
-        <section class="flex w-48 border justify-center items-center">
-            <span>{poster}</span>
+    <div class="flex lg:flex-row flex-col">
+        <section class="flex h-10 lg:h-auto lg:w-48 border lg:justify-center lg:items-center bg-amber-100">
+            <span class="text-black font-bold">{poster}</span>
         </section>
-        <section class="border w-full p-2">
+        <section class="border w-full p-2 bg-gray-800">
             <span class="whitespace-pre-wrap">{@html reply}</span>
         </section>
     </div>

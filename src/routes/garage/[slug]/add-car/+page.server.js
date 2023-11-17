@@ -9,8 +9,10 @@ export const actions = {
         const image = formdata.get('file');
         const model = formdata.get('car');
         const desc = formdata.get('desc');
+
+        const randmod = Math.floor(Math.random() * 1000000);
        
-        let url = session.user.displayname + "/" + model.replace(/\s+/g, '').trim() + "/" + image.name;
+        let url = `${session.user.displayname}/${model.replace(/\s+/g, '').trim()}-${randmod}/${image.name}`
         
         if(image && image.name != "undefined") {
             console.log(image.name)
@@ -37,7 +39,13 @@ export const actions = {
         const { car_data, car_error } = await supabase
         .from('garage_vehicle_info')
         .insert([
-            { vehicle_name: model, short_vehicle_name: model.replace(/\s+/g, '').trim(), username: session.user.displayname, image_urls: public_url, description: desc }
+            { 
+                vehicle_name: model, 
+                short_vehicle_name: `${model.replace(/\s+/g, '').trim()}-${randmod}`, 
+                username: session.user.displayname, 
+                image_urls: public_url, 
+                description: desc 
+            }
         ])
         .select()
 

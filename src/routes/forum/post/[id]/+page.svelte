@@ -1,6 +1,7 @@
 <script>
     import ReplyCard from '$lib/forum/ReplyCard.svelte';
     import { invalidateAll } from '$app/navigation'
+    import { page } from '$app/stores'
     export let data;
 
     let reply_maker = false;
@@ -29,16 +30,18 @@
 
 <div class="p-4">
     <h1 class="text-2xl font-bold">{data.forum_posts[0].post_title}</h1>
-    {#if !reply_maker}
-        <button on:click={toggle_reply_maker} class="my-1 text-lg">reply</button>
-    {:else}
-        <div class="border border-white w-fit mx-auto my-2">
-            <form class="flex flex-col gap-2 justify-center items-center p-2 text-black w-96" on:submit={create_reply}>
-                <textarea placeholder="content" required class="w-full h-48 p-1" bind:value={content}></textarea>
-                <!-- might also allow for attachments here -->
-                <input type="submit" class="text-white" value="send reply"/>
-            </form>
-        </div>
+    {#if $page.data.session?.user}
+        {#if !reply_maker}
+            <button on:click={toggle_reply_maker} class="my-1 text-lg">reply</button>
+        {:else}
+            <div class="border border-white w-full lg:w-fit mx-auto my-2">
+                <form class="flex flex-col gap-2 justify-center items-center p-2 text-black lg:w-96" on:submit={create_reply}>
+                    <textarea placeholder="content" required class="w-full h-48 p-1" bind:value={content}></textarea>
+                    <!-- might also allow for attachments here -->
+                    <input type="submit" class="text-white" value="send reply"/>
+                </form>
+            </div>
+        {/if}
     {/if}
     <div>
         {#each data.forum_replies as reply}
