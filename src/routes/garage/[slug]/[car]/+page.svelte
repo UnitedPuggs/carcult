@@ -153,7 +153,7 @@
                 <button class="text-2xl hover:opacity-75" on:click={close_modal}>x</button>
             </div>
             <label class="my-2">
-                <input type="file" id="file" name="file" bind:value={file} class="hidden" on:change={(e) => uploaded_file(e)} multiple /> <!-- Might need some styling on this bad boy -->            
+                <input type="file" id="file" accept="image/*" name="file" bind:value={file} class="hidden" on:change={(e) => uploaded_file(e)} multiple /> <!-- Might need some styling on this bad boy -->            
                 {#if file}
                     <img src={file} alt="upload your car" class="border-4  border-white w-[512px] h-[296px] object-cover cursor-pointer"/>
                 {:else}

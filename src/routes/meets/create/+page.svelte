@@ -101,7 +101,7 @@
         <input name="event_name" type="text" bind:value={event_name} maxlength="25" required class="text-black px-0.5 py-1" placeholder="event name here">
         <label for="date" class="pt-2">date</label>
         <input name="date" type="datetime-local" bind:value={date} required class="text-black" max={max_date}>
-        <input type="file" class="pt-2" bind:value={bg_img} on:change={(e) => upload_background(e)}>
+        <input type="file" accept="image/*" class="pt-2" bind:value={bg_img} on:change={(e) => upload_background(e)}>
         <label class="pt-2">
             repeat?
             <input type="checkbox" bind:checked={checked}>

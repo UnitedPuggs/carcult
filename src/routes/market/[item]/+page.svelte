@@ -62,16 +62,16 @@
             <!-- this is/was div hell -->
             <div class="flex flex-col h-96 lg:h-full items-center justify-center">
                 <div class="flex justify-center items-center h-full">
-                    <img src={curr_img} alt="listing" class="rounded-sm w-fit lg:max-w-4xl max-h-72 lg:max-h-[40rem] select-none">
+                    <img src={curr_img} alt="listing" class="rounded-sm w-fit lg:max-w-4xl max-h-72 lg:max-h-[40rem] select-none" loading="lazy">
                 </div>
                 <section class="flex justify-center gap-4 p-4 w-full mt-auto mb-0">
                     {#each market.listing_pics as pic}
                     <button on:click={() => click_image_set(pic)}>
                         <div class="flex justify-center items-center bg-transparent p-0.5">
                             {#if curr_img == pic}
-                                <img src={pic} alt="car" class="object-cover w-10 h-10 lg:w-16 lg:h-16 rounded-md">
+                                <img src={pic} alt="car" class="object-cover w-10 h-10 lg:w-16 lg:h-16 rounded-md" loading="lazy">
                             {:else}
-                                <img src={pic} alt="car" class="object-cover w-10 h-10 lg:w-16 lg:h-16 opacity-50 rounded-md">
+                                <img src={pic} alt="car" class="object-cover w-10 h-10 lg:w-16 lg:h-16 opacity-50 rounded-md" loading="lazy">
                             {/if}
                         </div>
                     </button>
@@ -106,7 +106,7 @@
         <h1 class="text-xl font-bold pt-10">seller info</h1>
         <section class="flex items-center gap-4 py-1">
             <a href="/garage/{market.seller}">
-                <img src={user.pfp_url} alt="seller" class="rounded-full w-16 h-16 ">
+                <img src={user.pfp_url} alt="seller" class="rounded-full w-16 h-16" loading="lazy">
             </a>
                 <span class="text-xl font-bold">{market.seller}</span>
         </section>

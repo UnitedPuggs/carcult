@@ -1,7 +1,8 @@
 <script>
     import { page } from '$app/stores'
-    let car; //Do I need this variable? Kinda forgot
     let file;
+    let model;
+    let description;
 
     const uploaded_file = (e) => {
         let img = e.target.files[0];
@@ -18,21 +19,20 @@
 </svelte:head>
 
 {#if $page.data.session?.user.displayname == $page.params.slug}
-<div>
-    <div class="flex flex-col justify-center items-center mt-4">
-        <form class="flex flex-col" method="POST" enctype="multipart/form-data">
-            <input type="text" class="text-black py-1 px-0.5 rounded-sm" placeholder="car here" id="car" name="car" required>
-            <label class="my-2">
-                <input type="file" id="file" name="file" bind:value={file} class="hidden" on:change={(e) => uploaded_file(e)} /> <!-- Might need some styling on this bad boy -->            
-                {#if file}
-                    <img src={file} alt="upload your car" class="border-4 border-white w-[512px] h-[296px] object-cover cursor-pointer"/>
-                {:else}
-                    <img src="/assets/image_upload.png" alt="upload your car" class="border-4 border-white w-[512px] h-[296px] object-none cursor-pointer"/>
-                {/if}
-            </label>
-            <textarea class="text-black rounded-sm px-0.5 py-1" id="desc" name="desc" placeholder="description here"></textarea>
+<div class="flex flex-col lg:flex-row gap-4 justify-center items-center border w-fit mx-auto mt-4 p-4">
+    <div class="border-2 p-2 sticky top-0">
+        <form class="flex flex-col gap-1" method="POST" enctype="multipart/form-data">
+            <input type="text" class="text-black py-1 px-0.5 rounded-sm" placeholder="model here" id="car" name="car" required bind:value={model}>
+            <input type="file" accept="image/*" id="file" name="file" bind:value={file} on:change={(e) => uploaded_file(e)} />
+            <textarea class="text-black rounded-sm px-0.5 py-1" id="desc" name="desc" placeholder="description here" bind:value={description}></textarea>
             <input type="submit" value="add" class="hover:opacity-75 cursor-pointer">
         </form>
+    </div>
+    <div class="flex flex-col text-center">   
+        <span class="text-2xl font-bold">{model ? model : "your car's model"}</span>
+        <img src={file ? file : "/assets/image_upload.png"} alt="upload your car" class="border-4 border-white w-[512px] h-[296px] object-cover select-none"/>
+        <span class="text-lg font-bold">description</span>
+        <p class="max-w-lg break-all">{description ? description : "your description"}</p>
     </div>
 </div>
 {:else}

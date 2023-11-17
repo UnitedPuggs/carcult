@@ -67,7 +67,7 @@
 <div class="flex flex-row flex-nowrap">
     <div class="w-[150px] lg:max-w-xs lg:min-w-[20rem] min-h-[calc(100vh_-_6rem)] p-2 border-white border-2">
         {#if $page.data.session?.user.displayname == short.username}
-            <div class="flex justify-between lg:flex-col lg:justify-start items-start">
+            <div class="flex justify-between items-start">
                 <button class="hover:opacity-75" on:click={toggle_edit}>edit</button>
                 {#if edit_mode}
                     <button class="hover:opacity-75" on:click={update_profile}>save</button>
@@ -79,8 +79,8 @@
                 <img src={short.pfp_url} alt="your profile pic" class="rounded-full border-white border-4 lg:mt-6 w-[100px] h-[94.22px] lg:w-[150px] lg:h-[146.22px]" width="150" height="150"/>
             {:else}
             <label>
-                <input type="file" class="hidden" bind:value={temp_pfp} on:change={(e) => uploaded_file(e)} />
-                <img src={temp_pfp} alt="" class="rounded-full border-4 border-white w-[100px] h-[94.22px] lg:w-[150px] lg:h-[146.22px] cursor-pointer">
+                <input type="file" class="hidden" accept="image/*" bind:value={temp_pfp} on:change={(e) => uploaded_file(e)} />
+                <img src={temp_pfp ? temp_pfp : "/assets/user_profile.png"} alt="" class="lg:mt-6 rounded-full border-4 border-white w-[100px] h-[94.22px] lg:w-[150px] lg:h-[146.22px] cursor-pointer">
             </label>
             {/if}
             <h1 class="text-xl font-semibold lg:text-2xl mt-2">{short.username}</h1>
@@ -131,12 +131,13 @@
                 {/each}
             {/if}
         {/await}
-        {#if $page.data.session?.user.displayname == short.username}
-            <!-- need to move functionality from this to navbar -->
+<!--      {#if $page.data.session?.user.displayname == short.username}
+            need to move functionality from this to navbar
             <a href="{$page.url.pathname}/add-car" 
             class="flex hover:opacity-75 border-2 border-white min-h-[200px] max-h-[200px] grow text-3xl font-bold justify-center items-center mx-auto">
-            + <!-- hello there :) -->
+            + hello there :)
             </a>
         {/if}
+-->
     </div>
 </div>
