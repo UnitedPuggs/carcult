@@ -1,4 +1,4 @@
-import { supabase } from '$lib/supabase.js'
+import { client } from '$lib/public_supabase.js'
 
 let images = [];
 
@@ -8,10 +8,11 @@ async function parse_url(images_urls) {
         if(images_urls[i].substr(80) != "default.jpg")
             images.push(images_urls[i].substr(80))
     }
-    console.log(images)
 }
 
-export async function DELETE({ request }) {
+export async function DELETE({ request, locals }) {
+    const session = await locals.getSession();
+    const supabase = await client(session)
     const { id } = await request.json();
 
     let { data: garage_vehicle_info, info_error } = await supabase

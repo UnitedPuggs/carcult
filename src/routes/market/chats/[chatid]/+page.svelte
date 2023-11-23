@@ -1,5 +1,5 @@
 <script>
-    import { supabase } from '$lib/public_supabase'
+    import { client } from '$lib/public_supabase'
     import { page } from '$app/stores'
     import { onDestroy, onMount } from 'svelte';
     import ChatMessage from '$lib/market/ChatMessage.svelte';
@@ -18,7 +18,8 @@
         return { send_user: message.send_user, message_content: message.message_content }
     });
     
-    onMount(() => {   
+    onMount(async() => {   
+        const supabase = await client(data.session)
         channel = supabase
         .channel($page.params.chatid)
         .on(
@@ -33,7 +34,8 @@
         .subscribe()
     })
 
-    onDestroy(() => {
+    onDestroy(async() => {
+        const supabase = await client(data.session)
         supabase.channel($page.params.chatid).unsubscribe()
     })
 

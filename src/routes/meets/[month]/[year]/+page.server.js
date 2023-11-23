@@ -18,7 +18,7 @@ export async function load({ params }) {
 
     //Pretty sure I'm technically selecting everything from the current and previous month, which is not super efficient, but it is what it is
     let { data: events, error } = await supabase
-    .from('events')
+    .from('meets')
     .select('*')
     .or(`event_date.ilike.%${date_str}%, event_date.ilike.%${prev_date_str}%`)
     .order('event_date', { ascending: true })

@@ -1,13 +1,14 @@
-import { supabase } from '$lib/supabase';
+import { client } from '$lib/public_supabase';
 
-export async function PATCH({ request }) {
+export async function PATCH({ request, locals }) {
+    const session = await locals.getSession()
+    const supabase = await client(session)
     const { id, event_name, description, event_date } = await request.json();
 
-    const { data, error } = await supabase
-    .from('events')
+    const { error } = await supabase
+    .from('meets')
     .update({ event_name, event_date, description })
     .eq('id', id)
-    .select();
 
     if(error)
         return new Response({status: 400, error: error})

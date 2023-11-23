@@ -1,8 +1,10 @@
-import { supabase } from '$lib/supabase.js'
+import { client } from '$lib/public_supabase.js'
 
 export async function POST({ request, locals }) {
     const formdata = await request.formData();
     const session = await locals.getSession();
+
+    const supabase = await client(session)
     
     const image = formdata.get("file");
     const bio = formdata.get("bio")

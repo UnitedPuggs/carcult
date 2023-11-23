@@ -1,6 +1,8 @@
-import { supabase } from '$lib/supabase'
+import { client } from '$lib/public_supabase'
 
-export async function POST({ request }) {
+export async function POST({ request, locals }) {
+    const session = await locals.getSession();
+    const supabase = await client(session);
     const form_data = await request.formData();
 
     const image = form_data.get('bg');
@@ -25,7 +27,7 @@ export async function POST({ request }) {
         .getPublicUrl(url)
 
         const { img_url, update_error } = await supabase
-        .from('events')
+        .from('meets')
         .update({ bg_img: data.publicUrl })
         .eq('slug', slug)
         .select();

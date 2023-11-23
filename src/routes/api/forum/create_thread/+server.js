@@ -1,7 +1,8 @@
-import { supabase } from '$lib/supabase'
+import { client } from '$lib/public_supabase'
 
 export async function POST({ request, locals }) {
     const session = await locals.getSession();
+    const supabase = await client(session);
     const { title, content } = await request.json();
 
     if(title && content) {

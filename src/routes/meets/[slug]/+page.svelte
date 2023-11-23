@@ -23,7 +23,7 @@
     async function delete_meet() {
         await fetch('/api/meets/delete_meet', {
             method: "DELETE",
-            body: JSON.stringify({ id: events.id, host: events.host })
+            body: JSON.stringify({ id: events.id, slug: events.slug })
         })
         goto(`/meets/${date.getMonth() + 1}/${date.getFullYear()}`)
     }

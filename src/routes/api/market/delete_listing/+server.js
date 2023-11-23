@@ -1,8 +1,8 @@
-import { supabase } from '$lib/supabase'
+import { client } from '$lib/public_supabase'
 
-let images = []
-
-export async function DELETE({ request }) {
+export async function DELETE({ request, locals }) {
+    const session = await locals.getSession()
+    const supabase = await client(session)
     const { id } = await request.json()
     
     const { error } = await supabase
@@ -19,8 +19,6 @@ export async function DELETE({ request }) {
     .list(id)
 
     const remove_these = list.map((img) => `${id}/${img.name}`)
-
-    console.log(remove_these)
 
     const { data, img_error } = await supabase
     .storage

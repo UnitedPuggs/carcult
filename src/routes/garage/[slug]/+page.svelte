@@ -46,7 +46,9 @@
     async function follow_user(follower, followed) {
         await fetch('/api/garage/follow_user', {
             method: "POST",
-            body: JSON.stringify({follower, followed})
+            body: JSON.stringify({follower, followed}),
+            headers: {
+            }
         })
         invalidateAll();
     }
@@ -54,7 +56,10 @@
     async function unfollow_user(id) {
         await fetch('/api/garage/unfollow_user', {
             method: "DELETE",
-            body: JSON.stringify({id})
+            body: JSON.stringify({id}),
+            headers: {
+                'Authorization': `Bearer ${data.session.supabaseAccessToken}`,
+            }
         })
         invalidateAll();
     }

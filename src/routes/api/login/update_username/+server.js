@@ -1,6 +1,8 @@
-import { supabase } from '$lib/supabase.js'
+import { client } from '$lib/public_supabase.js'
 
-export async function PATCH({ request }) {
+export async function PATCH({ request, locals }) {
+    const session = await locals.getSession()
+    const supabase = await client(session)
     const { email, username } = await request.json();
     let cleaned_user = username.replace(' ', '');
 

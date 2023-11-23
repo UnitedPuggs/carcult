@@ -1,6 +1,8 @@
-import { supabase } from '$lib/supabase'
+import { client } from '$lib/public_supabase'
 
-export async function PATCH({ request }) {
+export async function PATCH({ request, locals }) {
+    const session = await locals.getSession()
+    const supabase = await client(session)
     const { id, new_status } = await request.json();
 
     const { data, error } = await supabase
