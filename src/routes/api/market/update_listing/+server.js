@@ -1,4 +1,5 @@
 import { supabase } from '$lib/supabase'
+import { client } from '$lib/public_supabase'
 
 async function upload_image(id, file) {
     const url = `${id}/${file.name}`
@@ -18,8 +19,10 @@ async function upload_image(id, file) {
     }
 }
 
-export async function PATCH({ request }) {
+export async function PATCH({ request, locals }) {
     const form_data = await request.formData()
+    const session = await locals.getSession()
+    const supabase = await client(session)
 
     const id = form_data.get('id')
     const title = form_data.get('title')

@@ -7,6 +7,7 @@
     //funny little workaround, but it stays 0 once the user starts touching stuff
     let min_price = 0 ? min_price : "";
     let max_price = 0 ? max_price : "";
+    let timer;
 
     $: {
         if(search_term == "") {
@@ -18,6 +19,7 @@
     }
 
     async function search_market() {
+        clearTimeout(timer)
         const req = await fetch(`/api/market/search_market?q=${search_term}&min=${min_price}&max=${max_price}`)
         const res = await req.json()
         //I feel like this isn't the best way to do this since I don't know behavior when there's a lot of data
@@ -26,6 +28,13 @@
         //Plus if the result returns a lot of shit, it might be best to just #await it in the html instead for loading purposes
 
         //Could also make search into something [slugified], but idk about that since it'd require some funkery
+    }
+
+    const debounce = () => {
+        clearTimeout(timer);
+        timer = setTimeout(() => {
+            search_market();
+        }, 1000)
     }
 </script>
 
@@ -37,7 +46,7 @@
     <div class="flex flex-col border-2 border-white lg:min-h-[calc(100vh_-_6rem)] w-wo-scroll lg:w-64 p-2">
         <h1 class="font-bold text-2xl">marketplace</h1>
         <form on:submit={search_market}>
-            <input type="input" class="bg-gray-800 border border-white px-0.5 py-1 mb-4 w-full" placeholder="search marketplace" bind:value={search_term}>
+            <input type="input" class="bg-gray-800 border border-white px-0.5 py-1 mb-4 w-full" placeholder="search marketplace" bind:value={search_term} on:input={debounce}>
         </form>
 
         <h1 class="font-bold text-xl">price</h1>

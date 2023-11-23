@@ -1,6 +1,8 @@
-import { supabase } from '$lib/supabase.js'
+import { client } from '$lib/public_supabase.js'
 
-export async function DELETE({ request }) {
+export async function DELETE({ request, locals }) {
+    const session = await locals.getSession()
+    const supabase = await client(session)
     const { id, url, imgs } = await request.json();
     
     const { delete_data, delete_error } = await supabase

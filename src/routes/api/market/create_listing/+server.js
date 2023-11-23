@@ -1,4 +1,5 @@
 import { supabase } from '$lib/supabase'
+import { client } from '$lib/public_supabase'
 import { generate } from 'random-words'
 
 async function upload_image(id, file) {
@@ -22,6 +23,7 @@ async function upload_image(id, file) {
 export async function POST({ request, locals }) {
     const form_data = await request.formData();
     const session = await locals.getSession();
+    const supabase = await client(session);
 
     const title = form_data.get('title')
     const price = form_data.get('price')
@@ -36,7 +38,7 @@ export async function POST({ request, locals }) {
         return `https://knnxtkccpetpqxmvcxmu.supabase.co/storage/v1/object/public/marketplace_photos/${req}`
     }))
 
-    const { data, error } = await supabase
+    const { error } = await supabase
     .from('marketplace_listings')
     .insert([
         { 
@@ -48,7 +50,6 @@ export async function POST({ request, locals }) {
             listing_pics: urls
         }
     ])
-    .select()
 
     if(error)
         return error

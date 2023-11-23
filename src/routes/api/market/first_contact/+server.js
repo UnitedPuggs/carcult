@@ -1,11 +1,13 @@
-import { supabase } from '$lib/supabase'
+import { client } from '$lib/public_supabase'
 
-export async function POST({ request }) {
+export async function POST({ request, locals }) {
+    const session = await locals.getSession()
+    const supabase = await client(session)
     const { listing_id, send_user, receive_user, message_content } = await request.json()
 
     const chat_id = crypto.randomUUID()
 
-    const { data, error } = await supabase
+    const { error } = await supabase
     .from('marketplace_messages')
     .insert([{
         chat_id,
@@ -14,7 +16,9 @@ export async function POST({ request }) {
         receive_user,
         message_content
     }])
-    .select()
+
+    if(error)
+        return new Response(error)
 
     const { err } = await supabase
     .from('marketplace_buyers')
@@ -26,8 +30,5 @@ export async function POST({ request }) {
     if(err)
         return new Response(err)
 
-    if(error)
-        return new Response(error)
-    else
-        return new Response(JSON.stringify({chat_id: chat_id}))
+    return new Response(JSON.stringify({chat_id: chat_id}))
 }
