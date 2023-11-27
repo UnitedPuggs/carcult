@@ -7,15 +7,16 @@ export async function load({ params }) {
     .eq('post_id', params.id)
     .order('created_at', { ascending: true })
 
+    if(error)
+        return { "load": error }
+
     let { data: forum_posts, post_err } = await supabase
     .from('forum_posts')
     .select('post_title')
     .eq('id', params.id)
 
-    //we love not error-checking
+    if(post_err)
+        return { "load": post_err }
 
-    if(error)
-        return { "load": error }
-    else
-        return { forum_replies, forum_posts }
+    return { forum_replies, forum_posts }
 }

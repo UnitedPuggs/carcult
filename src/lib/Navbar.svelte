@@ -9,7 +9,6 @@
     onMount(() => {
         window.onscroll = () => {
             if(window.scrollY > prev_scroll) {
-                console.log(window.scrollY)
                 show = "-top-96";
             } else {
                 show = "top-0";

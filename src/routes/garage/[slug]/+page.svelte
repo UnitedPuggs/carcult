@@ -128,7 +128,7 @@
     <!-- Vehicle info/images from garage_vehicle_info table -->
     <div class="grow">
         {#await data.streamed.garage_info}
-            <p class="text-center">loading cars...</p>
+            <p class="text-center">loading vehicles...</p>
         {:then garage_info}
             {#if garage_info}
                 {#each garage_info as info}

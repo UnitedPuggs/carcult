@@ -40,7 +40,7 @@
                         <input type="text" placeholder="title" required class="w-full p-1" bind:value={title} />
                         <textarea placeholder="content" required class="w-full h-48 p-1" bind:value={content}></textarea>
                         <!-- might also allow for attachments here -->
-                        <input type="submit" class="text-white" value="create thread"/>
+                        <input type="submit" class="text-white cursor-pointer" value="create thread"/>
                     </form>
                 </div>
             {/if}

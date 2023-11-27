@@ -38,14 +38,16 @@
                 <form class="flex flex-col gap-2 justify-center items-center p-2 text-black lg:w-96" on:submit={create_reply}>
                     <textarea placeholder="content" required class="w-full h-48 p-1" bind:value={content}></textarea>
                     <!-- might also allow for attachments here -->
-                    <input type="submit" class="text-white" value="send reply"/>
+                    <input type="submit" class="text-white cursor-pointer" value="send reply"/>
                 </form>
             </div>
         {/if}
     {/if}
     <div>
         {#each data.forum_replies as reply}
-            <ReplyCard 
+            <ReplyCard
+            post_id={reply.post_id}
+            reply_id={reply.reply_id}
             created_at={reply.created_at} 
             poster={reply.poster} 
             reply={reply.reply_content}
