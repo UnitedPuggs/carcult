@@ -28,7 +28,7 @@
 
 <a href="/forum" class="text-xl">&lt-</a>
 
-<div class="p-4">
+<div class="lg:p-4 p-1">
     <h1 class="text-2xl font-bold">{data.forum_posts[0].post_title}</h1>
     {#if $page.data.session?.user}
         {#if !reply_maker}
@@ -44,8 +44,9 @@
         {/if}
     {/if}
     <div>
-        {#each data.forum_replies as reply}
+        {#each data.forum_replies as reply, i}
             <ReplyCard
+            reply_num={i + 1}
             post_id={reply.post_id}
             reply_id={reply.reply_id}
             created_at={reply.created_at} 

@@ -15,14 +15,16 @@
 <div class="border border-white flex flex-col h-40 w-full lg:w-48 {day.extra_style} overflow-y-auto">
     <!--<h1>{curr_date}</h1>-->
     <span class="sticky top-0 bg-black z-50 pl-1">{day.curr_day}</span>
-    {#if today_events}
-        {#each today_events as event}
-            <a 
-            href="/meets/{event.slug}"
-            class="hover:opacity-75 border rounded-sm mx-1 my-0.5 bg-white text-black text-xs lg:text-lg font-bold text-ellipsis overflow-x-hidden"
-            >
-                {event.event}
-            </a>
-        {/each}
-    {/if}
+    <div class="flex flex-col">
+        {#if today_events}
+            {#each today_events as event}
+                <a 
+                href="/meets/{event.slug}"
+                class="hover:opacity-75 border rounded-sm mx-1 my-0.5 bg-white text-black text-xs lg:text-lg font-bold text-ellipsis overflow-x-hidden"
+                >
+                    {event.event}
+                </a>
+            {/each}
+        {/if}
+    </div>
 </div>

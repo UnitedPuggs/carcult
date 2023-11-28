@@ -35,8 +35,8 @@
             {#if !thread_maker}
                 <button class="p-2" on:click={toggle_thread_maker}>create new thread</button>
             {:else} 
-                <div class="border border-white w-fit mx-auto">
-                    <form class="flex flex-col gap-2 justify-center items-center p-2 text-black w-96" on:submit={create_thread}>
+                <div class="border border-white lg:w-fit mx-auto w-full">
+                    <form class="flex flex-col gap-2 justify-center items-center p-2 text-black lg:w-96 w-full" on:submit={create_thread}>
                         <input type="text" placeholder="title" required class="w-full p-1" bind:value={title} />
                         <textarea placeholder="content" required class="w-full h-48 p-1" bind:value={content}></textarea>
                         <!-- might also allow for attachments here -->

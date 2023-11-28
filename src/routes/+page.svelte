@@ -19,7 +19,7 @@
 <body class="font-mono bg-black">
     <div class="flex flex-col justify-center items-center text-center">
         <h1 class="text-3xl font-bold pt-4">carcult</h1> 
-        <section class="mt-2 w-screen">
+        <section class="mt-2 w-full max-h-96 overflow-y-auto">
         <h2 class="text-2xl font-bold">today's meets</h2>
             <div class="grid lg:grid-cols-[repeat(auto-fit,minmax(300px,1fr))] items-center gap-2 p-2">
             {#if data.meets.length > 0}

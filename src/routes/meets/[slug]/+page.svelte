@@ -9,10 +9,13 @@
     let event_name = data.events[0].event_name;
     let event_date = data.events[0].event_date;
 
-    let text_width = 0;
-    let text_height = 0;
-
     $: events = data.events[0];
+
+    let textarea;
+
+    $: if(textarea) {
+        textarea.style.height = `${textarea.scrollHeight}px`
+    }
 
     let date = new Date();
 
@@ -50,14 +53,14 @@
             <p class="text-lg text-stroke">hosted by <strong><a href="/garage/{events.host}" class="underline hover:no-underline">{events.host}</a></strong></p>
             <p class="text-stroke">on {events.event_date.substring(0, 10)} @ {events.event_date.substring(11)}</p>
             <!-- kinda drunk, but this bind shit is kinda based -->
-            <p class="p-1 whitespace-pre-wrap md:max-w-xl text-stroke" bind:clientHeight={text_height} bind:clientWidth={text_width}>{events.description}</p>
+            <p class="p-1 whitespace-pre-wrap md:max-w-xl text-stroke">{events.description}</p>
         {:else} <!-- referring to that first comment, yes it's much cleaner -->
             <input type="text" placeholder={event_name} class="text-3xl font-bold text-black" bind:value={event_name}>
             <p class="text-lg">hosted by <strong><a href="/garage/{events.host}" class="underline hover:no-underline">{events.host}</a></strong></p>
             <div class="flex">
             on&nbsp;<input type="datetime-local" bind:value={event_date} class="text-black">
             </div>
-            <textarea id="test" class="text-black w-[{text_width}px] h-[{text_height}px]" bind:value={description}></textarea>
+            <textarea id="test" class="text-black w-[36rem]" bind:value={description} bind:this={textarea}></textarea>
         {/if}
     </div>
 </div>

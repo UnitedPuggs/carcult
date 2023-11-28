@@ -1,18 +1,12 @@
 import { supabase } from '$lib/supabase'
 
 export async function load() {
-    const date = new Date()
-    let formatted_date;
-
-    if((date.getMonth() + 1) < 10)
-        formatted_date = `${date.getFullYear()}-0${date.getMonth() + 1}-${date.getDate()}`
-    else
-        formatted_date = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
+    const date = new Date().toLocaleString('sv').substring(0, 10)
 
     let { data: meets, meets_err } = await supabase
     .from('meets')
     .select('event_name, slug, event_date')
-    .ilike('event_date', `%${formatted_date}%`)
+    .ilike('event_date', `%${date}%`)
 
     if(meets_err)
         return { "meets": meets_err }
