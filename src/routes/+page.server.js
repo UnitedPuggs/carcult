@@ -1,7 +1,10 @@
 import { supabase } from '$lib/supabase'
 
 export async function load() {
-    const date = new Date().toLocaleString('sv').substring(0, 10)
+    const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    console.log(tz)
+    const date = new Date().toLocaleString('sv', { timeZone: tz }).substring(0, 10)
+    console.log(date)
 
     let { data: meets, meets_err } = await supabase
     .from('meets')
