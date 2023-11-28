@@ -126,6 +126,7 @@
     <title>{$page.params.slug}'s {short.vehicle_name}</title>
 </svelte:head>
 
+<a href="/garage/{$page.params.slug}" class="text-3xl hover:opacity-75">&lt;-</a>
 <div class="flex flex-col mt-10 justify-center items-center">
     <dialog id="delete-prompt" class="bg-black text-white text-center border-2 border-white">
         <div class="p-10">

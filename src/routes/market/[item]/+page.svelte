@@ -92,7 +92,12 @@
         </div>
     </div>
     <div class="flex flex-col border-l border-gray-600 w-full lg:w-[30rem] min-h-[calc(100vh_-_6rem)] ml-auto mr-0 bg-gray-800 p-2">
-        <h1 class="text-2xl font-bold break-all">{market.item_name}</h1>
+        <section class="flex">
+            <h1 class="text-2xl font-bold break-words">{market.item_name}</h1>
+            <section class="ml-auto mr-2 mt-0.5">
+                <a href="/market" class="text-2xl border-2 border-black bg-white text-black font-bold rounded-full px-2.5 py-0.5 text-center hover:opacity-75">x</a>
+            </section>
+        </section>
         <h2 class="text-lg">${market.price}</h2>
         <h3 class="text-sm text-gray-500">listed on {market.created_at.substring(0, 10)}</h3>
         <!-- would probably want to include message buttons here -->

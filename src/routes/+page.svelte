@@ -14,6 +14,9 @@
         .select('event_name, slug, event_date')
         .ilike('event_date', `%${date}%`)
 
+        if(meets_err)
+            console.log(meets_err)
+
         meets_arr = meets
     })  
     
@@ -38,10 +41,11 @@
 
 <body class="font-mono bg-black">
     <div class="flex flex-col justify-center items-center text-center">
-        <h1 class="text-3xl font-bold pt-4">carcult</h1> 
-        <section class="mt-2 w-full max-h-96 overflow-y-auto">
-        <h2 class="text-2xl font-bold">today's meets</h2>
-        <div class="grid lg:grid-cols-[repeat(auto-fit,minmax(300px,1fr))] items-center gap-2 p-2">
+        <h1 class="text-4xl font-bold pt-4">carcult</h1>
+        <h2 class="text-lg text-gray-400">the best place to find car meets!</h2>
+        <section class="mt-4 w-full max-h-96 overflow-y-auto">
+            <h2 class="text-2xl font-bold">today's meets</h2>
+            <div class="grid lg:grid-cols-[repeat(auto-fit,minmax(300px,1fr))] items-center gap-2 p-2">
             {#if meets_arr.length > 0}
                 {#each meets_arr as meet} 
                 <a href="/meets/{meet.slug}" class="hover:opacity-75">
@@ -66,7 +70,7 @@
                                 <img src={listing.listing_pics[0]} alt="marketplace listing" class="w-full h-full object-cover rounded-lg">
                             </div>
                             <span class="text-lg font-bold max-w-full truncate">{listing.item_name}</span>
-                            <span>sold by {listing.seller}</span>
+                            <span>listed by {listing.seller}</span>
                         </div>
                     </a>
                 {/each}

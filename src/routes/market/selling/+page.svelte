@@ -3,11 +3,12 @@
     export let data;
 </script>
 
+<a href="/market" class="text-3xl hover:opacity-75 px-2">&lt;-</a>
 <div>
     {#await data.streamed.marketplace_listings}
         <p>loading marketplace listings...</p>
     {:then result}
-        <div class="flex flex-col justify-center items-center gap-4 my-10">
+        <div class="flex flex-col justify-center items-center gap-4 my-8">
             {#each result as listing}
                 <SellingItem 
                 item_name={listing.item_name} 
