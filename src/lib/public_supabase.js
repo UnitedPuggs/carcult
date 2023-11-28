@@ -5,9 +5,11 @@ export async function client(session) {
     const client = createClient(PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_KEY, {
         global: {
             headers: {
-                Authorization: `Bearer ${session.supabaseAccessToken}`
+                Authorization: `Bearer ${session?.supabaseAccessToken}`
             }
         }
     })
     return client;
 }
+
+export const public_sb = createClient(PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_KEY)

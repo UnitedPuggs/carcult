@@ -1,15 +1,15 @@
 <script>
-    import { client } from '$lib/public_supabase'
+    import { public_sb } from '$lib/public_supabase'
     import { onMount } from 'svelte';
     export let data;
 
     let meets_arr = [];
     onMount(async() => {
-        const supabase = await client(data.session)
+        //const supabase = await client(data.session)
         const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
         const date = new Date().toLocaleString('sv', { timeZone: tz }).substring(0, 10)
 
-        let { data: meets, meets_err } = await supabase
+        let { data: meets, meets_err } = await public_sb
         .from('meets')
         .select('event_name, slug, event_date')
         .ilike('event_date', `%${date}%`)
