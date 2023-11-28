@@ -4,18 +4,17 @@ Created by car enthusiasts, for car enthusiasts. The aim of the passion project 
 
 The current system is hoping to find something semi-active on some form of social media, but we think that's backwards. 
 Why should *you* be seeking out meets and not the other way around? That's the gap that we're trying to bridge. 
-Current options are out-dated (*cough* *cough* socalcarculture), abandoned (carmeets.app), or don't include the little guys (like our very own Fullerton Motor Group).
+Current options are out-dated (*cough* *cough* socalcarculture), abandoned (carmeets.app), or don't include the little guys, such as our very own Fullerton Motor Group.
 We want to facilitate the interaction between host and enthusiast from the most general, prestigious types of meets to your local parking garage meets.
 
-Built by Eddie Poulson (the world's poorest philantropist and vehicle collector) and Akim Rayskiy (rocket scientist and professional python engineer) using 
-SvelteKit for just about everything, Auth.js to make logging in easy and secure, TailwindCSS to make things look pretty, and Supabase Database and Storage for 
-data retention.
+Built by Eddie Poulson using SvelteKit for just about everything, Auth.js to make logging in easy and secure, 
+TailwindCSS to make things look pretty, and Supabase Database and Storage for data retention.
 
 ## features 
 - A garage that users are able to personalize with their cars, a fun profile picture, and a little bit about themselves ☑
 - The actual meeting component, which is more or less just a built-by-hand calendar component ☑
-- A forum for users to talk about cars and car-related stuff ☐
-- Another go at creating a marketplace for vehicles/vehicle parts ☐ (WIP)
+- A forum for users to talk about cars and car-related stuff ☑
+- Another go at creating a marketplace for vehicles/vehicle parts ☑
 
 ### garage
 The first fully-functioning feature of carcult. Either the most or least difficult part of the project and it looks like it's leaning towards most.
@@ -40,7 +39,7 @@ Everything is built by hand, no extra libraries mostly because I couldn't find a
 
 ### marketplace
 Believe it or not, this is the place where users are going to be able to list their cars, parts, and services that they're wanting to offer. Currently a work in progress, but uhh don't look too closely
-at the styling when compared to Facebook Marketplace. Still very much a work-in-progress as this is the feature currently receiving 99% of my attention!
+at the styling when compared to Facebook Marketplace. Included a very cool listing preview and realtime chat, which has been done by utilizing Supabase Realtime.
 ![image](https://github.com/UnitedPuggs/carcult/assets/48199805/8cbe9764-d7de-4f0e-9257-dcc91494adb6)
 ![image](https://github.com/UnitedPuggs/carcult/assets/48199805/9b682f7d-0517-49da-8807-dc05d3a1efa0)
 ![image](https://github.com/UnitedPuggs/carcult/assets/48199805/0c319ea7-c8b3-4af4-a515-fcddbc6eb4c8)
