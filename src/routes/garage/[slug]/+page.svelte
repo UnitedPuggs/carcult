@@ -114,14 +114,18 @@
                     <textarea class="p-1 text-black lg:-mb-8 w-full" placeholder="your bio here" bind:value={bio}></textarea>
                 {/if}
             {/if}
-            {#if shorter.length > 0}
-                <h1 class="font-semibold mt-12 text-xl">Owner of:</h1>
-                <div class="flex flex-col text-center">
-                    {#each shorter as vehicles}
-                        <span>{vehicles.vehicle_name}</span>
-                    {/each}
-                </div>
-            {/if}
+            {#await data.streamed.garage_info}
+                <p class="text-center">loading vehicles...</p>
+            {:then garage_info}
+                {#if garage_info.length > 0}
+                    <h1 class="font-semibold mt-12 text-xl">Owner of:</h1>
+                    <div class="flex flex-col text-center">
+                        {#each garage_info as vehicles}
+                            <span>{vehicles.vehicle_name}</span>
+                        {/each}
+                    </div>
+                {/if}
+            {/await}
         </div>
     </div>
 

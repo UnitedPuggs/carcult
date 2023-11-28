@@ -1,5 +1,25 @@
 <script>
+    import { client } from '$lib/public_supabase'
+    import { onMount } from 'svelte';
     export let data;
+
+    let meets_arr = [];
+    onMount(async() => {
+        const supabase = await client(data.session)
+        const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+        const date = new Date().toLocaleString('sv', { timeZone: tz }).substring(0, 10)
+
+        let { data: meets, meets_err } = await supabase
+        .from('meets')
+        .select('event_name, slug, event_date')
+        .ilike('event_date', `%${date}%`)
+
+        meets_arr = meets
+    })  
+    
+    $: if(meets_arr) {
+        meets_arr = meets_arr
+    }
 </script>
 
 <svelte:head>
@@ -21,9 +41,9 @@
         <h1 class="text-3xl font-bold pt-4">carcult</h1> 
         <section class="mt-2 w-full max-h-96 overflow-y-auto">
         <h2 class="text-2xl font-bold">today's meets</h2>
-            <div class="grid lg:grid-cols-[repeat(auto-fit,minmax(300px,1fr))] items-center gap-2 p-2">
-            {#if data.meets.length > 0}
-                {#each data.meets as meet} 
+        <div class="grid lg:grid-cols-[repeat(auto-fit,minmax(300px,1fr))] items-center gap-2 p-2">
+            {#if meets_arr.length > 0}
+                {#each meets_arr as meet} 
                 <a href="/meets/{meet.slug}" class="hover:opacity-75">
                     <div class="flex flex-col justify-center items-center border border-white w-42 h-32 p-2">
                         <span class="text-2xl font-bold">{meet.event_name}</span>
