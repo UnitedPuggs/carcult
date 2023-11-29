@@ -78,7 +78,7 @@
         </section>
         <section class="mt-2">
             <h2 class="text-2xl font-bold">new threads</h2>
-            <div class="grid grid-cols-2 lg:grid-cols-5 col-auto grid-flow-col p-2 gap-2">
+            <div class="grid grid-cols-2 lg:grid-cols-5 p-2 gap-2">
                 {#each data.forum_posts as post}
                     <a href="/forum/post/{post.id}" class="hover:opacity-75">
                         <div class="flex border p-2 h-24">
