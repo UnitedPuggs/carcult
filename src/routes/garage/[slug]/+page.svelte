@@ -89,7 +89,6 @@
             </label>
             {/if}
             <h1 class="text-xl font-semibold lg:text-2xl mt-2">{short.username}</h1>
-            <!-- Let's see if this might be worth it -->
             <section class="flex-wrap max-w-[7rem] lg:max-w-[15rem] mt-2 text-center">
                 <a href="{$page.url.pathname}/followers">{short.follower_count} followers</a>
                 <a href="{$page.url.pathname}/following">{short.following_count} following</a>
@@ -140,13 +139,5 @@
                 {/each}
             {/if}
         {/await}
-<!--      {#if $page.data.session?.user.displayname == short.username}
-            need to move functionality from this to navbar
-            <a href="{$page.url.pathname}/add-car" 
-            class="flex hover:opacity-75 border-2 border-white min-h-[200px] max-h-[200px] grow text-3xl font-bold justify-center items-center mx-auto">
-            + hello there :)
-            </a>
-        {/if}
--->
     </div>
 </div>

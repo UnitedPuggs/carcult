@@ -15,7 +15,6 @@ import {
 import { SupabaseAdapter } from "@auth/supabase-adapter";
 import { supabase } from '$lib/supabase'
 import jwt from 'jsonwebtoken'
-import { createClient } from "@supabase/supabase-js";
 
 async function get_username(email) {
     const { data: users, error } = await supabase
