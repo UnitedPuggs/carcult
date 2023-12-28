@@ -43,10 +43,16 @@
 
 <svelte:head>
     <title>{events.event_name} by {events.host}</title>
+    <meta name="description" content="{events.description} on carcult">
+    <meta name="keywords" content="car meets, automotive events, car enthusiasts, carcult, {events.event_name}">
+    
+    <meta property="og:image" content="{events.bg_img}">
+    <meta property="og:image:secure_url" content="{events.bg_img}">
+    <meta property="og:image:alt" content="Background for {events.event_name}">
 </svelte:head>
 
 <div class="bg-no-repeat bg-center bg-cover bg-scroll border-b border-white" style="background-image: url('{events.bg_img}')">
-    <div class="flex flex-col justify-center items-center backdrop-blur py-10">
+    <div class="flex flex-col justify-center items-center backdrop-blur py-10 lg:min-h-[44rem]">
         <!-- would it be better to essentially just copy-paste this all into one big if/else instead of littering this with if/else statements? -->
         {#if !edit_mode}
             <h1 class="text-3xl font-bold text-stroke">{events.event_name}</h1>

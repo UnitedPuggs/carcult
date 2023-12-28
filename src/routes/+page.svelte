@@ -29,7 +29,7 @@
     <title>carcult - the best place to find car meets!</title>
     <meta name="description" content="Built by car lovers, carcult is the place where you can find new meets to share your love of cars with other car enthusiasts!">
     <meta name="keywords" content="car enthusiasts, car meets, auto events, car community, automotive gatherings, connect with car lovers, car culture, car show calendar, automotive networking">
-    <meta name="author" content="Eddie Poulson">
+    <meta name="author" content="carcult">
 
     <link rel="canonical" href="https://www.carcult.org" />
 

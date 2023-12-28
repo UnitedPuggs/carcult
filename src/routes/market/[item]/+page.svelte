@@ -43,6 +43,12 @@
 
 <svelte:head>
     <title>marketplace - {market.item_name}</title>
+    <meta name="description" content="Explore cars and parts on the carcult market. Join enthusiasts, discover diverse vehicles, and immerse yourself in automotive passion.">
+    <meta name="keywords" content="car meets, automotive market, car enthusiasts, carcult">
+    <meta name="author" content="carcult">
+
+    <meta property="og:image" content="{curr_img}">
+    <meta property="og:image:secure_url" content="{curr_img}">
 </svelte:head>
 
 <div class="flex flex-col lg:flex-row" bind:clientWidth={width}>

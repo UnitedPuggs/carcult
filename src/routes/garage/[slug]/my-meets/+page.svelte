@@ -6,11 +6,15 @@
     import { page }  from '$app/stores'
 
     export let data;
-    let short = data.events;
+    $: short = data.events;
 </script>
 
+<svelte:head>
+    <title>your meets</title>
+</svelte:head>
+
 {#if $page.data.session?.user.displayname == $page.params.slug}
-<div>
+<div class="grid grid-cols-2 lg:grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-2 mt-4">
     {#each short as event}
         <Events event_name={event.event_name} event_date={event.event_date} slug={event.slug} bg_img={event.bg_img} />
     {/each}

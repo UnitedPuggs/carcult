@@ -1,6 +1,6 @@
 <script>
     import { onMount } from "svelte";
-    import { goto, invalidate } from '$app/navigation'
+    import { goto } from '$app/navigation'
     import { page } from '$app/stores'
     import CalendarEvents from "$lib/meets/CalendarEvents.svelte";
     export let data;
@@ -72,7 +72,15 @@
 </script>
 
 <svelte:head>
-    <title>{month_str.toLowerCase()} meets</title>
+    <title>carcult | {month_str.toLowerCase()} meets</title>
+    <meta name="description" content="Explore upcoming car meets on the carcult calendar. Join enthusiasts, discover diverse vehicles, and immerse yourself in automotive passion.">
+    <meta name="keywords" content="car meets, automotive events, car enthusiasts, carcult">
+    <meta name="author" content="carcult">
+
+    <meta property="og:title" content="carcult | {month_str.toLowerCase()} meets">
+    <meta property="og:image" content="/assets/logo-new.jpg">
+    <meta property="og:image:secure_url" content="/assets/logo-new.jpg">
+    <meta property="og:url" content="https://carcult.org/meets/{$page.params.month}/{$page.params.year}">
 </svelte:head>
 
 <div bind:clientWidth={width}>
@@ -90,7 +98,7 @@
             &lt;-
             </button>
             <section>
-                <h1 class="text-2xl p-2 -mb-3 w-52">{month_str} {curr_year}</h1>
+                <h1 class="text-2xl p-2 -mb-2 w-52 font-bold">{month_str} {curr_year}</h1>
                 <button on:click={() => {
                     goto_today()
                 }} 

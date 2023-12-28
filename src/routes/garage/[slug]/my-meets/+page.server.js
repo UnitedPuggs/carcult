@@ -5,10 +5,10 @@ export async function load({ params }) {
     .from('meets')
     .select('slug, event_name, event_date, bg_img')
     .eq('host', params.slug)
-    .order('event_date', { ascending: true });
+    .order('event_date', { ascending: false });
 
     if(error)
         return { "load": error };
-
-    return { events: events };
+    else
+        return { events: events };
 }

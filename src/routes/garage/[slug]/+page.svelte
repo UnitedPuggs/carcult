@@ -12,7 +12,6 @@
     $: follow_status = data.is_following[0];
 
     $: short = data.garage[0];
-    $: shorter = data.streamed.garage_info;
 
     async function toggle_edit() {
         edit_mode = !edit_mode
@@ -24,7 +23,7 @@
         form_data.append("file", file)
 
 
-        const res = await fetch("/api/garage/update_profile", {
+        await fetch("/api/garage/update_profile", {
             method: "POST",
             body: form_data,
         });
@@ -35,7 +34,7 @@
 
     const uploaded_file = (e) => {
         let img = e.target.files[0];
-        file = img;
+        file = img; //since we need to use our "file" value for the endpoint :)
         let reader = new FileReader();
         reader.readAsDataURL(img);
         reader.onload = e => {
@@ -66,7 +65,7 @@
 </script>
 
 <svelte:head>
-    <title>{short.username}'s garage</title>
+    <title>carcult - {short.username}'s garage</title>
 </svelte:head>
 
 <div class="flex flex-row flex-nowrap">
@@ -83,10 +82,10 @@
             {#if !edit_mode}
                 <img src={short.pfp_url} alt="your profile pic" class="rounded-full border-white border-4 lg:mt-6 w-[100px] h-[94.22px] lg:w-[150px] lg:h-[146.22px]" width="150" height="150"/>
             {:else}
-            <label>
-                <input type="file" class="hidden" accept="image/*" bind:value={temp_pfp} on:change={(e) => uploaded_file(e)} />
-                <img src={temp_pfp ? temp_pfp : "/assets/user_profile.png"} alt="" class="lg:mt-6 rounded-full border-4 border-white w-[100px] h-[94.22px] lg:w-[150px] lg:h-[146.22px] cursor-pointer">
-            </label>
+                <label>
+                    <input type="file" class="hidden" accept="image/*" bind:value={temp_pfp} on:change={(e) => uploaded_file(e)} />
+                    <img src={temp_pfp ? temp_pfp : "/assets/user_profile.png"} alt="" class="lg:mt-6 rounded-full border-4 border-white w-[100px] h-[94.22px] lg:w-[150px] lg:h-[146.22px] cursor-pointer">
+                </label>
             {/if}
             <h1 class="text-xl font-semibold lg:text-2xl mt-2">{short.username}</h1>
             <section class="flex-wrap max-w-[7rem] lg:max-w-[15rem] mt-2 text-center">
