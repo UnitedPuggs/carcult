@@ -75,7 +75,7 @@
 </div>
 <!-- svelte-ignore a11y-missing-attribute -->
 {#if events.location}
-    <iframe src="https://maps.google.com/maps?q={events.location}&output=embed" width="100%" height="300" frameborder="0" style="border:0" allowfullscreen class="pointer-events-none"></iframe>
+    <iframe src="https://maps.google.com/maps?q={events.location}&output=embed" width="100%" height="300" frameborder="0" style="border:0" allowfullscreen></iframe>
 {/if}
 {#if $page.data.session?.user.displayname == events.host}
     <div class="flex flex-col mt-2 gap-2">
