@@ -25,7 +25,7 @@
     class="border border-white text-mono text-white p-4 gap-4 flex grow flex-col lg:flex-row flex-wrap lg:h-24 bg-black lg:justify-normal justify-center items-center text-center"
     >
         <div>
-            <a href="/" class="text-xl hover:opacity-75 transition ease-in-out hover:scale-110"><img src="/assets/logo-new.png" alt="click me" class="w-16 h-16 rounded-full"></a>
+            <a href="/" class="text-xl hover:opacity-75"><img src="/assets/logo-new.png" alt="click me" class="w-16 h-16 rounded-full transition ease-in-out hover:scale-110 active:scale-95"></a>
         </div>
         <div class="flex gap-4">
             <a href="/meets/{date.getMonth() + 1}/{date.getFullYear()}" class="hover:opacity-75">meets</a>
@@ -33,14 +33,16 @@
             <a href="/forum" class="hover:opacity-75">forum</a>
             <a href="/users" class="hover:opacity-75">users</a>
         </div>
-        <div class="flex gap-4 lg:mr-5 lg:ml-auto">
+        <div class="flex items-center gap-4 lg:mr-5 lg:ml-auto">
             {#if $page.data.session?.user}
-                <a href="/garage/{$page.data.session.user.displayname}" class="hover:opacity-75">garage</a>
-                <a href="/garage/{$page.data.session.user.displayname}/add-car" class="hover:opacity-75">add a car</a>
-            {#if $page.data.session.user.role > 0}
+                <a href="/garage/{$page.data.session.user.displayname}" class="hover:opacity-75 w-8"><img src="/assets/garage.png" alt="garage"></a>
+                {#if $page.url.pathname.indexOf("garage") != -1}
+                    <a href="/garage/{$page.data.session.user.displayname}/add-car" class="hover:opacity-75">add a car</a>
+                {/if}
+            {#if $page.data.session.user.role > 0 && $page.url.pathname.indexOf("meets") != -1}
                 <a href="/garage/{$page.data.session.user.displayname}/my-meets" class=" hover:opacity-75">my meets</a>
             {/if}
-                <button on:click={() => signOut()} class="hover:opacity-75 mb-1">log out</button>
+                <button on:click={() => signOut()} class="hover:opacity-75">log out</button>
             {:else}
                 <a href="/login" class="hover:opacity-75">log in</a>
             {/if}

@@ -6,6 +6,7 @@
     let end_date;
     let description;
     let event_name;
+    let location;
     
     let bg_img;
     let meet_slug;
@@ -21,11 +22,13 @@
     const min_date = new Date().toLocaleString('sv').slice(0, 10) + "T00:00"
     const max_date = new Date(new Date().setFullYear(new Date().getFullYear() + 5)).toLocaleString('sv').slice(0, 10) + "T23:59";
     
+    //Kinda wondering why I didn't just use form actions for this...
+
     async function create_meet() {
         if(description) {
             await fetch('/api/meets/create_meet', {
                 method: "POST",
-                body: JSON.stringify({meets: [{host: $page.data.session.user.displayname, event_name, event_date: date, description}]})
+                body: JSON.stringify({meets: [{host: $page.data.session.user.displayname, location, event_name, event_date: date, description}]})
             })
             .then(meet_data => meet_data.json())
             .then(data => {
@@ -52,6 +55,7 @@
     }
 
     async function create_repeated_meet() {
+        //yeah, this is pretty fucking horrid. there's probably a better way of doing this, I would think.
         if(description) {        
             let meets = [];
             meets.push({host: $page.data.session.user.displayname, event_name: event_name, event_date: replace_str(10, 'T', meet_date.toLocaleString('sv')), description: description})
@@ -86,7 +90,6 @@
     const upload_background = (e) => {
         let img = e.target.files[0];
         bg_img = img;
-        console.log(bg_img)
     }
 </script>
 
@@ -96,21 +99,28 @@
 
 <div class="mt-10">
     <h1 class="text-2xl font-bold text-center">create your event</h1>
-    <form class="flex flex-col justify-center items-center">
+    <form class="flex flex-col justify-center items-center gap-2" on:submit={() => {
+        if(repeat_week || repeat_month || repeat_year)
+            create_repeated_meet();
+        else
+            create_meet();
+        }}>
         <label for="event_name">event name</label>
-        <input name="event_name" type="text" bind:value={event_name} maxlength="25" required class="text-black px-0.5 py-1" placeholder="event name here">
-        <label for="date" class="pt-2">date</label>
+        <input name="event_name" type="text" bind:value={event_name} maxlength="255" required class="text-black px-0.5 py-1" placeholder="event name here">
+        <label for="location" >location</label>
+        <input name="location" type="text" bind:value={location} required class="text-black px-0.5 py-1" placeholder="location here">
+        <label for="date" class="">date</label>
         <input name="date" type="datetime-local" bind:value={date} required class="text-black" max={max_date}>
-        <input type="file" accept="image/*" class="pt-2" bind:value={bg_img} on:change={(e) => upload_background(e)}>
-        <label class="pt-2">
+        <input type="file" accept="image/*" class="file:bg-gray-800 file:text-white file:border-0 file:rounded-full file:p-2 file:hover:opacity-75 file:hover:cursor-pointer file:font-bold p-1" bind:value={bg_img} on:change={(e) => upload_background(e)}>
+        <label>
             repeat?
             <input type="checkbox" bind:checked={checked}>
         </label>
         {#if checked}
             <!-- repeat every week -->
-            <label for="end-date" class="pt-2">end date</label>
+            <label for="end-date" class="">end date</label>
             <input type="datetime-local" class="text-black" name="end-date" min={min_date} max={max_date} bind:value={end_date} required>
-            <div class="flex flex-rows gap-4 pt-2">
+            <div class="flex flex-rows gap-4">
                 <label>
                     repeat weekly
                     <input type="checkbox" bind:checked={repeat_week}>
@@ -127,10 +137,6 @@
         {/if}
         <label for="desc" class="pt-2">description</label>
         <textarea name="desc" class="text-black p-1 w-96 h-48" bind:value={description} placeholder="description here" required></textarea>
-        {#if repeat_week || repeat_month || repeat_year}
-            <button on:click={ create_repeated_meet }>submit</button>
-        {:else}
-            <button on:click={ create_meet }>submit</button>
-        {/if}
+        <input type="submit" class="bg-gray-800 p-2 m-2 rounded-md hover:opacity-75 transition-all duration-150 active:scale-90" value="create">
     </form>
 </div>
