@@ -5,7 +5,6 @@
 
     let meets_arr = [];
     onMount(async() => {
-        //const supabase = await client(data.session)
         const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
         const date = new Date().toLocaleString('sv', { timeZone: tz }).substring(0, 10)
 
@@ -60,8 +59,8 @@
             {/if}
             </div>
         </section>
-        <section class="mt-2">
-            <h2 class="text-2xl font-bold">new listings</h2>
+        <section class="mt-4">
+            <h2 class="text-2xl font-bold">latest listings</h2>
             <div class="grid grid-cols-2 lg:grid-cols-5 gap-2 p-2">
                 {#each data.marketplace_listings as listing}
                     <a href="/market/{listing.id}" class="hover:opacity-75">
@@ -76,16 +75,17 @@
                 {/each}
             </div>
         </section>
-        <section class="mt-2">
-            <h2 class="text-2xl font-bold">new threads</h2>
-            <div class="grid grid-cols-2 lg:grid-cols-5 p-2 gap-2">
+        <section class="mt-4 w-full">
+            <h2 class="text-2xl font-bold">latest threads</h2>
+            <div class="grid grid-cols-1 p-2 gap-1">
                 {#each data.forum_posts as post}
                     <a href="/forum/post/{post.id}" class="hover:opacity-75">
-                        <div class="flex border p-2 h-24">
+                        <div class="flex border p-2 h-16 w-full">
                             <span class="max-h-full overflow-y-hidden">{post.post_title}</span>
                         </div>
                     </a>
                 {/each}
+                <a href="/forum" class="w-full bg-gray-800 p-2 hover:opacity-75">view more threads</a>
             </div>
         </section>
     </div>

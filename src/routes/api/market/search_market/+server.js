@@ -11,6 +11,7 @@ export async function GET({ url }) {
         .from('marketplace_listings')
         .select('id, item_name, price, listing_pics')
         .ilike('item_name', `%${search_term}%`)
+        .eq('is_live', true)
         .order('created_at', { ascending: false })
 
         if(error)
@@ -22,6 +23,7 @@ export async function GET({ url }) {
         .from('marketplace_listings')
         .select('id, item_name, price, listing_pics')
         .ilike('item_name', `%${search_term}%`)
+        .eq('is_live', true)
         .lte('price', max)
         .order('created_at', { ascending: false })
 
@@ -34,6 +36,7 @@ export async function GET({ url }) {
         .from('marketplace_listings')
         .select('id, item_name, price, listing_pics')
         .ilike('item_name', `%${search_term}%`)
+        .eq('is_live', true)
         .gte('price', min)
         .order('created_at', { ascending: false })
 
@@ -46,6 +49,7 @@ export async function GET({ url }) {
         .from('marketplace_listings')
         .select('id, item_name, price, listing_pics')
         .ilike('item_name', `%${search_term}%`)
+        .eq('is_live', true)
         .gte('price', min)
         .lte('price', max)
         .order('created_at', { ascending: false })

@@ -35,7 +35,7 @@
         </div>
         <div class="flex items-center gap-4 lg:mr-5 lg:ml-auto">
             {#if $page.data.session?.user}
-                <a href="/garage/{$page.data.session.user.displayname}" class="hover:opacity-75 w-10"><img src="/assets/garage.png" alt="garage"></a>
+                <a href="/garage/{$page.data.session.user.displayname}" class="hover:opacity-75 w-8"><img src="/assets/garage.png" alt="garage"></a>
                 {#if $page.url.pathname.indexOf("garage") != -1}
                     <a href="/garage/{$page.data.session.user.displayname}/add-car" class="hover:opacity-75">add a car</a>
                 {/if}

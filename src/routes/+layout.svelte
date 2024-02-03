@@ -10,3 +10,6 @@
 <body class="bg-black font-mono text-white antialiased">
     <slot />
 </body>
+<footer>
+    <!-- TODO -->
+</footer>
