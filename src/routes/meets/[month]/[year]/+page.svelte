@@ -3,9 +3,14 @@
     import { goto } from '$app/navigation'
     import { page } from '$app/stores'
     import CalendarEvents from "$lib/meets/CalendarEvents.svelte";
+    
     export let data;
 
-    $: events = data.events
+    let width = 0;
+    let radius;
+    let user_location;
+
+    $: events = data.events;
 
     let date;
     $: month_str = ref_date.toLocaleString(undefined, { month: 'long' });
@@ -18,10 +23,65 @@
 
     //Just gets the month from [month] param and year from the [year] param
     $: curr_month = parseInt($page.params.month) - 1;
-    $: curr_year = parseInt($page.params.year)
-    $: ref_date = new Date(curr_year, curr_month)
+    $: curr_year = parseInt($page.params.year);
+    $: ref_date = new Date(curr_year, curr_month);
 
-    const daysInMonth = (year, month) => new Date(year, month, 0).getDate()
+    const daysInMonth = (year, month) => new Date(year, month, 0).getDate();
+    const short_days = ['Sun', 'Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat'];
+    const long_days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
+    async function get_coords(address) {
+        const req = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(address)}`);
+        const res = await req.json();
+
+        if(res.length > 0) {
+            const location = res[0];
+            return {
+                lat: parseFloat(location.lat), 
+                lon: parseFloat(location.lon)
+            };
+        } else {
+            return {
+                lat: parseFloat(41.84201),
+                lon: parseFloat(-89.485937)
+            };
+        }
+    }
+
+    function to_rad(degrees) {
+        return degrees * (Math.PI / 180);
+    }
+
+    async function calculate_distance(start_coord, end_coord) {
+        const R = 6371; //Earth's radius in km
+        const lat_dist = to_rad(end_coord.lat - start_coord.lat);
+        const lon_dist = to_rad(end_coord.lon - start_coord.lon);
+
+        const a = Math.pow(Math.sin(lat_dist / 2), 2) + Math.cos(to_rad(start_coord.lat)) * Math.cos(to_rad(end_coord.lat)) * Math.pow(Math.sin(lon_dist / 2), 2);
+
+        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        
+        const dist = R * c; //Distance in km
+        return dist;
+    }
+
+    async function search_locations(user_location, radius, all_locations) {
+        const user_coords = await get_coords(user_location);
+
+        const locations_in_rad = [];
+
+        for(const location of all_locations) {
+            const location_coords = await get_coords(location.location);
+
+            const dist = await calculate_distance(user_coords, location_coords);
+            //console.log(dist);
+            if(dist <= radius) {
+                locations_in_rad.push(location);
+            }
+        }
+
+        data.events = data.events.filter((x) => locations_in_rad.find(({ id }) => x.id === id));
+    }
 
     async function get_current_calendar(month) {
         //If we go over december, increment into jan the next year basically
@@ -64,8 +124,6 @@
         get_current_calendar(curr_month)
     }
 
-    let width = 0;
-
     onMount(() => {
         get_current_calendar(curr_month);
     })
@@ -88,6 +146,11 @@
         <a href="/meets/create" class="m-2 inline-block hover:opacity-75">create meet</a>
     {/if}
     <div class="mt-6">
+        <form class="flex justify-center items-center gap-2 text-black" on:submit={() => search_locations(user_location, radius, data.locations)}>
+            <input type="text" bind:value={user_location} />
+            <input type="number" min=1 max=200 bind:value={radius} />
+            <input type="submit" class="text-white" />
+        </form> 
         <div class="flex flex-row justify-center items-center text-center">
             <button on:click={() => {
                 calendar_days = [];
@@ -118,37 +181,16 @@
         </div>
         <div class="flex flex-col justify-center items-center mx-auto rounded-sm w-full lg:w-[85rem] p-1 overflow-y-auto overflow-x-hidden">
             <section class="grid grid-cols-7 mx-auto border border-white w-full lg:w-[84rem] sticky top-0 bg-black z-50 text-center text-xs lg:text-base">
-                {#if width > 700}
-                    <span>Sunday</span>
-                    <span>Monday</span>
-                    <span>Tuesday</span>
-                    <span>Wednesday</span>
-                    <span>Thursday</span>
-                    <span>Friday</span>
-                    <span>Saturday</span>
-                {:else}
-                    <span>Sun</span>
-                    <span>Mon</span>
-                    <span>Tues</span>
-                    <span>Wed</span>
-                    <span>Thurs</span>
-                    <span>Fri</span>
-                    <span>Sat</span>
-                {/if}
+                {#each width > 640 ? long_days : short_days as day}
+                    <span>{day}</span>
+                {/each}
             </section>
-            {#if width > 700}
-                <div class="grid grid-cols-7 px-1 h-auto">
+                <div class={`grid grid-cols-7 px-1 h-auto ${width > 640 ? "" : "w-screen"}`}>
                     {#each calendar_days as day}
                         <CalendarEvents day={day} date={date} {events} />
                     {/each}
                 </div>
-            {:else}
-                <div class="grid grid-cols-7 px-1 h-auto w-screen">
-                    {#each calendar_days as day}
-                        <CalendarEvents day={day} date={date} {events} />
-                    {/each}
-                </div>
-            {/if}
+            
         </div>
     </div>
 </div>
