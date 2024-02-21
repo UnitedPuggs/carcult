@@ -1,12 +1,14 @@
 <script>
     import { page } from '$app/stores'
     import { goto } from '$app/navigation'
-/* seller - item_name - price - lsting_pics */
     export let data;
 
     let title;
     let price;
     let description;
+    let mileage;
+    let title_status;
+    let transmission;
 
     let files;
     let preview_files = [];
@@ -16,41 +18,42 @@
     async function create_listing() {
         const form_data = new FormData()
 
-        form_data.append('title', title)
-        form_data.append('price', price)
-        form_data.append('description', description)
+        form_data.append('title', title);
+        form_data.append('price', price);
+        form_data.append('description', description);
+        form_data.append('mileage', mileage ? mileage : 0);
+        form_data.append('title_status', title_status ? title_status : '');
+        form_data.append('transmission', transmission ? transmission : '');
 
         //mfw append can't add an entire list with append
         for(let i = 0; i < files.length; ++i) {
-            form_data.append('images', files[i])
+            form_data.append('images', files[i]);
         }
 
         await fetch("/api/market/create_listing", {
             method: "POST",
             body: form_data
-        })
+        });
 
-        goto("/market")
+        goto("/market");
     }
 
     const upload_images = (e) => {
-        preview_files = []
+        preview_files = [];
 
         let images = e.target.files;
         files = images;
         Object.keys(images).forEach(i => {
             const file = images[i];
             const reader = new FileReader();
-            reader.readAsDataURL(file)
+            reader.readAsDataURL(file);
             reader.onload = e => {
-                preview_files.unshift(e.target.result)
-                preview_files = preview_files
+                preview_files.unshift(e.target.result);
+                preview_files = preview_files;
             }
         })
-        preview_files = preview_files
+        preview_files = preview_files;
     }
-
-
 </script>
 
 <svelte:head>
@@ -64,6 +67,18 @@
         <form class="flex flex-col gap-2" on:submit={create_listing}>
             <input bind:value={title} class="bg-gray-800 border border-white p-2 rounded-sm" placeholder="title" required>
             <input bind:value={price} type="number" class="bg-gray-800 border border-white p-2 rounded-sm" placeholder="price" required min=0>
+            <input bind:value={mileage} type="number" class="bg-gray-800 border border-white p-2 rounded-sm" placeholder="mileage" min=1 max=999999>
+            <select class="bg-gray-800 border border-white p-2 rounded-sm" bind:value={title_status}>
+                <option value="" disabled selected hidden>title status</option>
+                <option value="clean">clean</option>
+                <option value="salvage">salvage</option>
+                <option value="rebuilt">rebuilt</option>
+            </select>
+            <select class="bg-gray-800 border border-white p-2 rounded-sm" bind:value={transmission}>
+                <option value="" disabled selected hidden>transmission type</option>
+                <option value="manual">manual</option>
+                <option value="automatic">automatic</option>
+            </select>
             <textarea bind:value={description} class="bg-gray-800 border border-white p-2 rounded-sm h-64" placeholder="description" required></textarea>
             <input 
                 type="file" 
@@ -76,7 +91,8 @@
             <input type="submit" value="create listing" class="bg-gray-700 border border-white p-2 rounded-sm hover:opacity-80 hover:cursor-pointer">
         </form>
     </div>
-    {#if width > 700}
+    <!-- could totally make a little mobile preview -->
+    {#if width > 640}
         <div class="flex justify-center items-center mx-auto" id="seller-preview">
             <div class="border-2 border-white w-[46rem] lg:h-[45rem] p-4">
                 <h1 class="font-bold text-lg pb-2">preview</h1>
@@ -96,7 +112,16 @@
                     </section>
                     <section class="flex flex-col p-2 break-words rounded-md">
                         <h2 class="text-lg font-bold w-[254px] max-h-20 overflow-y-auto">{title ? title : 'title'}</h2>
-                        <h3 class="text-sm font-bold">{price ? `$${price}` : 'price'}</h3>
+                        <span class="text-sm font-bold">{price ? `$${price}` : 'price'}</span>
+                        {#if mileage > 0}
+                            <span>{mileage > 1 ? `${mileage} miles` : `${mileage} mile`}</span>
+                        {/if}
+                        {#if title_status}
+                            <span>{title_status} title</span>
+                        {/if}
+                        {#if transmission}
+                            <span>{transmission} transmission</span>
+                        {/if}
                         <h2 class="font-bold pt-8 text-lg">description</h2>
                         <span class="w-[254px] max-h-80 overflow-y-auto">{description ? description : 'description appears here'}</span>
                         <div class="mt-auto mb-8 flex flex-col gap-4">

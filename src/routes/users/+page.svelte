@@ -19,7 +19,7 @@
 </script>
 
 <svelte:head>
-    <title>carcult | user search</title>
+    <title>carcult user search</title>
 </svelte:head>
 
 <div class="flex flex-col mt-10">

@@ -1,6 +1,7 @@
 <script>
     import { public_sb } from '$lib/public_supabase'
     import { onMount } from 'svelte';
+  import MarketItem from '../lib/market/MarketItem.svelte';
     export let data;
 
     let meets_arr = [];
@@ -25,7 +26,7 @@
 </script>
 
 <svelte:head>
-    <title>carcult - the best place to find car meets!</title>
+    <title>carcult | the best place to find car meets!</title>
     <meta name="description" content="Built by car lovers, carcult is the place where you can find new meets to share your love of cars with other car enthusiasts!">
     <meta name="keywords" content="car enthusiasts, car meets, auto events, car community, automotive gatherings, connect with car lovers, car culture, car show calendar, automotive networking">
     <meta name="author" content="carcult">
@@ -63,15 +64,15 @@
             <h2 class="text-2xl font-bold">latest listings</h2>
             <div class="grid grid-cols-2 lg:grid-cols-5 gap-2 p-2">
                 {#each data.marketplace_listings as listing}
-                    <a href="/market/{listing.id}" class="hover:opacity-75">
-                        <div class="flex flex-col justify-center items-center border-2 h-fit p-2">
-                            <div class="w-full h-48 border rounded-lg">
-                                <img src={listing.listing_pics[0]} alt="marketplace listing" class="w-full h-full object-cover rounded-lg">
-                            </div>
-                            <span class="text-lg font-bold max-w-full truncate">{listing.item_name}</span>
-                            <span>listed by {listing.seller}</span>
-                        </div>
-                    </a>
+                    <MarketItem
+                    slug={listing.id}
+                    cover_pic={listing.listing_pics[0]}
+                    price={listing.price}
+                    item_name={listing.item_name}
+                    mileage={listing.mileage}
+                    title_status={listing.title_status}
+                    transmission={listing.transmission}
+                    />
                 {/each}
             </div>
         </section>

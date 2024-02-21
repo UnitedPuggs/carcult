@@ -3,7 +3,7 @@ import { supabase } from '$lib/supabase'
 export async function load() {
     let { data: marketplace_listings, listing_err } = await supabase
     .from('marketplace_listings')
-    .select('id, item_name, seller, listing_pics')
+    .select('id, item_name, seller, listing_pics, mileage, transmission, title_status, price')
     .order('created_at', { ascending: false })
     .range(0, 4)
     .eq('is_live', true)
