@@ -61,7 +61,7 @@
             <a class="mt-4 p-4 bg-gray-800 hover:opacity-80 text-center transition-all active:scale-90 rounded-sm" href="/market/selling">selling</a>
         {/if}
     </div>
-    <div class="grid grid-cols-2 lg:grid-cols-[repeat(auto-fill,minmax(300px,1fr))] p-2 gap-2 justify-items-center w-full">
+    <div class="grid grid-cols-2 lg:grid-cols-[repeat(auto-fill,minmax(300px,1fr))] auto-rows-min p-2 gap-2 justify-items-center w-full">
         {#await data.streamed.marketplace_listings}
             <p>loading marketplace listings...</p>
         {:then result}

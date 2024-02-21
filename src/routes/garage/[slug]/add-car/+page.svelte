@@ -25,11 +25,11 @@
             <input type="text" class="text-black py-1 px-0.5 rounded-sm" placeholder="model here" id="car" name="car" required bind:value={model}>
             <input type="file" accept="image/*" id="file" name="file" bind:value={file} on:change={(e) => uploaded_file(e)} />
             <textarea class="text-black rounded-sm px-0.5 py-1" id="desc" name="desc" placeholder="description here" bind:value={description}></textarea>
-            <input type="submit" value="add" class="hover:opacity-75 cursor-pointer">
+            <input type="submit" value="add" class="hover:opacity-75 cursor-pointer text-white bg-gray-800 rounded-sm">
         </form>
     </div>
     <div class="flex flex-col text-center">   
-        <span class="text-2xl font-bold break-all max-w-lg">{model ? model : "your car's model"}</span>
+        <span class="text-2xl font-bold break-all max-w-lg">{model ? model : "your vehicle"}</span>
         <img src={file ? file : "/assets/image_upload.png"} alt="upload your car" class="border-4 border-white w-full lg:w-[512px] h-[296px] object-cover select-none"/>
         <span class="text-lg font-bold">description</span>
         <p class="max-w-lg break-all">{description ? description : "your description"}</p>

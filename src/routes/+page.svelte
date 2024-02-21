@@ -1,7 +1,7 @@
 <script>
     import { public_sb } from '$lib/public_supabase'
     import { onMount } from 'svelte';
-  import MarketItem from '../lib/market/MarketItem.svelte';
+    import MarketItem from '$lib/market/MarketItem.svelte';
     export let data;
 
     let meets_arr = [];
@@ -13,6 +13,7 @@
         .from('meets')
         .select('event_name, slug, event_date')
         .ilike('event_date', `%${date}%`)
+        .range(0, 5)
 
         if(meets_err)
             console.log(meets_err)
@@ -44,7 +45,7 @@
         <h1 class="text-4xl font-bold pt-4">carcult</h1>
         <h2 class="text-lg text-gray-400">the best place to find car meets!</h2>
         <section class="mt-4 w-full max-h-96 overflow-y-auto">
-            <h2 class="text-2xl font-bold">today's meets</h2>
+            <h2 class="text-2xl font-bold sticky top-0 bg-black z-50">today's meets</h2>
             <div class="grid lg:grid-cols-[repeat(auto-fit,minmax(300px,1fr))] items-center gap-2 p-2">
             {#if meets_arr.length > 0}
                 {#each meets_arr as meet} 
@@ -62,7 +63,7 @@
         </section>
         <section class="mt-4">
             <h2 class="text-2xl font-bold">latest listings</h2>
-            <div class="grid grid-cols-2 lg:grid-cols-5 gap-2 p-2">
+            <div class="grid grid-cols-2 lg:grid-cols-3 gap-2 p-2">
                 {#each data.marketplace_listings as listing}
                     <MarketItem
                     slug={listing.id}
@@ -80,13 +81,24 @@
             <h2 class="text-2xl font-bold">latest threads</h2>
             <div class="grid grid-cols-1 p-2 gap-1">
                 {#each data.forum_posts as post}
-                    <a href="/forum/post/{post.id}" class="hover:opacity-75">
-                        <div class="flex border p-2 h-16 w-full">
-                            <span class="max-h-full overflow-y-hidden">{post.post_title}</span>
+                    <a href="/forum/post/{post.forum_replies[0].post_id}" class="hover:opacity-75 border flex flex-col">
+                        <div class="flex gap-2 lg:w-full">
+                            <img src={post.garage.pfp_url} alt="poster" class="h-16 w-16 object-cover" />
+                            <div class="flex flex-col justify-start items-start">
+                                <span class="font-bold text-lg">{post.post_title}</span>
+                                <span class="text-sm">started by {post.garage.username} on {post.created_at.substring(0, 10)}</span>
+                                <span class="text-sm">{post.reply_count > 1 ? `${post.reply_count} replies` : `${post.reply_count} reply`}</span>
+                                <span class="text-gray-400">
+                                    last reply by {post.forum_replies[post.forum_replies.length - 1].poster} at {post.forum_replies[post.forum_replies.length - 1].created_at.substring(0, 10)}:
+                                </span>
+                                <p class="text-start max-h-16 overflow-y-auto text-gray-400">
+                                    {post.forum_replies[post.forum_replies.length - 1].reply_content}
+                                </p>
+                            </div>
                         </div>
                     </a>
                 {/each}
-                <a href="/forum" class="w-full bg-gray-800 p-2 hover:opacity-75">view more threads</a>
+                <a href="/forum" class="w-full lg:w-48 mx-auto bg-gray-800 p-2 hover:opacity-75">view more threads</a>
             </div>
         </section>
     </div>

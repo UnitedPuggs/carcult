@@ -37,7 +37,7 @@
             {#if $page.data.session?.user}
                 <a href="/garage/{$page.data.session.user.displayname}" class="hover:opacity-75 w-8"><img src="/assets/garage.png" alt="garage"></a>
                 {#if $page.url.pathname.indexOf("garage") != -1 && $page.url.pathname != `/garage/${$page.data.session.user.displayname}/my-meets`}
-                    <a href="/garage/{$page.data.session.user.displayname}/add-car" class="hover:opacity-75">add a car</a>
+                    <a href="/garage/{$page.data.session.user.displayname}/add-car" class="hover:opacity-75">add vehicle</a>
                 {/if}
             {#if $page.data.session.user.role > 0 && $page.url.pathname.indexOf("meets") != -1}
                 <a href="/garage/{$page.data.session.user.displayname}/my-meets" class=" hover:opacity-75">my meets</a>
