@@ -105,7 +105,10 @@
             </section>
         </section>
         <h2 class="text-lg">${market.price}</h2>
-        <h3 class="text-sm text-gray-500">listed on {market.created_at.substring(0, 10)}</h3>
+        <span class="text-sm">{market.mileage ? `hooned ${market.mileage} miles` : ''}</span>
+        <span class="text-sm">{market.title_status ? `${market.title_status} title` : ''}</span>
+        <span class="text-sm">{market.transmission ? `${market.transmission} transmission` : ''}</span>
+        <span class="text-sm text-gray-500">listed on {market.created_at.substring(0, 10)}</span>
         <!-- would probably want to include message buttons here -->
         <h1 class="text-xl font-bold pt-2">description</h1>
         <span class="max-h-[30rem] min-h-[24rem] overflow-y-auto border border-gray-600 p-1 rounded-md whitespace-pre-wrap">{market.item_description}</span>
