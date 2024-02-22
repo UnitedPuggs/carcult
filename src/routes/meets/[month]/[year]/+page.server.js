@@ -23,8 +23,21 @@ export async function load({ params }) {
     .or(`event_date.ilike.%${date_str}%, event_date.ilike.%${prev_date_str}%`)
     .order('event_date', { ascending: true })
 
-    if(error)
-        console.log(error)
+    if(error) {
+        console.log(error);
+        return {};
+    }
 
-    return { events: events }
+    let { data: locations, loc_error } = await supabase
+    .from('meets')
+    .select('id, location')
+    .or(`event_date.ilike.%${date_str}%, event_date.ilike.%${prev_date_str}%`)
+    .neq('location', null)
+
+    if(loc_error) {
+        console.log(loc_error);
+        return {};
+    }
+
+    return { events: events, locations }
 }
