@@ -8,11 +8,11 @@
     let description = data.events[0].description;
     let event_name = data.events[0].event_name;
     let event_date = data.events[0].event_date;
+    let event_location = data.events[0].location;
 
     $: events = data.events[0];
 
     let textarea;
-
     $: if(textarea) {
         textarea.style.height = `${textarea.scrollHeight}px`
     }
@@ -34,7 +34,7 @@
     async function update_meet() {
         await fetch('/api/meets/update_meet', {
             method: "PATCH",
-            body: JSON.stringify({id: events.id, event_name, description, event_date})
+            body: JSON.stringify({ id: events.id, event_name, description, event_date, location: event_location })
         })
         edit_mode = false;
         invalidateAll();
@@ -64,7 +64,8 @@
             <!-- kinda drunk, but this bind shit is kinda based <-- wtf was I talking about here -->
             <p class="p-1 whitespace-pre-wrap md:max-w-xl text-stroke">{events.description}</p>
         {:else} <!-- referring to that first comment, yes it's much cleaner -->
-            <input type="text" placeholder={event_name} class="text-3xl font-bold text-black" bind:value={event_name}>
+            <input type="text" placeholder={event_name} class="text-3xl font-bold text-black" bind:value={event_name} />
+            <input type="text" placeholder={event_location} class="w-auto font-bold text-black" bind:value={event_location} />
             <p class="text-lg">hosted by <strong><a href="/garage/{events.host}" class="underline hover:no-underline">{events.host}</a></strong></p>
             <div class="flex">
             on&nbsp;<input type="datetime-local" bind:value={event_date} class="text-black">
@@ -78,12 +79,12 @@
     <iframe src="https://maps.google.com/maps?q={events.location}&output=embed" width="100%" height="300" frameborder="0" style="border:0" allowfullscreen></iframe>
 {/if}
 {#if $page.data.session?.user.displayname == events.host}
-    <div class="flex flex-col mt-2 gap-2">
-        <button class="hover:opacity-75 md:w-fit md:mx-auto" on:click={ toggle_edit_mode }>edit</button>
+    <div class="flex flex-col my-2 gap-2">
+        <button class="hover:opacity-75 md:w-fit md:mx-auto bg-gray-800 p-2 rounded-md" on:click={ toggle_edit_mode }>{!edit_mode ? "edit" : "close edit"}</button>
         {#if edit_mode}
-            <button class="hover:opacity-75 md:w-fit md:mx-auto" on:click={ update_meet }>save</button>
+            <button class="hover:opacity-75 md:w-fit md:mx-auto bg-gray-800 p-2 rounded-md" on:click={ update_meet }>save</button>
         {/if}
         <!-- probably a good idea to have a double-checker -->
-        <button class="hover:opacity-75 md:w-fit md:mx-auto" on:click={ delete_meet }>delete meet</button>
+        <button class="hover:opacity-75 md:w-fit md:mx-auto bg-gray-800 p-2 rounded-md" on:click={ delete_meet }>delete meet</button>
     </div>
 {/if}
