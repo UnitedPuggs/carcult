@@ -25,10 +25,14 @@ export async function PATCH({ request, locals }) {
     const supabase = await client(session)
 
     const id = form_data.get('id')
-    const title = form_data.get('title')
-    const price = form_data.get('price')
-    const description = form_data.get('description')
-    const images = form_data.getAll('images') 
+    const title = form_data.get('title');
+    const price = form_data.get('price');
+    const description = form_data.get('description');
+    const mileage = form_data.get('mileage');
+    const title_status = form_data.get('title_status');
+    const transmission = form_data.get('transmission');
+    const zip = form_data.get('zip');
+    const images = form_data.getAll('images')
     const orig_images = form_data.getAll('img_arr')
 
     const urls = await Promise.all(images.map(async image => {
@@ -44,9 +48,13 @@ export async function PATCH({ request, locals }) {
         item_name: title,
         price: price,
         item_description: description,
+        mileage: mileage,
+        title_status: title_status,
+        transmission: transmission,
+        zip: zip,
         listing_pics: orig_images
     }])
-    .eq('id', id)
+    .eq('id', id);
 
     if(error)
         return new Response(JSON.stringify({error: error}))

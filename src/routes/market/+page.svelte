@@ -36,6 +36,15 @@
             search_market();
         }, 1000)
     }
+
+    function check_acc_age() { 
+        let acc_created = new Date($page.data.session?.user.created_at);
+        let today = new Date();
+
+        let time_diff = today.getTime() - acc_created.getTime();
+        let day_diff = Math.round(time_diff / (1000 * 3600 * 24));
+        return day_diff;
+    }
 </script>
 
 <svelte:head>
@@ -56,9 +65,13 @@
             <input type="number" step=100 class="bg-gray-800 w-24 px-1" placeholder="max" min=0 bind:value={max_price}>
         </div>
         {#if $page.data.session?.user}
-            <a class="mt-4 border-2 p-4 border-white bg-gray-800 hover:opacity-80 text-center transition-all active:scale-90" href="/market/create">create new listing</a>
+            {#if check_acc_age() > 14}
+                <a class="mt-4 border-2 p-4 border-white bg-gray-800 hover:opacity-80 text-center transition-all active:scale-90" href="/market/create">create new listing</a>
+            {/if}
             <a class="mt-4 p-4 border-2 border-white bg-gray-800 hover:opacity-80 text-center transition-all active:scale-90 rounded-sm" href="/market/chats">chats</a>
-            <a class="mt-4 p-4 bg-gray-800 hover:opacity-80 text-center transition-all active:scale-90 rounded-sm" href="/market/selling">selling</a>
+            {#if check_acc_age() > 14}
+                <a class="mt-4 p-4 bg-gray-800 hover:opacity-80 text-center transition-all active:scale-90 rounded-sm" href="/market/selling">selling</a>
+            {/if}
         {/if}
     </div>
     <div class="grid grid-cols-2 lg:grid-cols-[repeat(auto-fill,minmax(300px,1fr))] auto-rows-min p-2 gap-2 justify-items-center w-full">

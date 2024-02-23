@@ -29,9 +29,9 @@ export async function POST({ request, locals }) {
     const price = form_data.get('price');
     const description = form_data.get('description');
     const mileage = form_data.get('mileage');
-    //console.log(mileage)
     const title_status = form_data.get('title_status');
     const transmission = form_data.get('transmission');
+    const zip = form_data.get('zip');
     const images = form_data.getAll('images')
 
     let words = generate({ exactly: 3 })
@@ -49,6 +49,7 @@ export async function POST({ request, locals }) {
     .insert([
         { 
             id: id,
+            zip: zip,
             seller: session.user.displayname,
             item_name: title,
             price: price,

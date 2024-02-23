@@ -42,7 +42,7 @@
 </script>
 
 <svelte:head>
-    <title>marketplace - {market.item_name}</title>
+    <title>carcult marketplace | {market.item_name}</title>
     <meta name="description" content="Explore cars and parts on the carcult market. Join enthusiasts, discover diverse vehicles, and immerse yourself in automotive passion.">
     <meta name="keywords" content="car meets, automotive market, car enthusiasts, carcult">
     <meta name="author" content="carcult">
@@ -125,5 +125,7 @@
                 <span class="text-xl font-bold">{market.seller}</span>
         </section>
         <span class="text-sm text-gray-500">joined on {user.created.substring(0, 7)}</span>
+        <!-- svelte-ignore a11y-missing-attribute -->
+        <iframe src="https://maps.google.com/maps?q={market.zip}&output=embed&z=10" width="100%" height="200" frameborder="0" style="border:0" allowfullscreen></iframe>
     </div>
 </div>

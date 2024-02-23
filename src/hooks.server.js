@@ -19,7 +19,7 @@ import jwt from 'jsonwebtoken'
 async function get_username(email) {
     const { data: users, error } = await supabase
     .from('users')
-    .select('username')
+    .select('username, created_at')
     .eq('email', email)
 
     if(error)
@@ -67,6 +67,9 @@ export const handle = SvelteKitAuth(async (event) => {
                 const email = await get_username(session.user.email);
                 let displayname = await email[0].username;
                 session.user.displayname = displayname;
+
+                const created_at = await email[0].created_at;
+                session.user.created_at = created_at;
 
                 const role = await get_role(session.user.email)
                 let user_role = await role[0].role;
