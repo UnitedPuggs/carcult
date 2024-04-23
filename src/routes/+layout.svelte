@@ -10,7 +10,8 @@
 <body class="bg-black font-mono text-white antialiased">
     <slot />
 </body>
-<footer>
+<!--
+<footer class="">
     <hr>
     <div class="flex flex-col my-2">
         <h3>carcult<sup>tm</sup> - 2024</h3>
@@ -18,3 +19,4 @@
         <a href="">careers</a>
     </div>
 </footer>
+-->
