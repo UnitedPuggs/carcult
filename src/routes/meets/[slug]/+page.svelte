@@ -76,15 +76,15 @@
 </div>
 <!-- svelte-ignore a11y-missing-attribute -->
 {#if events.location}
-    <iframe src="https://maps.google.com/maps?q={events.location}&output=embed" width="100%" height="300" frameborder="0" style="border:0" allowfullscreen></iframe>
+    <iframe src="https://maps.google.com/maps?q={events.location}&output=embed" width="100%" height="400" frameborder="0" style="border:0" allowfullscreen></iframe>
 {/if}
 {#if $page.data.session?.user.displayname == events.host}
     <div class="flex flex-col my-2 gap-2">
-        <button class="hover:opacity-75 md:w-fit md:mx-auto bg-gray-800 p-2 rounded-md" on:click={ toggle_edit_mode }>{!edit_mode ? "edit" : "close edit"}</button>
+        <button class="hover:opacity-75 md:w-fit md:mx-auto border-2 border-white p-2 rounded-md active:scale-95" on:click={ toggle_edit_mode }>{!edit_mode ? "edit" : "close edit"}</button>
         {#if edit_mode}
-            <button class="hover:opacity-75 md:w-fit md:mx-auto bg-gray-800 p-2 rounded-md" on:click={ update_meet }>save</button>
+            <button class="hover:opacity-75 md:w-fit md:mx-auto border-2 border-white p-2 rounded-md active:scale-95" on:click={ update_meet }>save</button>
         {/if}
         <!-- probably a good idea to have a double-checker -->
-        <button class="hover:opacity-75 md:w-fit md:mx-auto bg-gray-800 p-2 rounded-md" on:click={ delete_meet }>delete meet</button>
+        <button class="hover:opacity-75 md:w-fit md:mx-auto border-2 border-white p-2 rounded-md active:scale-95" on:click={ delete_meet }>delete meet</button>
     </div>
 {/if}

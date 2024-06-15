@@ -33,7 +33,7 @@
             <!-- <a href="/forum" class="hover:opacity-75">forum</a> -->
             <a href="/users" class="hover:opacity-75 border border-white p-1 rounded-sm active:scale-95">users</a>
         </div>
-        <div class="flex items-center gap-2 lg:mr-5 lg:ml-auto">
+        <div class="flex items-center gap-4 lg:mr-1 lg:ml-auto">
             {#if $page.data.session?.user}
                 <a href="/garage/{$page.data.session.user.displayname}" class="hover:opacity-75 w-8 active:scale-95"><img src="/assets/garage.png" alt="garage"></a>
                 {#if $page.url.pathname.indexOf("garage") != -1 && !$page.url.pathname.includes(`/garage/${$page.data.session.user.displayname}/my-meets`)}

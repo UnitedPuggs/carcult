@@ -23,9 +23,9 @@
     <div class="border-2 p-2 sticky top-0 w-full">
         <form class="flex flex-col gap-1" method="POST" enctype="multipart/form-data">
             <input type="text" class="text-black py-1 px-0.5 rounded-sm" placeholder="model here" id="car" name="car" required bind:value={model}>
-            <input type="file" accept="image/*" id="file" name="file" bind:value={file} on:change={(e) => uploaded_file(e)} />
+            <input type="file" accept="image/*" id="file" name="file" class="file:bg-black file:border-2 file:border-white file:text-white file:cursor-pointer" bind:value={file} on:change={(e) => uploaded_file(e)} />
             <textarea class="text-black rounded-sm px-0.5 py-1" id="desc" name="desc" placeholder="description here" bind:value={description}></textarea>
-            <input type="submit" value="add" class="hover:opacity-75 cursor-pointer text-white bg-gray-800 rounded-sm">
+            <input type="submit" value="add" class="hover:opacity-75 cursor-pointer text-white border border-white rounded-sm">
         </form>
     </div>
     <div class="flex flex-col text-center">   
