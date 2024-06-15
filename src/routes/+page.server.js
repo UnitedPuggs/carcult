@@ -1,4 +1,4 @@
-import { supabase } from '$lib/supabase'
+/*import { supabase } from '$lib/supabase'
 
 export async function load() {
     let { data: marketplace_listings, listing_err } = await supabase
@@ -34,4 +34,4 @@ export async function load() {
         return { "posts": posts_err }
     else
         return { marketplace_listings, forum_posts }
-}
+}*/
