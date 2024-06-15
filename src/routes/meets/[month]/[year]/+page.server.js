@@ -1,26 +1,15 @@
 import { supabase } from '$lib/supabase.js'
 
 export async function load({ params }) {
-    let date_str;
-    let prev_date_str;
-
-    if(params.month < 10) {
-        date_str = params.year + "-0" + params.month
-    } else {
-        date_str = params.year + "-" + params.month
-    }
-
-    if(params.month <= 10) {
-        prev_date_str = `${params.year}-0${params.month - 1}`
-    } else {
-        prev_date_str = `${params.year}-${params.month - 1}`
-    }
-
-    //Pretty sure I'm technically selecting everything from the current and previous month, which is not super efficient, but it is what it is
+    let date = new Date(`${params.year}-${params.month}`);
+    let start_date = new Date(date.getFullYear(), date.getMonth() - 1, 1).toISOString();
+    let end_date = new Date(date.getFullYear(), date.getMonth() + 1, 1, 0).toISOString();
+    
     let { data: events, error } = await supabase
     .from('meets')
     .select('*')
-    .or(`event_date.ilike.%${date_str}%, event_date.ilike.%${prev_date_str}%`)
+    .lte('event_date', end_date)
+    .gte('event_date', start_date)
     .order('event_date', { ascending: true })
 
     if(error) {
@@ -31,7 +20,8 @@ export async function load({ params }) {
     let { data: locations, loc_error } = await supabase
     .from('meets')
     .select('id, location')
-    .or(`event_date.ilike.%${date_str}%, event_date.ilike.%${prev_date_str}%`)
+    .lte('event_date', end_date)
+    .gte('event_date', start_date)
     .neq('location', null)
 
     if(loc_error) {

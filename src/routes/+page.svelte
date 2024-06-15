@@ -1,33 +1,37 @@
 <script>
     import { public_sb } from '$lib/public_supabase'
     import { onMount } from 'svelte';
-    import MarketItem from '$lib/market/MarketItem.svelte';
-    export let data;
+    //import MarketItem from '$lib/market/MarketItem.svelte';
+    //export let data;
 
     let meets_arr = [];
-    onMount(async() => {
+    onMount(async() => { // We fucking hate datetime shit
         const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
-        const date = new Date().toLocaleString('sv', { timeZone: tz }).substring(0, 10)
-
+        const date = new Date();
+        const start_date = new Date().toLocaleString('sv', { timeZone: tz })
+        const end_date = new Date(new Date(date).setDate(date.getDate() + 7)).toLocaleString('sv', { timeZone: tz })
+        
         let { data: meets, meets_err } = await public_sb
         .from('meets')
         .select('event_name, slug, event_date')
-        .ilike('event_date', `%${date}%`)
-        .range(0, 5)
+        .lt('event_date', `%${end_date}%`)
+        .gt('event_date', `%${start_date}%`)
+        .range(0, 10)
+        .order('event_date', { ascending: true })
 
         if(meets_err)
-            console.log(meets_err)
+            console.log(meets_err);
 
-        meets_arr = meets
+        meets_arr = meets;
     })  
     
     $: if(meets_arr) {
-        meets_arr = meets_arr
+        meets_arr = meets_arr;
     }
 </script>
 
 <svelte:head>
-    <title>carcult | the best place to find car meets!</title>
+    <title>carcult - the best place to find car meets!</title>
     <meta name="description" content="Built by car lovers, carcult is the place where you can find new meets to share your love of cars with other car enthusiasts!">
     <meta name="keywords" content="car enthusiasts, car meets, auto events, car community, automotive gatherings, connect with car lovers, car culture, car show calendar, automotive networking">
     <meta name="author" content="carcult">
@@ -45,14 +49,14 @@
         <h1 class="text-4xl font-bold pt-4">carcult</h1>
         <h2 class="text-lg text-gray-400">the best place to find car meets!</h2>
         <section class="mt-4 w-full max-h-96 overflow-y-auto">
-            <h2 class="text-2xl font-bold sticky top-0 bg-black z-50">today's meets</h2>
-            <div class="grid lg:grid-cols-[repeat(auto-fit,minmax(300px,1fr))] items-center gap-2 p-2">
+            <h2 class="text-2xl font-bold sticky top-0 bg-black z-50">this week's meets</h2>
+            <div class="flex my-4 gap-1 justify-center" id="not-meet-carousel"> <!-- this might need to be adjusted a bit teehee -->
             {#if meets_arr.length > 0}
-                {#each meets_arr as meet} 
+                {#each meets_arr as meet} <!-- add in a carousel here? gonna require that we copy-paste this -->
                 <a href="/meets/{meet.slug}" class="hover:opacity-75">
-                    <div class="flex flex-col justify-center items-center border border-white w-42 h-32 p-2">
+                    <div class="flex flex-col justify-center items-center border border-white w-80 h-32 p-2">
                         <span class="text-2xl font-bold">{meet.event_name}</span>
-                        <span>starting @ {meet.event_date.substring(11)}</span>
+                        <span>starting @ {meet.event_date.substring(11, 16)}{meet.event_date > 12 ? 'pm' : 'am'}</span>
                     </div>
                 </a>
                 {/each}
@@ -61,6 +65,7 @@
             {/if}
             </div>
         </section>
+        <!--
         <section class="mt-4">
             <h2 class="text-2xl font-bold">latest listings</h2>
             <div class="grid grid-cols-2 lg:grid-cols-3 gap-2 p-2">
@@ -101,5 +106,6 @@
                 <a href="/forum" class="w-full lg:w-48 mx-auto bg-gray-800 p-2 hover:opacity-75">view more threads</a>
             </div>
         </section>
+        -->
     </div>
 </body>
