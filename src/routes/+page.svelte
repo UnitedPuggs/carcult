@@ -31,7 +31,7 @@
 </script>
 
 <svelte:head>
-    <title>carcult - the best place to find car meets!</title>
+    <title>carcult</title>
     <meta name="description" content="Built by car lovers, carcult is the place where you can find new meets to share your love of cars with other car enthusiasts!">
     <meta name="keywords" content="car enthusiasts, car meets, auto events, car community, automotive gatherings, connect with car lovers, car culture, car show calendar, automotive networking">
     <meta name="author" content="carcult">
@@ -57,6 +57,7 @@
                     <div class="flex flex-col justify-center items-center border border-white w-80 h-32 p-2">
                         <span class="text-2xl font-bold">{meet.event_name}</span>
                         <span>starting @ {meet.event_date.substring(11, 16)}{meet.event_date > 12 ? 'pm' : 'am'}</span>
+                        <span>on {meet.event_date.substring(5, 7)}/{meet.event_date.substring(8, 10)}/{meet.event_date.substring(0, 4)}</span>
                     </div>
                 </a>
                 {/each}
