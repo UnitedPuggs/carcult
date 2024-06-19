@@ -55,7 +55,7 @@
     <div class="flex flex-col backdrop-blur py-10 lg:min-h-[40rem]">
         <!-- would it be better to essentially just copy-paste this all into one big if/else instead of littering this with if/else statements? -->
         {#if $page.data.session?.user.displayname == meets.host}
-            <div class="flex flex-row gap-2 mx-4">
+            <div class="flex flex-row gap-2 mx-4 my-2 justify-center lg:justify-normal">
                 <button 
                 class="hover:opacity-75 border-2 border-white p-2 rounded-md active:scale-95" 
                 on:click={ toggle_edit_mode }
