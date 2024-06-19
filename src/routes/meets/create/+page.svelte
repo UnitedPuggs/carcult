@@ -111,7 +111,13 @@
         <input name="location" type="text" bind:value={location} required class="text-black px-0.5 py-1" placeholder="location here">
         <label for="date" class="">date</label>
         <input name="date" type="datetime-local" bind:value={date} required class="text-black" max={max_date}>
-        <input type="file" accept="image/*" class="file:bg-gray-800 file:text-white file:border-0 file:rounded-full file:p-2 file:hover:opacity-75 file:hover:cursor-pointer file:font-bold p-1" bind:value={bg_img} on:change={(e) => upload_background(e)}>
+        <input 
+        type="file" 
+        accept="image/*" 
+        class="file:border-white file:bg-transparent file:text-white file:border-2 file:rounded-full file:p-2 file:hover:opacity-75 file:hover:cursor-pointer file:font-bold p-1" 
+        bind:value={bg_img} 
+        on:change={(e) => upload_background(e)}
+        >
         <label>
             repeat?
             <input type="checkbox" bind:checked={checked}>
@@ -137,6 +143,6 @@
         {/if}
         <label for="desc" class="pt-2">description</label>
         <textarea name="desc" class="text-black p-1 w-96 h-48" bind:value={description} placeholder="description here" required></textarea>
-        <input type="submit" class="bg-gray-800 p-2 m-2 rounded-md hover:opacity-75 transition-all duration-150 active:scale-90" value="create">
+        <input type="submit" class="p-2 m-2 rounded-md hover:opacity-75 active:scale-95 border border-white cursor-pointer" value="create">
     </form>
 </div>
