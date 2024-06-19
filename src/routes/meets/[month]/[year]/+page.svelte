@@ -191,7 +191,7 @@
             -&gt;
             </button>
         </div>
-        <div class="flex flex-col justify-center items-center mx-auto rounded-sm w-full lg:w-[85rem] p-1 overflow-x-hidden pointer-events-auto">
+        <div class="flex flex-col justify-center items-center mx-auto rounded-sm w-full lg:w-[85rem] p-1 overflow-hidden">
             <section class="grid grid-cols-7 mx-auto border border-white w-full lg:w-[84rem] sticky top-0 bg-black z-50 text-center text-xs lg:text-base">
                 {#each width > 640 ? long_days : short_days as day}
                     <span>{day}</span>
