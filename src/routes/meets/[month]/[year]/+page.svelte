@@ -2,6 +2,7 @@
     import { onMount } from "svelte";
     import { goto } from '$app/navigation'
     import { page } from '$app/stores'
+    import { swipe } from "svelte-gestures";
     import CalendarEvents from "$lib/meets/CalendarEvents.svelte";
     
     export let data;
@@ -124,6 +125,15 @@
         get_current_calendar(curr_month)
     }
 
+    function handler(event) {
+        calendar_days = [];
+        if(event.detail.direction == "left") {
+            get_current_calendar(++curr_month);
+        } else if (event.detail.direction == "right") {
+            get_current_calendar(--curr_month);
+        }
+    }
+
     onMount(() => {
         get_current_calendar(curr_month);
     })
@@ -136,14 +146,14 @@
     <meta name="author" content="carcult">
 
     <meta property="og:title" content="carcult | {month_str.toLowerCase()} meets">
-    <meta property="og:image" content="/assets/logo-new.jpg">
-    <meta property="og:image:secure_url" content="/assets/logo-new.jpg">
+    <meta property="og:image" content="/assets/logo-tester.jpg">
+    <meta property="og:image:secure_url" content="/assets/logo-tester.jpg">
     <meta property="og:url" content="https://carcult.org/meets/{$page.params.month}/{$page.params.year}">
 </svelte:head>
 
-<div bind:clientWidth={width}>
+<div bind:clientWidth={width} use:swipe={{ timeframe: 300, minSwipeDistnace: 100, touchAction: 'pan-y'}} on:swipe={handler}>
     {#if $page.data.session?.user.role >= 1}
-        <a href="/meets/create" class="m-2 inline-block hover:opacity-75">create meet</a>
+        <a href="/meets/create" class="m-2 inline-block hover:opacity-75 border border-white p-1 rounded-sm active:scale-95">create meet</a>
     {/if}
     <div class="mt-6">
         <!--
@@ -163,7 +173,7 @@
             &lt;-
             </button>
             <section>
-                <h1 class="text-2xl p-2 -mb-2 w-52 font-bold">{month_str} {curr_year}</h1>
+                <h1 class="text-2xl p-2 -mb-2 w-52 font-bold select-none">{month_str} {curr_year}</h1>
                 <button on:click={() => {
                     goto_today()
                 }} 

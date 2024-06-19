@@ -27,6 +27,7 @@
 		"@supabase/auth-helpers-sveltekit": "^0.10.3",
 		"@supabase/supabase-js": "^2.38.0",
 		"jsonwebtoken": "^9.0.2",
-		"random-words": "^2.0.0"
+		"random-words": "^2.0.0",
+		"svelte-gestures": "^5.0.1"
 	}
 }

@@ -25,7 +25,7 @@
 <div class="flex flex-col mt-10">
     <form class="flex flex-row justify-center items-center gap-2 border p-2 rounded-sm w-fit mx-auto" on:submit={search_users}>
         <input type="search" class="text-black p-1" placeholder="username here" bind:value={username_search}>
-        <input type="submit" class="hover:opacity-75 active:scale-90 cursor-pointer bg-gray-800 border p-1 rounded-sm" value="search">
+        <input type="submit" class="hover:opacity-75 active:scale-95 cursor-pointer border p-1 rounded-sm" value="search">
     </form>
     {#if users_found.length > 0}
         <div class="flex flex-col mt-4">
