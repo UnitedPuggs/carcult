@@ -151,7 +151,7 @@
     <meta property="og:url" content="https://carcult.org/meets/{$page.params.month}/{$page.params.year}">
 </svelte:head>
 
-<div bind:clientWidth={width} use:swipe={{ timeframe: 300, minSwipeDistnace: 100, touchAction: 'pan-y'}} on:swipe={handler}>
+<div bind:clientWidth={width} use:swipe={{ timeframe: 300, minSwipeDistance: 50, touchAction: 'pan-y'}} on:swipe={handler}>
     {#if $page.data.session?.user.role >= 1}
         <a href="/meets/create" class="m-2 inline-block hover:opacity-75 border border-white p-1 rounded-sm active:scale-95">create meet</a>
     {/if}
@@ -189,20 +189,19 @@
             class="select-none"
             >
             -&gt;
-        </button>
+            </button>
         </div>
-        <div class="flex flex-col justify-center items-center mx-auto rounded-sm w-full lg:w-[85rem] p-1 overflow-y-auto overflow-x-hidden">
+        <div class="flex flex-col justify-center items-center mx-auto rounded-sm w-full lg:w-[85rem] p-1 overflow-y-auto overflow-x-hidden pointer-events-none">
             <section class="grid grid-cols-7 mx-auto border border-white w-full lg:w-[84rem] sticky top-0 bg-black z-50 text-center text-xs lg:text-base">
                 {#each width > 640 ? long_days : short_days as day}
                     <span>{day}</span>
                 {/each}
             </section>
-                <div class={`grid grid-cols-7 px-1 h-auto ${width > 640 ? "" : "w-screen"}`}>
-                    {#each calendar_days as day}
-                        <CalendarEvents day={day} date={date} {events} />
-                    {/each}
-                </div>
-            
+            <div class={`grid grid-cols-7 px-1 h-auto ${width > 640 ? "" : "w-screen"}`}>
+                {#each calendar_days as day}
+                    <CalendarEvents {day} {date} {events} />
+                {/each}
+            </div>
         </div>
     </div>
 </div>
