@@ -12,7 +12,7 @@
     //need to figure out if a day is in prev month and apply a new extra_style
 </script>
 
-<div class="border border-white flex flex-col h-40 w-full lg:w-48 {day.extra_style} overflow-y-auto">
+<div class="border border-white flex flex-col h-40 w-full lg:w-48 {day.extra_style} overflow-y-auto pointer-events-none">
     <!--<h1>{curr_date}</h1>-->
     <span class="sticky top-0 bg-black z-50 pl-1">{day.curr_day}</span>
     <div class="flex flex-col">
@@ -20,7 +20,7 @@
             {#each today_events as event}
                 <a 
                 href="/meets/{event.slug}"
-                class="hover:opacity-75 border rounded-sm mx-1 my-0.5 bg-white text-black text-xs lg:text-lg font-bold text-ellipsis overflow-x-hidden"
+                class="hover:opacity-75 border rounded-sm mx-1 my-0.5 bg-white text-black text-xs lg:text-lg font-bold text-ellipsis overflow-x-hidden pointer-events-auto"
                 >
                     {event.event}
                 </a>
