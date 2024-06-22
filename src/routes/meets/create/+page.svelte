@@ -27,9 +27,10 @@
 
     async function create_meet() {
         if(description) {
+            let sluggy = `${slugify(event_name)}-${self.crypto.randomUUID().substring(0, 8)}`
             await fetch('/api/meets/create_meet', {
                 method: "POST",
-                body: JSON.stringify({meets: [{host: $page.data.session.user.displayname, location, event_name, slug: slugify(event_name), event_date: date, description}]})
+                body: JSON.stringify({meets: [{host: $page.data.session.user.displayname, location, event_name, slug: sluggy, event_date: date, description}]})
             })
             .then(meet_data => meet_data.json())
             .then(data => {
