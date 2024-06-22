@@ -56,7 +56,7 @@
                 <a href="/meets/{meet.slug}" class="hover:opacity-75">
                     <div class="flex flex-col lg:justify-center lg:items-center m-auto border border-white w-full overflow-y-auto lg:w-80 h-36 lg:p-2">
                         <span class="text-2xl font-bold break-all">{meet.event_name}</span>
-                        <span>starting @ {meet.event_date.substring(11, 16)}{meet.event_date > 12 ? 'pm' : 'am'}</span>
+                        <span>starting @ {meet.event_date.substring(11, 16)}</span>
                         <span>on {meet.event_date.substring(5, 7)}/{meet.event_date.substring(8, 10)}/{meet.event_date.substring(0, 4)}</span>
                     </div>
                 </a>
