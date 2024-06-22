@@ -52,7 +52,7 @@
 </svelte:head>
 
 <div class="bg-no-repeat bg-center bg-cover bg-scroll border-b border-white" style="background-image: url('{meets.bg_img}')">
-    <div class="flex flex-col backdrop-blur py-10 lg:min-h-[40rem]">
+    <div class="flex flex-col backdrop-blur py-4 lg:min-h-[40rem]">
         <!-- would it be better to essentially just copy-paste this all into one big if/else instead of littering this with if/else statements? -->
         {#if $page.data.session?.user.displayname == meets.host}
             <div class="flex flex-row gap-2 mx-4 my-2 justify-center lg:justify-normal">

@@ -2,6 +2,8 @@
     export let day;
     export let date;
     export let events;
+    export let month;
+    export let year;
 
     $: event_date = new Date(date.getFullYear(), day.month, day.curr_day).toISOString().slice(0, 10);
     $: today_events = events.filter(event => {
@@ -19,7 +21,7 @@
         {#if today_events}
             {#each today_events as event}
                 <a 
-                href="/meets/{event.slug}"
+                href="/meets/{month}/{year}/{event.slug}"
                 class="hover:opacity-75 border rounded-sm mx-1 my-0.5 bg-white text-black text-xs lg:text-lg font-bold text-ellipsis overflow-x-hidden pointer-events-auto"
                 >
                     {event.event}

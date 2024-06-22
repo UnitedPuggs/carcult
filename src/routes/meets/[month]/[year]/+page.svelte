@@ -199,7 +199,7 @@
             </section>
             <div class={`grid grid-cols-7 px-1 h-auto ${width > 640 ? "" : "w-screen"}`}>
                 {#each calendar_days as day}
-                    <CalendarEvents {day} {date} {events} />
+                    <CalendarEvents month={$page.params.month} year={$page.params.year} {day} {date} {events} />
                 {/each}
             </div>
         </div>

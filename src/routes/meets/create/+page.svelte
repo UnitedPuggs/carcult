@@ -1,6 +1,7 @@
 <script>
     import { page } from '$app/stores'
     import { goto } from '$app/navigation'
+    import slugify from 'slugify';
 
     let date;
     let end_date;
@@ -28,7 +29,7 @@
         if(description) {
             await fetch('/api/meets/create_meet', {
                 method: "POST",
-                body: JSON.stringify({meets: [{host: $page.data.session.user.displayname, location, event_name, event_date: date, description}]})
+                body: JSON.stringify({meets: [{host: $page.data.session.user.displayname, location, event_name, slug: slugify(event_name), event_date: date, description}]})
             })
             .then(meet_data => meet_data.json())
             .then(data => {
@@ -118,10 +119,13 @@
         bind:value={bg_img} 
         on:change={(e) => upload_background(e)}
         >
+        <!--
         <label>
             repeat?
             <input type="checkbox" bind:checked={checked}>
         </label>
+        need to look over the logic for this shit again
+        -->
         {#if checked}
             <!-- repeat every week -->
             <label for="end-date" class="">end date</label>
