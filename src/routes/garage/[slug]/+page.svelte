@@ -68,17 +68,17 @@
     <title>carcult - {short.username}'s garage</title>
 </svelte:head>
 
-<div class="flex flex-row flex-nowrap">
-    <div class="w-[150px] lg:max-w-xs lg:min-w-[20rem] min-h-[calc(100vh_-_6rem)] p-2 border-white border-2">
-        {#if $page.data.session?.user.displayname == short.username}
-            <div class="flex justify-between items-start">
-                <button class="hover:opacity-75" on:click={toggle_edit}>edit</button>
+<div class="flex flex-col lg:flex-row flex-nowrap">
+    <div class="flex lg:flex-col flex-row lg:w-[150px] lg:max-w-xs lg:min-w-[20rem] lg:min-h-[calc(100vh_-_6rem)] p-2 border-white border-2">
+        <div class="flex flex-col gap-2 justify-center items-center mx-auto">
+            {#if $page.data.session?.user.displayname == short.username}
+            <div class="flex gap-4">
+                <button class="hover:opacity-75 border border-white rounded-sm p-1 hover:scale-95" on:click={toggle_edit}>edit</button>
                 {#if edit_mode}
-                    <button class="hover:opacity-75" on:click={update_profile}>save</button>
+                    <button class="hover:opacity-75 border border-white rounded-sm p-1 hover:scale-95" on:click={update_profile}>save</button>
                 {/if}
             </div>
-        {/if}
-        <div class="flex flex-col justify-center items-center mx-auto">
+            {/if}
             {#if !edit_mode}
                 <img src={short.pfp_url} alt="your profile pic" class="rounded-full border-white border-4 lg:mt-6 w-[100px] h-[94.22px] lg:w-[150px] lg:h-[146.22px]" width="150" height="150"/>
             {:else}
