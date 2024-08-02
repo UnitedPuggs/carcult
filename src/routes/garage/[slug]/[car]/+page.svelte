@@ -1,17 +1,21 @@
 <script>
     import { page } from '$app/stores'
     import { invalidateAll, goto } from '$app/navigation';
+    import { swipe } from "svelte-gestures";
+
     export let data;
+
     let file;
     let jank_file;
     let edit_mode = false;
 
+    let width = 0;
     let desc = data.garage_info[0].description;
 
     let curr_gallery_img = "";
     $: curr_gallery_idx = short.image_urls.indexOf(curr_gallery_img);
 
-
+    let show_gallery_modal = false;
     $: short = data.garage_info[0];
 
     async function delete_vehicle(id) {
@@ -46,10 +50,14 @@
 
     async function open_gallery() {
         document.getElementById("gallery").showModal();
+        show_gallery_modal = true;
+        show_gallery_modal = show_gallery_modal;
     }
 
     async function close_gallery() {
         document.getElementById("gallery").close();
+        show_gallery_modal = false;
+        show_gallery_modal = show_gallery_modal;
     }
 
     async function open_delete_prompt() {
@@ -120,6 +128,30 @@
         edit_mode = false;
         invalidateAll();
     }
+
+    function clickOutside(node) {
+        const handleClick = (event) => {
+            if (!node.contains(event.target)) {
+                node.dispatchEvent(new CustomEvent('outclick'));
+            }
+        };
+
+        document.addEventListener('click', handleClick, true);
+
+        return {
+            destroy() {
+                document.removeEventListener('click', handleClick, true);
+            }
+	    };
+    }
+    
+    async function handler() {
+        if(event.detail.direction == "left") {
+            await next_image();
+        } else if (event.detail.direction == "right") {
+            await prev_image();
+        }
+    }
 </script>
 
 <svelte:head>
@@ -161,14 +193,14 @@
                     <img src="/assets/image_upload.png" alt="upload your car" class="border-4 bg-black border-white w-[512px] h-[296px] object-none cursor-pointer"/>
                 {/if}
             </label>
-            <button class="text-xl hover:opacity-75" on:click={upload_image}>upload</button>
+            <button class="text-xl hover:opacity-75 border-2 my-1 border-black p-1 active:scale-95 bg-white text-black rounded-sm" on:click={upload_image}>upload</button>
         </dialog>
         <div class="flex">
-            <button class="mt-2 mx-2 px-1 hover:opacity-75 justify-start" on:click={open_modal}>add image</button>
-            <button class="mt-2 mx-2 px-1 hover:opacity-75" on:click={toggle_edit}>edit</button>
+            <button class="mt-2 mx-2 px-1 hover:opacity-75 justify-start border border-white p-1 rounded-sm active:scale-95" on:click={open_modal}>add image</button>
+            <button class="mt-2 mx-2 px-1 hover:opacity-75 border border-white p-1 rounded-sm active:scale-95" on:click={toggle_edit}>edit</button>
             {#if edit_mode}
-                <button class="mt-2 mx-2 px-1 hover:opacity-75" on:click={open_delete_prompt}>remove</button>
-                <button class="mt-2 mx-2 px-1 hover:opacity-75" on:click={save_desc}>save</button>
+                <button class="mt-2 mx-2 px-1 hover:opacity-75 border border-white p-1 rounded-sm active:scale-95" on:click={open_delete_prompt}>remove</button>
+                <button class="mt-2 mx-2 px-1 hover:opacity-75 border border-white p-1 rounded-sm active:scale-95" on:click={save_desc}>save</button>
             {/if}
         </div>
     {/if}
@@ -190,30 +222,34 @@
         {/each}
     </section>
     
-    <dialog id="gallery" class="bg-transparent text-white text-center backdrop:backdrop-blur-sm">
-        <div class="justify-start text-left">
-            <button class="text-2xl hover:opacity-75" on:click={close_gallery}>x</button>
-        </div>
-        <div class="flex">
-        {#if curr_gallery_idx > 0}
-            <button class="text-2xl px-4 hover:opacity-75 select-none" on:click={prev_image}>&lt;</button>
-        {:else}
-            <span class="invisible text-2xl px-4">!</span>
-        {/if}
-        <div style="background-image: url('{curr_gallery_img}');" class="bg-cover bg-no-repeat border-2 border-white select-none">
-            <img src={curr_gallery_img} alt="" class="w-[1296px] h-[400px] md:h-[732px] object-contain backdrop-blur-md"/>
-        </div>
-        {#if curr_gallery_idx < short.image_urls.length - 1}
-            <button class="text-2xl px-4 hover:opacity-75 select-none" on:click={next_image}>&gt;</button>
-        {:else}
-            <span class="invisible text-2xl px-4">!</span>
-        {/if}
-        </div>
-        {#if $page.data.session?.user.displayname == short.username}
-        <section class="flex flex-col">
-            <button class="hover:opacity-75 md:w-fit mx-auto" on:click={set_main_img}>set as main</button>
-            <button class="hover:opacity-75 md:w-fit mx-auto" on:click={remove_image}>remove image</button>
-        </section>
+    <dialog id="gallery" class="bg-transparent text-white text-center backdrop:backdrop-blur-sm" bind:clientWidth={width} use:swipe={{ timeframe: 300, minSwipeDistance: 50, touchAction: 'pan-y'}} on:swipe={handler}>
+        {#if show_gallery_modal}
+            <div use:clickOutside on:outclick={() => close_gallery()} bind:clientWidth={width} use:swipe={{ timeframe: 300, minSwipeDistance: 50, touchAction: 'pan-y'}} on:swipe={handler}>
+                <div class="justify-start text-left">
+                    <button class="text-2xl hover:opacity-75" on:click={close_gallery}>x</button>
+                </div>
+                <div class="flex">
+                {#if curr_gallery_idx > 0}
+                    <button class="text-2xl px-4 hover:opacity-75" on:click={prev_image}>&lt;</button>
+                {:else}
+                    <span class="invisible text-2xl px-4">!</span>
+                {/if}
+                <div style="background-image: url('{curr_gallery_img}');" class="bg-cover bg-no-repeat border-2 border-white select-none">
+                    <img src={curr_gallery_img} alt="" class="w-[1296px] h-[400px] md:h-[732px] object-contain backdrop-blur-md"/>
+                </div>
+                {#if curr_gallery_idx < short.image_urls.length - 1}
+                    <button class="text-2xl px-4 hover:opacity-75" on:click={next_image}>&gt;</button>
+                {:else}
+                    <span class="invisible text-2xl px-4">!</span>
+                {/if}
+                </div>
+                {#if $page.data.session?.user.displayname == short.username}
+                <section class="flex flex-col">
+                    <button class="hover:opacity-75 md:w-fit mx-auto" on:click={set_main_img}>set as main</button>
+                    <button class="hover:opacity-75 md:w-fit mx-auto" on:click={remove_image}>remove image</button>
+                </section>
+                {/if}
+            </div>
         {/if}
     </dialog>
     
