@@ -193,7 +193,7 @@
                     <img src="/assets/image_upload.png" alt="upload your car" class="border-4 bg-black border-white w-[512px] h-[296px] object-none cursor-pointer"/>
                 {/if}
             </label>
-            <button class="text-xl hover:opacity-75 border-2 my-1 border-black p-1 active:scale-95 bg-white text-black rounded-sm" on:click={upload_image}>upload</button>
+            <button class="text-xl font-bold hover:opacity-75 border-2 my-1 border-white p-1 active:scale-95 rounded-sm" on:click={upload_image}>upload</button>
         </dialog>
         <div class="flex">
             <button class="mt-2 mx-2 px-1 hover:opacity-75 justify-start border border-white p-1 rounded-sm active:scale-95" on:click={open_modal}>add image</button>

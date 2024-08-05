@@ -22,7 +22,7 @@
 
 <nav class="sticky {show} bg-black z-[100] max-w-full transition-all ease-in-out duration-300">
     <div 
-    class="border-b border-x border-white text-mono text-white p-4 gap-4 flex grow flex-col lg:flex-row flex-wrap lg:h-24 bg-black lg:justify-normal justify-center items-center text-center"
+    class="border border-white text-mono text-white text-xl lg:py-0 py-4 px-4 gap-4 flex grow flex-col lg:flex-row flex-wrap lg:h-24 bg-black lg:justify-normal justify-center items-center text-center"
     >
         <div>
             <a href="/" class="text-xl hover:opacity-75"><img src="/assets/logo-tester.png" alt="click me" class="w-16 h-12 rounded-sm active:scale-95"></a>
@@ -33,7 +33,7 @@
             <!-- <a href="/forum" class="hover:opacity-75">forum</a> -->
             <a href="/users" class="hover:opacity-75 border border-white p-1 rounded-sm active:scale-95">users</a>
         </div>
-        <div class="flex items-center gap-4 lg:mr-1 lg:ml-auto">
+        <div class="flex items-center gap-4 lg:mr-1 lg:ml-auto h-full lg:border-l-2 lg:pl-4">
             {#if $page.data.session?.user}
                 <a href="/garage/{$page.data.session.user.displayname}" class="hover:opacity-75 w-8 active:scale-95"><img src="/assets/garage.png" alt="garage"></a>
                 {#if $page.url.pathname.indexOf("garage") != -1 && !$page.url.pathname.includes(`/garage/${$page.data.session.user.displayname}/my-meets`)}
