@@ -22,7 +22,7 @@
 
 <nav class="sticky {show} bg-black z-[100] max-w-full transition-all ease-in-out duration-300">
     <div 
-    class="border border-white text-mono text-white text-xl lg:py-0 py-4 px-4 gap-4 flex grow flex-col lg:flex-row flex-wrap lg:h-24 bg-black lg:justify-normal justify-center items-center text-center"
+    class="border border-white text-mono text-white text-lg lg:py-0 py-4 px-4 gap-4 flex grow flex-col lg:flex-row flex-wrap lg:h-24 bg-black lg:justify-normal justify-center items-center text-center"
     >
         <div>
             <a href="/" class="text-xl hover:opacity-75"><img src="/assets/logo-tester.png" alt="click me" class="w-16 h-12 rounded-sm active:scale-95"></a>
