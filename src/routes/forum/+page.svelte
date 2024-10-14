@@ -40,7 +40,7 @@
                         <input type="text" placeholder="title" required class="w-full p-1" bind:value={title} />
                         <textarea placeholder="content" required class="w-full h-48 p-1" bind:value={content}></textarea>
                         <!-- might also allow for attachments here -->
-                        <input type="submit" class="text-white cursor-pointer" value="create thread"/>
+                        <input type="submit" class=" cursor-pointer" value="create thread"/>
                     </form>
                 </div>
             {/if}
@@ -48,7 +48,7 @@
     </div>
     <section class="border-2 bg-white text-black m-2">
         <h1 class="p-2 underline text-2xl font-bold">threads</h1>
-        <div class="border-0 bg-black text-white font-normal">
+        <div class="border-0   font-normal">
             {#each data.forum_posts as post}
                 <PostCard 
                 id={post.id} 

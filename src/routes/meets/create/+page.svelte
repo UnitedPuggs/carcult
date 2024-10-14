@@ -116,7 +116,7 @@
         <input 
         type="file" 
         accept="image/*" 
-        class="file:border-white file:bg-transparent file:text-white file:border-2 file:rounded-full file:p-2 file:hover:opacity-75 file:hover:cursor-pointer file:font-bold p-1" 
+        class="file:border-white file:bg-transparent file:border-2 file:rounded-full file:p-2 file:hover:opacity-75 file:hover:cursor-pointer file:font-bold p-1" 
         bind:value={bg_img} 
         on:change={(e) => upload_background(e)}
         >

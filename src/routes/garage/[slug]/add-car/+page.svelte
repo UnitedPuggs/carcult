@@ -19,18 +19,20 @@
 </svelte:head>
 
 {#if $page.data.session?.user.displayname == $page.params.slug}
-<div class="flex flex-col lg:flex-row gap-4 justify-center items-center border lg:w-fit mx-auto mt-4 p-4 w-full">
-    <div class="border-2 p-2 sticky top-0 w-full">
+<div class="flex flex-col lg:flex-row gap-4 justify-center items-center border border-black rounded-lg offset-box lg:w-fit mx-auto mt-4 p-4 w-full">
+    <div class="border border-black rounded-xl shadow p-2 sticky top-0 w-full">
         <form class="flex flex-col gap-1" method="POST" enctype="multipart/form-data">
-            <input type="text" class="text-black py-1 px-0.5 rounded-sm" placeholder="model here" id="car" name="car" required bind:value={model}>
-            <input type="file" accept="image/*" id="file" name="file" class="file:bg-black file:border-2 file:border-white file:text-white file:cursor-pointer" bind:value={file} on:change={(e) => uploaded_file(e)} />
-            <textarea class="text-black rounded-sm px-0.5 py-1" id="desc" name="desc" placeholder="description here" bind:value={description}></textarea>
-            <input type="submit" value="add" class="hover:opacity-75 cursor-pointer text-white border border-white rounded-sm">
+            <input type="text" class="text-black border border-black rounded-md p-1 w-74" placeholder="model here" id="car" name="car" required bind:value={model}>
+            <input type="file" accept="image/*" id="file" name="file" class="file:cursor-pointer" bind:value={file} on:change={(e) => uploaded_file(e)} />
+            <textarea class="text-black border border-black rounded-md p-1 w-74" id="desc" name="desc" placeholder="description here" bind:value={description}></textarea>
+            <input type="submit" value="add wheels" class="bg-white text-lg w-28 p-1 mx-auto hover:opacity-80 border border-black rounded-xl box transition-all hover:no-box hover:translate-y-1 cursor-pointer active:scale-90">
         </form>
     </div>
-    <div class="flex flex-col text-center">   
-        <span class="text-2xl font-bold break-all max-w-lg">{model ? model : "your vehicle"}</span>
-        <img src={file ? file : "/assets/image_upload.png"} alt="upload your car" class="border-4 border-white w-full lg:w-[512px] h-[296px] object-cover select-none"/>
+    <div class="flex flex-col text-center gap-1">   
+        <span class="text-xl font-bold break-all max-w-lg">{model ? model : "your vehicle"}</span>
+        <div class="border-2 border-black rounded-md w-full lg:w-[296px] h-[296px] overflow-clip {file ? "p-0 transition-all less-offset-box -translate-x-1 -translate-y-1" : "p-2"}">
+            <img src={file ? file : "/assets/question_marked.png"} alt="upload your car" class="w-full h-full object-cover select-none"/>
+        </div>
         <span class="text-lg font-bold">description</span>
         <p class="max-w-lg break-all">{description ? description : "your description"}</p>
     </div>

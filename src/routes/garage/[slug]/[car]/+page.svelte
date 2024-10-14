@@ -160,7 +160,7 @@
 
 <a href="/garage/{$page.params.slug}" class="text-3xl hover:opacity-75">&lt;-</a>
 <div class="flex flex-col mt-10 justify-center items-center">
-    <dialog id="delete-prompt" class="bg-black text-white text-center border-2 border-white">
+    <dialog id="delete-prompt" class=" text-center border-2 border-white">
         <div class="p-10">
             <h1 class="text-xl font-bold">this COMPLETELY removes your vehicle. are you sure?</h1>
             <div class="flex justify-center gap-8 text-lg mt-4">
@@ -181,7 +181,7 @@
     {/if}
 
     {#if $page.data.session?.user.displayname == short.username}
-        <dialog id="upload-photo" class="bg-transparent text-white text-center backdrop:backdrop-blur-sm">
+        <dialog id="upload-photo" class="bg-transparent  text-center backdrop:backdrop-blur-sm">
             <div class="justify-start text-left">
                 <button class="text-2xl hover:opacity-75" on:click={close_modal}>x</button>
             </div>
@@ -190,7 +190,7 @@
                 {#if file}
                     <img src={file} alt="upload your car" class="border-4  border-white w-[512px] h-[296px] object-cover cursor-pointer"/>
                 {:else}
-                    <img src="/assets/image_upload.png" alt="upload your car" class="border-4 bg-black border-white w-[512px] h-[296px] object-none cursor-pointer"/>
+                    <img src="/assets/image_upload.png" alt="upload your car" class="border-4 border-white w-[512px] h-[296px] object-none cursor-pointer"/>
                 {/if}
             </label>
             <button class="text-xl font-bold hover:opacity-75 border-2 my-1 border-white p-1 active:scale-95 rounded-sm" on:click={upload_image}>upload</button>
@@ -222,7 +222,7 @@
         {/each}
     </section>
     
-    <dialog id="gallery" class="bg-transparent text-white text-center backdrop:backdrop-blur-sm" bind:clientWidth={width} use:swipe={{ timeframe: 300, minSwipeDistance: 50, touchAction: 'pan-y'}} on:swipe={handler}>
+    <dialog id="gallery" class="bg-transparent text-center backdrop:backdrop-blur-sm" bind:clientWidth={width} use:swipe={{ timeframe: 300, minSwipeDistance: 50, touchAction: 'pan-y'}} on:swipe={handler}>
         {#if show_gallery_modal}
             <div use:clickOutside on:outclick={() => close_gallery()} bind:clientWidth={width} use:swipe={{ timeframe: 300, minSwipeDistance: 50, touchAction: 'pan-y'}} on:swipe={handler}>
                 <div class="justify-start text-left">

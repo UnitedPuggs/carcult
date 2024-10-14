@@ -89,7 +89,7 @@
                 accept="image/*" 
                 on:change={upload_images} 
                 required 
-                class="file:bg-gray-800 file:text-white file:border-0  file:rounded-full file:p-2 file:hover:opacity-75 file:hover:cursor-pointer file:font-bold"
+                class="file:bg-gray-800  file:border-0  file:rounded-full file:p-2 file:hover:opacity-75 file:hover:cursor-pointer file:font-bold"
             >
             <input type="submit" value="create listing" class="bg-gray-700 border border-white p-2 rounded-sm hover:opacity-80 hover:cursor-pointer">
         </form>

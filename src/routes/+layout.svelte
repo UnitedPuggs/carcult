@@ -8,12 +8,12 @@
 
 <div class="flex flex-col h-screen">
 <Navbar />
-<body class="bg-black font-mono text-white antialiased">
+<body>
     <slot />
 </body>
 <footer class="w-full mt-auto mb-0">
-    <hr>
-    <div class="flex flex-col my-2 w-fit">
+    <hr class="border-t border-black">
+    <div class="flex flex-col my-2 w-fit text-sm text-gray-400">
         <h3>copyright © 2024 carcult. All rights reserved.</h3>
         <a href="/">contact us</a>
     </div>
