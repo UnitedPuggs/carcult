@@ -30,8 +30,10 @@
     </div>
     <div class="flex flex-col text-center gap-1">   
         <span class="text-xl font-bold break-all max-w-lg">{model ? model : "your vehicle"}</span>
-        <div class="border-2 border-black rounded-md w-full lg:w-[296px] h-[296px] overflow-clip {file ? "p-0 transition-all less-offset-box -translate-x-1 -translate-y-1" : "p-2"}">
-            <img src={file ? file : "/assets/question_marked.png"} alt="upload your car" class="w-full h-full object-cover select-none"/>
+        <div 
+        class="border-2 border-black rounded-md w-full lg:w-96 h-96 overflow-clip bg-cover bg-no-repeat {file ? "p-0 transition-all less-offset-box -translate-x-1 -translate-y-1" : "p-2"}" 
+        style="{file ? `background-image: url('${file}')` : ""}">
+            <img src={file ? file : "/assets/question_marked.png"} alt="upload your car" class="w-full h-full object-scale-down select-none backdrop-blur-md"/>
         </div>
         <span class="text-lg font-bold">description</span>
         <p class="max-w-lg break-all">{description ? description : "your description"}</p>
