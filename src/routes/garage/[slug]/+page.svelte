@@ -9,6 +9,11 @@
     let temp_pfp;
     let edit_mode = false;
 
+    let textarea;
+    $: if(textarea) {
+        textarea.style.height = `${textarea.scrollHeight}px`;
+    }
+
     $: follow_status = data.is_following[0];
 
     $: short = data.garage[0];
@@ -71,7 +76,16 @@
 <div class="flex flex-col flex-nowrap">
     <section class="flex flex-row gap-2 py-4 justify-center">
         <div class="flex flex-col gap-2 items-center">
-            <img src={short.pfp_url} alt="{short.username}'s profile picture" class="rounded-full h-24 w-24 border border-black box">
+            <!-- User profile picture -->
+            {#if edit_mode} 
+                <label>
+                    <input type="file" class="hidden" accept="image/*" bind:value={ temp_pfp } on:change={(e) => uploaded_file(e)} />
+                    <img src={temp_pfp ? temp_pfp : '/assets/user_profile.png'} alt="new profile pic" class="rounded-full h-24 w-24 border border-black box cursor-pointer" />
+                </label>
+            {:else}
+                <img src={short.pfp_url} alt="{short.username}'s profile picture" class="rounded-full h-24 w-24 border border-black box">
+            {/if}
+            <!------------------------->
             <span class="text-sm text-gray-400">Joined {short.created.substring(5, 7)}/{short.created.substring(8, 10)}/{short.created.substring(2, 4)}</span>
             {#if $page.data.session?.user.displayname != short.username && $page.data.session?.user && typeof follow_status == 'undefined'} <!-- need to change follow to optimistic rendering -->
                 <button 
@@ -88,10 +102,36 @@
                 unfollow
                 </button>
             {/if}
+            <button 
+            class="border {!edit_mode ? 'border-black box p-1' : 'border-red-500 warning-box px-4 py-1'} 
+            rounded-lg active:scale-90 transition-all hover:no-box hover:translate-y-1 hover:opacity-80"
+            on:click={ toggle_edit }
+            >
+            {!edit_mode ? "edit" : "x"}
+            </button>
+            {#if edit_mode}
+                <button class="border border-black box p-1 rounded-lg active:scale-90 transition-all hover:no-box hover:translate-y-1 hover:opacity-80"
+                on:click={ update_profile }
+                >
+                save
+                </button>
+            {/if}
         </div>
         <div class="flex flex-col">
             <span class="font-semibold text-xl">{short.username}</span>
-            <p class="lg:w-72 max-h-32 overflow-y-auto">{short.bio}</p>
+            <!-- User bio -->
+            {#if short.bio}
+                {#if edit_mode}
+                    <textarea class="w-48 lg:w-72 border border-red-500 rounded-lg p-1 max-h-32" bind:value={ bio } bind:this={ textarea }></textarea>
+                {:else}
+                    <p class="w-48 lg:w-72 max-h-32 overflow-y-auto">{short.bio}</p>
+                {/if}
+            {:else}
+                {#if edit_mode}
+                    <textarea class="w-48 lg:w-72 h-full border border-red-500 rounded-lg p-1 max-h-32" bind:value={ bio } bind:this={ textarea }></textarea>
+                {/if}
+            {/if}
+            <!------------->
             {#await data.streamed.garage_info}
                 <span>loading...</span> <!-- maybe have an animation of some kind -->
             {:then garage}
@@ -116,7 +156,7 @@
             <p class="text-center">loading vehicles...</p>
         {:then garage_info}
             {#if garage_info.length > 0}
-                <div class="flex flex-col gap-2 p-1 w-3/4 mx-auto">
+                <div class="flex flex-col gap-2 p-1 lg:w-3/4 mx-auto">
                     {#each garage_info as info}
                         <VehicleBox main_image={info.image_urls[0]} vehicle_name={info.vehicle_name} vehicle_slug={info.short_vehicle_name} desc={info.description} info_id={info.id}/>
                     {/each}
