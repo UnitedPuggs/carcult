@@ -20,7 +20,7 @@
     let date = new Date();
 </script>
 
-<nav class="sticky {show} z-[100] max-w-full transition-all ease-in-out duration-300 border border-b-black shadow">
+<nav class="sticky {show} z-[100] max-w-full transition-all ease-in-out duration-300 border border-b-black shadow bg-white">
     <div 
     class="text-lg lg:py-0 py-4 px-4 gap-4 flex grow flex-col lg:flex-row flex-wrap lg:h-24  lg:justify-normal justify-center items-center text-center"
     >

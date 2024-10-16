@@ -114,10 +114,11 @@
         let temp = data.garage_info[0].image_urls[0]; //why did I not use short here?
         short.image_urls[0] = short.image_urls[curr_gallery_idx];
         short.image_urls[curr_gallery_idx] = temp;
+        console.log(short.image_urls)
         await fetch('/api/garage/update_main_img', {
             method: "PATCH",
             body: JSON.stringify({id: short.id, img_urls: short.image_urls})
-        })
+        });
     }
 
     async function save_desc() {
