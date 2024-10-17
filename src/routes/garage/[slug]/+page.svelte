@@ -102,19 +102,21 @@
                 unfollow
                 </button>
             {/if}
-            <button 
-            class="border {!edit_mode ? 'border-black box p-1' : 'border-red-500 warning-box px-4 py-1'} 
-            rounded-lg active:scale-90 transition-all hover:no-box hover:translate-y-1 hover:opacity-80"
-            on:click={ toggle_edit }
-            >
-            {!edit_mode ? "edit" : "x"}
-            </button>
-            {#if edit_mode}
-                <button class="border border-black box p-1 rounded-lg active:scale-90 transition-all hover:no-box hover:translate-y-1 hover:opacity-80"
-                on:click={ update_profile }
+            {#if $page.data.session?.user.displayname == short.username}
+                <button 
+                class="border {!edit_mode ? 'border-black box p-1' : 'border-red-500 warning-box px-4 py-1'} 
+                rounded-lg active:scale-90 transition-all hover:no-box hover:translate-y-1 hover:opacity-80"
+                on:click={ toggle_edit }
                 >
-                save
+                {!edit_mode ? "edit" : "x"}
                 </button>
+                {#if edit_mode}
+                    <button class="border border-black box p-1 rounded-lg active:scale-90 transition-all hover:no-box hover:translate-y-1 hover:opacity-80"
+                    on:click={ update_profile }
+                    >
+                    save
+                    </button>
+                {/if}
             {/if}
         </div>
         <div class="flex flex-col">
