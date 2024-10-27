@@ -14,7 +14,7 @@
 
 <div class="outline outline-1 outline-black flex flex-col w-full lg:w-48 h-40 {day.extra_style} overflow-y-auto pointer-events-none">
     <!--<h1>{curr_date}</h1>-->
-    <span class="sticky top-0 z-50 pl-1 select-none">{day.curr_day}</span>
+    <span class="sticky top-0 z-50 pl-1 select-none bg-white w-full">{day.curr_day}</span>
     <div class="flex flex-col">
         {#if today_events}
             {#each today_events as event}
