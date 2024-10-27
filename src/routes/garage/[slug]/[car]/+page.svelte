@@ -181,16 +181,17 @@
     <div class="bg-cover bg-no-repeat overflow-clip border-2 border-black rounded-lg less-offset-box w-72 h-72 lg:h-[30rem] lg:w-[30rem]" style="background-image: url('{short.image_urls[0]}')">
         <img src={short.image_urls[0]} alt="your cool car" class="overflow-clip object-scale-down backdrop-blur-md h-full w-full"/>
     </div>
-    <h2 class="font-bold text-xl mt-2">description</h2>
-    {#if !edit_mode}
-        <p class="p-1 whitespace-pre-wrap w-72 lg:w-96">{short.description}</p> <!-- Had a contenteditable here. Don't think I need it? -->
-    {:else}
-        <textarea 
-        bind:value={ desc } 
-        class="text-black p-1 max-h-60 w-72 lg:w-96 {edit_mode ? "border border-red-500 rounded-lg" : ""}" 
-        bind:this={ textarea }></textarea>
-    {/if}
-
+    <div class="flex flex-col justify-center items-center text-"> <!-- description stuff -->
+        <h2 class="font-bold text-xl mt-2">description</h2>
+        {#if !edit_mode}
+            <p class="p-1 whitespace-pre-wrap max-w-sm lg:max-w-md">{short.description}</p> <!-- Had a contenteditable here. Don't think I need it? -->
+        {:else}
+            <textarea 
+            bind:value={ desc } 
+            class="text-black p-1 max-h-60 w-72 lg:w-96 {edit_mode ? "border border-red-500 rounded-lg" : ""}" 
+            bind:this={ textarea }></textarea>
+        {/if}
+    </div>
     {#if $page.data.session?.user.displayname == short.username}
         <!-- Modal to upload new photos -->
         <dialog id="upload-photo" class="bg-transparent text-center backdrop:backdrop-blur-sm">

@@ -55,9 +55,9 @@
                 {#each meets_arr as meet} <!-- add in a carousel here? gonna require that we copy-paste this -->
                 <a href="/meets/{meet.slug}" class="hover:opacity-75">
                     <div 
-                    class="flex flex-col lg:justify-center lg:items-center m-auto border border-black rounded-lg box w-full lg:w-80 h-36 lg:p-2 transition-all hover:no-box hover:translate-y-1"
+                    class="flex flex-col lg:justify-center lg:items-center m-auto border border-black rounded-lg box w-full lg:w-80 h-36 p-2 transition-all hover:no-box hover:translate-y-1 overflow-auto"
                     >
-                        <span class="text-2xl font-bold break-all">{meet.event_name}</span>
+                        <span class="text-lg lg:text-2xl font-bold">{meet.event_name}</span>
                         <span>starting @ {meet.event_date.substring(11, 16)}</span>
                         <span>on {meet.event_date.substring(5, 7)}/{meet.event_date.substring(8, 10)}/{meet.event_date.substring(0, 4)}</span>
                     </div>
