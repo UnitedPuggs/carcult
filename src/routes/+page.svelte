@@ -48,13 +48,15 @@
     <div class="flex flex-col justify-center items-center text-center">
         <h1 class="text-4xl font-bold pt-4">carcult</h1>
         <h2 class="text-lg text-gray-400">the best place to find car meets!</h2>
-        <section class="mt-4 w-full max-h-96 overflow-y-auto">
+        <section class="mt-4 w-full">
             <h2 class="text-2xl font-bold sticky top-0  z-50">this week's meets</h2>
             <div class="{ meets_arr.length > 0 ?'grid grid-cols-2' : ''} gap-1 lg:flex flex-wrap justify-center items-center lg:max-w-full lg:mx-auto" id="not-meet-carousel"> <!-- this might need to be adjusted a bit teehee -->
             {#if meets_arr.length > 0}
                 {#each meets_arr as meet} <!-- add in a carousel here? gonna require that we copy-paste this -->
                 <a href="/meets/{meet.slug}" class="hover:opacity-75">
-                    <div class="flex flex-col lg:justify-center lg:items-center m-auto border border-white w-full overflow-y-auto lg:w-80 h-36 lg:p-2">
+                    <div 
+                    class="flex flex-col lg:justify-center lg:items-center m-auto border border-black rounded-lg box w-full lg:w-80 h-36 lg:p-2 transition-all hover:no-box hover:translate-y-1"
+                    >
                         <span class="text-2xl font-bold break-all">{meet.event_name}</span>
                         <span>starting @ {meet.event_date.substring(11, 16)}</span>
                         <span>on {meet.event_date.substring(5, 7)}/{meet.event_date.substring(8, 10)}/{meet.event_date.substring(0, 4)}</span>

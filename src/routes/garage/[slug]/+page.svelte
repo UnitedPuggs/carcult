@@ -164,9 +164,11 @@
                     {/each}
                 </div>
             {:else}
-                <div class="flex justify-center items-center">
-                    <span class="text-2xl">You have no vehicles! Add one <a href="{$page.data.session?.user.displayname}/add-car" class="underline hover:no-underline">here</a></span>
-                </div>
+                {#if $page.data.session?.user.displayname == $page.params.slug}
+                    <div class="flex justify-center items-center">
+                        <span class="text-2xl">You have no vehicles! Add one <a href="{$page.data.session?.user.displayname}/add-car" class="underline hover:no-underline">here</a></span>
+                    </div>
+                {/if}
             {/if}
         {/await}
     </section>

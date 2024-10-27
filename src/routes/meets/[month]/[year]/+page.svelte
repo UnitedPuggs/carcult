@@ -153,7 +153,7 @@
 
 <div bind:clientWidth={width} use:swipe={{ timeframe: 300, minSwipeDistance: 50, touchAction: 'pan-y'}} on:swipe={handler}>
     {#if $page.data.session?.user.role >= 1}
-        <a href="/meets/create" class="m-2 inline-block hover:opacity-75 border border-white p-1 rounded-sm active:scale-95">create meet</a>
+        <a href="/meets/create" class="border border-black box p-1 m-2 inline-block rounded-lg active:scale-90 transition-all hover:no-box hover:translate-y-1 hover:opacity-80">new meet</a>
     {/if}
     <div class="mt-6">
         <!--
@@ -191,13 +191,13 @@
             -&gt;
             </button>
         </div>
-        <div class="flex flex-col justify-center items-center mx-auto rounded-sm w-full lg:w-[85rem] p-1">
-            <section class="grid grid-cols-7 mx-auto border border-white w-full lg:w-[84rem] sticky top-0  z-50 text-center text-xs lg:text-base">
+        <div class="flex flex-col justify-center items-center mx-auto rounded-sm w-full lg:w-[85rem] pb-4 lg:px-0 px-1">
+            <section class="grid grid-cols-7 w-full lg:w-[84.5rem] sticky top-0 border border-black divide-x divide-dotted divide-black z-50 text-center text-xs lg:text-base">
                 {#each width > 640 ? long_days : short_days as day}
                     <span>{day}</span>
                 {/each}
             </section>
-            <div class={`grid grid-cols-7 px-1 h-auto ${width > 640 ? "" : "w-screen"}`}>
+            <div class="grid grid-cols-7 h-auto lg:w-auto w-screen gap-[1px]">
                 {#each calendar_days as day}
                     <CalendarEvents {day} {date} {events} />
                 {/each}

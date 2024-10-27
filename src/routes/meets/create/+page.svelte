@@ -96,27 +96,29 @@
 </script>
 
 <svelte:head>
-    <title>creating {$page.data.session.user.displayname}'s event</title>
+    <title>creating {$page.data.session.user.displayname}'s meet</title>
 </svelte:head>
 
 <div class="mt-10">
-    <h1 class="text-2xl font-bold text-center">create your event</h1>
-    <form class="flex flex-col justify-center items-center gap-2" on:submit={() => {
+    <h1 class="text-2xl font-bold text-center italic underline">create your meet</h1>
+    <form class="flex flex-col justify-center items-center gap-1 border border-black rounded-xl w-fit mx-auto p-2 offset-box" on:submit={() => {
         if(repeat_week || repeat_month || repeat_year)
             create_repeated_meet();
         else
             create_meet();
         }}>
-        <label for="event_name">event name</label>
-        <input name="event_name" type="text" bind:value={event_name} maxlength="255" required class="text-black px-0.5 py-1" placeholder="event name here">
+        <label for="event_name">meet name</label>
+        <input name="event_name" type="text" bind:value={event_name} maxlength="255" required class="text-black p-1 border border-black rounded-md shadow" placeholder="ur cool meet here">
         <label for="location" >location</label>
-        <input name="location" type="text" bind:value={location} required class="text-black px-0.5 py-1" placeholder="location here">
+        <input name="location" type="text" bind:value={location} required class="text-black p-1 border border-black rounded-md shadow" placeholder="where's it at?">
         <label for="date" class="">date</label>
-        <input name="date" type="datetime-local" bind:value={date} required class="text-black" max={max_date}>
+        <input name="date" type="datetime-local" bind:value={date} required class="text-black p-1 border border-black rounded-md shadow" max={max_date}>
+        <label for="bg_image">(optional) background</label>
         <input 
-        type="file" 
+        type="file"
+        name="bg_image"
         accept="image/*" 
-        class="file:border-white file:bg-transparent file:border-2 file:rounded-full file:p-2 file:hover:opacity-75 file:hover:cursor-pointer file:font-bold p-1" 
+        class="file:cursor-pointer"
         bind:value={bg_img} 
         on:change={(e) => upload_background(e)}
         >
@@ -146,8 +148,8 @@
                 </label>
             </div>
         {/if}
-        <label for="desc" class="pt-2">description</label>
-        <textarea name="desc" class="text-black p-1 w-96 h-48" bind:value={description} placeholder="description here" required></textarea>
-        <input type="submit" class="p-2 m-2 rounded-md hover:opacity-75 active:scale-95 border border-white cursor-pointer" value="create">
+        <label for="desc">description</label>
+        <textarea name="desc" class="text-black p-1 w-96 h-48 border border-black rounded-lg shadow" bind:value={description} placeholder="write your descriptive description here" required></textarea>
+        <input type="submit" class="border border-black box p-1 rounded-lg active:scale-90 transition-all hover:no-box hover:translate-y-1 hover:opacity-80 cursor-pointer" value="create">
     </form>
 </div>

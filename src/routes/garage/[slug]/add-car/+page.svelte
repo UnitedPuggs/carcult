@@ -19,7 +19,8 @@
 </svelte:head>
 
 {#if $page.data.session?.user.displayname == $page.params.slug}
-<div class="flex flex-col lg:flex-row gap-4 justify-center items-center border border-black rounded-lg offset-box lg:w-fit mx-auto mt-4 p-4 w-full">
+<h1 class="text-2xl font-bold text-center italic underline mt-10">add your wheels</h1>
+<div class="flex flex-col lg:flex-row gap-4 justify-center items-center border border-black rounded-lg offset-box lg:w-fit mx-auto p-4 w-full">
     <div class="border border-black rounded-xl shadow p-2 sticky top-0 w-full">
         <form class="flex flex-col gap-1" method="POST" enctype="multipart/form-data">
             <input type="text" class="text-black border border-black rounded-md p-1 w-74" placeholder="model here" id="car" name="car" required bind:value={model}>

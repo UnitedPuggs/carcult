@@ -12,15 +12,15 @@
     //need to figure out if a day is in prev month and apply a new extra_style
 </script>
 
-<div class="border border-white flex flex-col h-40 w-full lg:w-48 {day.extra_style} overflow-y-auto pointer-events-none">
+<div class="outline outline-1 outline-black flex flex-col w-full lg:w-48 h-40 {day.extra_style} overflow-y-auto pointer-events-none">
     <!--<h1>{curr_date}</h1>-->
-    <span class="sticky top-0  z-50 pl-1 select-none">{day.curr_day}</span>
+    <span class="sticky top-0 z-50 pl-1 select-none">{day.curr_day}</span>
     <div class="flex flex-col">
         {#if today_events}
             {#each today_events as event}
                 <a 
                 href="/meets/{event.slug}"
-                class="hover:opacity-75 border rounded-sm mx-1 my-0.5 bg-white text-black text-xs lg:text-lg font-bold text-ellipsis overflow-x-hidden pointer-events-auto"
+                class="border border-black mx-0.5 p-1 rounded-lg text-center overflow-auto font-bold shadow hover:opacity-80 pointer-events-auto text-xs lg:text-lg"
                 >
                     {event.event}
                 </a>

@@ -1,6 +1,7 @@
 <script>
     import { page } from '$app/stores'
     import { goto, invalidateAll } from '$app/navigation';
+    import { browser } from '$app/environment';
     export let data;
 
     let edit_mode = false;
@@ -23,6 +24,11 @@
         edit_mode = !edit_mode
     }
 
+    function back() {
+        if(browser)
+            window.history.back();
+    }
+
     async function delete_meet() {
         await fetch('/api/meets/delete_meet', {
             method: "DELETE",
@@ -42,7 +48,7 @@
 </script>
 
 <svelte:head>
-    <title>{meets.event_name} by {meets.host}</title>
+    <title>carcult | {meets.event_name} by {meets.host}</title>
     <meta name="description" content="{meets.description} on carcult">
     <meta name="keywords" content="car meets, automotive events, car enthusiasts, carcult, {meets.event_name}">
     
@@ -53,37 +59,38 @@
 
 <div class="bg-no-repeat bg-center bg-cover bg-scroll border-b border-white" style="background-image: url('{meets.bg_img}')">
     <div class="flex flex-col backdrop-blur py-4 lg:min-h-[40rem]">
+        <button class="text-white text-xl text-left ml-2" on:click={ back }>&lt;--</button>
         <!-- would it be better to essentially just copy-paste this all into one big if/else instead of littering this with if/else statements? -->
         {#if $page.data.session?.user.displayname == meets.host}
-            <div class="flex flex-row gap-2 mx-4 my-2 justify-center lg:justify-normal">
+            <div class="flex flex-row gap-1 mx-2 my-2 justify-center lg:justify-normal">
                 <button 
-                class="hover:opacity-75 border-2 border-white p-2 rounded-md active:scale-95" 
+                class="border border-black box p-1 inline-block rounded-lg active:scale-90 transition-all hover:no-box hover:translate-y-1 hover:opacity-80 bg-white" 
                 on:click={ toggle_edit_mode }
                 >
                 {!edit_mode ? "edit" : "close edit"}
                 </button>
                 {#if edit_mode}
                     <button 
-                    class="hover:opacity-75  border-2 border-white p-2 rounded-md active:scale-95" 
+                    class="border border-black box p-1 inline-block rounded-lg active:scale-90 transition-all hover:no-box hover:translate-y-1 hover:opacity-80 bg-white" 
                     on:click={ update_meet }
                     >
                     save
                     </button>
                 {/if}
                 <!-- probably a good idea to have a double-checker -->
-                <button class="hover:opacity-75 border-2 border-white p-2 rounded-md active:scale-95" on:click={ delete_meet }>delete meet</button>
+                <button class="border border-black box p-1 inline-block rounded-lg active:scale-90 transition-all hover:no-box hover:translate-y-1 hover:opacity-80 bg-white" on:click={ delete_meet }>delete meet</button>
             </div>
         {/if}
-        <div class="flex flex-col justify-center items-center h-auto my-auto">
+        <div class="flex flex-col justify-center items-center h-auto my-auto text-white">
             {#if !edit_mode}
-                <h1 class="text-3xl font-bold text-stroke text-center">{meets.event_name}</h1>
-                <p class="text-lg text-stroke">hosted by <strong><a href="/garage/{meets.host}" class="underline hover:no-underline">{meets.host}</a></strong></p>
+                <h1 class="text-3xl font-bold text-center">{meets.event_name}</h1>
+                <p class="text-lg">hosted by <strong><a href="/garage/{meets.host}" class="underline hover:no-underline">{meets.host}</a></strong></p>
                 {#if meets.location} <!-- just so we don't have to remove meets without locations -->
-                    <a href="https://www.google.com/maps?q={meets.location}" class="text-stroke">{meets.location}</a>
+                    <a href="https://www.google.com/maps?q={meets.location}">{meets.location}</a>
                 {/if}
-                <p class="text-stroke">on {meets.event_date.substring(5, 7)}/{meets.event_date.substring(8, 10)}/{meets.event_date.substring(0, 4)} @ {meets.event_date.substring(11, 16)}</p>
+                <p>on {meets.event_date.substring(5, 7)}/{meets.event_date.substring(8, 10)}/{meets.event_date.substring(0, 4)} @ {meets.event_date.substring(11, 16)}</p>
                 <!-- kinda drunk, but this bind shit is kinda based <-- wtf was I talking about here -->
-                <p class="p-1 whitespace-pre-wrap md:max-w-xl text-stroke">{meets.description}</p>
+                <p class="p-1 whitespace-pre-wrap md:max-w-xl">{meets.description}</p>
             {:else} <!-- referring to that first comment, yes it's much cleaner -->
                 <input type="text" placeholder={event_name} class="text-3xl font-bold text-black" bind:value={event_name} />
                 <input type="text" placeholder={event_location} class="w-auto font-bold text-black" bind:value={event_location} />
