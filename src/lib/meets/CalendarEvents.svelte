@@ -1,14 +1,12 @@
 <script>
-    export let day;
-    export let date;
-    export let events;
+    let { day, date, events } = $props();
 
-    $: event_date = new Date(date.getFullYear(), day.month, day.curr_day).toISOString().slice(0, 10);
-    $: today_events = events.filter(event => {
+    let event_date = $derived(new Date(date.getFullYear(), day.month, day.curr_day).toISOString().slice(0, 10));
+    let today_events = $derived(events.filter(event => {
         return event.event_date.substring(0, 10) == event_date;
     }).map(event => {
         return { event: event.event_name, slug: event.slug }
-    })
+    }))
     //need to figure out if a day is in prev month and apply a new extra_style
 </script>
 

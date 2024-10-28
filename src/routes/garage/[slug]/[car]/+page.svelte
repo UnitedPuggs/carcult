@@ -1,27 +1,24 @@
 <script>
+    import { run } from 'svelte/legacy';
+
     import { page } from '$app/stores'
     import { invalidateAll, goto } from '$app/navigation';
     import { swipe } from "svelte-gestures";
 
-    export let data;
+    let { data } = $props();
 
-    let file;
+    let file = $state();
     let jank_file;
-    let edit_mode = false;
+    let edit_mode = $state(false);
 
-    let width = 0;
-    let desc = data.garage_info[0].description;
+    let width = $state(0);
+    let desc = $state(data.garage_info[0].description);
 
-    let curr_gallery_img = "";
-    $: curr_gallery_idx = short.image_urls.indexOf(curr_gallery_img);
+    let curr_gallery_img = $state("");
 
-    let show_gallery_modal = false;
-    $: short = data.garage_info[0];
+    let show_gallery_modal = $state(false);
 
-    let textarea;
-    $: if(textarea) {
-        textarea.style.height = `${textarea.scrollHeight}px`;
-    }
+    let textarea = $state();
 
     async function delete_vehicle(id) {
         await fetch('/api/garage/delete_vehicle', {
@@ -158,6 +155,13 @@
             await prev_image();
         }
     }
+    let short = $derived(data.garage_info[0]);
+    let curr_gallery_idx = $derived(short.image_urls.indexOf(curr_gallery_img));
+    run(() => {
+        if(textarea) {
+            textarea.style.height = `${textarea.scrollHeight}px`;
+        }
+    });
 </script>
 
 <svelte:head>
@@ -171,8 +175,8 @@
         <div class="p-10">
             <h1 class="text-xl font-bold">this COMPLETELY removes your vehicle. are you sure?</h1>
             <div class="flex justify-center gap-2 text-lg mt-4">
-                <button class="border border-red-500 warning-box py-1 px-4 rounded-lg active:scale-90 transition-all hover:no-box hover:translate-y-1 hover:opacity-80" on:click={() => delete_vehicle(short.id)}>yes</button>
-                <button class="border border-gray-400 box py-1 px-4 rounded-lg active:scale-90 transition-all hover:no-box hover:translate-y-1 hover:opacity-80" on:click={close_delete_prompt}>no</button>
+                <button class="border border-red-500 warning-box py-1 px-4 rounded-lg active:scale-90 transition-all hover:no-box hover:translate-y-1 hover:opacity-80" onclick={() => delete_vehicle(short.id)}>yes</button>
+                <button class="border border-gray-400 box py-1 px-4 rounded-lg active:scale-90 transition-all hover:no-box hover:translate-y-1 hover:opacity-80" onclick={close_delete_prompt}>no</button>
             </div>
         </div>
     </dialog>
@@ -197,11 +201,11 @@
         <dialog id="upload-photo" class="bg-transparent text-center backdrop:backdrop-blur-sm">
             <div class="flex flex-col m-20">
                 <div class="mr-auto ml-0">
-                    <button class="text-2xl text-white hover:opacity-80" on:click={ close_modal }>x</button>
+                    <button class="text-2xl text-white hover:opacity-80" onclick={close_modal}>x</button>
                 </div>
                 <div>
                     <label>
-                        <input type="file" id="file" accept="image/*" name="file" bind:value={file} class="hidden" on:change={(e) => uploaded_file(e)} multiple /> <!-- Might need some styling on this bad boy -->            
+                        <input type="file" id="file" accept="image/*" name="file" bind:value={file} class="hidden" onchange={(e) => uploaded_file(e)} multiple /> <!-- Might need some styling on this bad boy -->            
                         <div 
                         class="bg-cover bg-no-repeat border-2 border-black rounded-lg offset-box overflow-clip" 
                         style={file ? `background-image: url('${file}')` : ""}
@@ -215,7 +219,7 @@
                     </label>
                     <button 
                     class="text-xl font-semibold border border-black box p-1 rounded-lg active:scale-90 transition-all hover:no-box hover:translate-y-1 hover:opacity-80 bg-white mt-4" 
-                    on:click={ upload_image }>
+                    onclick={upload_image}>
                     upload
                     </button>
                 </div>
@@ -226,13 +230,13 @@
             <div class="flex gap-1 justify-center items-center">
                 <button 
                 class="border border-black box p-1 rounded-lg active:scale-90 transition-all hover:no-box hover:translate-y-1 hover:opacity-80" 
-                on:click={ open_modal }
+                onclick={open_modal}
                 >
                 add image
                 </button>
                 <button 
                 class="{!edit_mode ? "border-black box p-1 ": "border-red-500 warning-box px-4 py-1"} border rounded-lg active:scale-90 transition-all hover:no-box hover:translate-y-1 hover:opacity-80" 
-                on:click={ toggle_edit }
+                onclick={toggle_edit}
                 >
                 {!edit_mode ? "edit": "x"}
                 </button>
@@ -241,13 +245,13 @@
                 <div class="flex gap-1 justify-center items-center">
                     <button 
                     class="border border-red-500 warning-box p-1 rounded-lg active:scale-90 transition-all hover:no-box hover:translate-y-1 hover:opacity-80" 
-                    on:click={ open_delete_prompt }
+                    onclick={open_delete_prompt}
                     >
                     remove
                     </button>
                     <button 
                     class="border border-black box p-1 rounded-lg active:scale-90 transition-all hover:no-box hover:translate-y-1 hover:opacity-80" 
-                    on:click={ save_desc }
+                    onclick={save_desc}
                     >
                     save
                     </button>
@@ -260,11 +264,10 @@
     <section class="border-4 border-white p-2 flex justify-center gap-4">
         {#each short.image_urls as pic}
             <button 
-            on:click={() => { 
+            onclick={() => { 
                 open_gallery()
                 curr_gallery_img = pic;
-            }
-            } 
+            }} 
             class=" bg-cover bg-no-repeat border border-black rounded-lg box transition-all hover:no-box hover:translate-y-1 overflow-clip"
             style="background-image: url('{pic}')"
             >
@@ -274,15 +277,15 @@
     </section>
     <!----------------->
     <!-- Modal for 'expanded' gallery photo-->
-    <dialog id="gallery" class="bg-transparent text-center backdrop:backdrop-blur-sm" bind:clientWidth={width} use:swipe={{ timeframe: 300, minSwipeDistance: 50, touchAction: 'pan-y'}} on:swipe={handler}>
+    <dialog id="gallery" class="bg-transparent text-center backdrop:backdrop-blur-sm" bind:clientWidth={width} use:swipe={{ timeframe: 300, minSwipeDistance: 50, touchAction: 'pan-y'}} onswipe={handler}>
         {#if show_gallery_modal}
-            <div class="m-2" use:clickOutside on:outclick={() => close_gallery()} bind:clientWidth={width} use:swipe={{ timeframe: 300, minSwipeDistance: 50, touchAction: 'pan-y'}} on:swipe={handler}>
+            <div class="m-2" use:clickOutside onoutclick={() => close_gallery()} bind:clientWidth={width} use:swipe={{ timeframe: 300, minSwipeDistance: 50, touchAction: 'pan-y'}} onswipe={handler}>
                 <div class="justify-start text-left">
-                    <button class="text-2xl hover:opacity-75" on:click={close_gallery}>x</button>
+                    <button class="text-2xl hover:opacity-75" onclick={close_gallery}>x</button>
                 </div>
                 <div class="flex">
                 {#if curr_gallery_idx > 0}
-                    <button class="text-2xl px-4 hover:opacity-80" on:click={prev_image}>&lt;</button>
+                    <button class="text-2xl px-4 hover:opacity-80" onclick={prev_image}>&lt;</button>
                 {:else}
                     <span class="invisible text-2xl px-4">!</span>
                 {/if} <!-- I think there's an issue with the swipe library and select-none lol -->
@@ -290,7 +293,7 @@
                     <img src={curr_gallery_img} alt="" class="lg:w-[1296px] h-72 lg:h-[732px] object-contain backdrop-blur-md"/>
                 </div>
                 {#if curr_gallery_idx < short.image_urls.length - 1}
-                    <button class="text-2xl px-4 hover:opacity-80" on:click={next_image}>&gt;</button>
+                    <button class="text-2xl px-4 hover:opacity-80" onclick={next_image}>&gt;</button>
                 {:else}
                     <span class="invisible text-2xl px-4">!</span>
                 {/if}
@@ -299,12 +302,12 @@
                 <section class="flex flex-col gap-2 mt-1">
                     <button 
                     class="bg-white border border-black box p-1 rounded-lg active:scale-90 transition-all hover:no-box hover:translate-y-1 hover:opacity-80 w-fit mx-auto" 
-                    on:click={set_main_img}>
+                    onclick={set_main_img}>
                     set as main
                     </button>
                     <button 
                     class="bg-white border border-red-500 warning-box p-1 rounded-lg active:scale-90 transition-all hover:no-box hover:translate-y-1 hover:opacity-80 w-fit mx-auto" 
-                    on:click={remove_image}
+                    onclick={remove_image}
                     >
                     remove image
                     </button>

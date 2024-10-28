@@ -1,9 +1,11 @@
 <script>
-    export let id;
-    export let content;
-    export let title;
-    export let reply_count;
-    export let poster;
+    let {
+        id,
+        content,
+        title,
+        reply_count,
+        poster
+    } = $props();
 </script>
 
 <a href="/forum/post/{id}">

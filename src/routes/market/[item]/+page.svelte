@@ -1,15 +1,20 @@
 <script>
+    import { run } from 'svelte/legacy';
+
     import { goto } from '$app/navigation'
     import { page } from '$app/stores'
 
-    export let data;
-    let width;
+    let { data } = $props();
+    let width = $state();
 
-    $: market = data.marketplace_listings[0]
-    $: user = data.garage[0]
+    let market = $derived(data.marketplace_listings[0])
+    let user = $derived(data.garage[0])
 
-    let curr_img = data.marketplace_listings[0].listing_pics[0]
-    $: curr_img_idx = data.marketplace_listings[0].listing_pics.indexOf(curr_img)
+    let curr_img = $state(data.marketplace_listings[0].listing_pics[0])
+    let curr_img_idx = $state(0);
+    run(() => {
+        curr_img_idx = data.marketplace_listings[0].listing_pics.indexOf(curr_img)
+    });
 
     async function next_img() {
         curr_img = data.marketplace_listings[0].listing_pics[++curr_img_idx]
@@ -58,7 +63,7 @@
                 {#if curr_img_idx > 0}
                     <button
                     class="w-4 lg:w-20 ml-0 mr-auto text-lg lg:text-3xl rounded-full px-3.5 py-0.5 lg:px-6 lg:py-4 border-2 border-gray-400 bg-white text-black font-bold hover:opacity-75 select-none" 
-                    on:click={prev_img}>
+                    onclick={prev_img}>
                         &lt
                     </button>
                 {:else}
@@ -72,7 +77,7 @@
                 </div>
                 <section class="flex justify-center gap-4 p-4 w-full mt-auto mb-0">
                     {#each market.listing_pics as pic}
-                    <button on:click={() => click_image_set(pic)}>
+                    <button onclick={() => click_image_set(pic)}>
                         <div class="flex justify-center items-center bg-transparent p-0.5">
                             {#if curr_img == pic}
                                 <img src={pic} alt="car" class="object-cover w-10 h-10 lg:w-16 lg:h-16 rounded-md" loading="lazy">
@@ -88,7 +93,7 @@
                 {#if curr_img_idx < market.listing_pics.length - 1}
                     <button 
                     class="w-4 lg:w-20 mr-0 ml-auto text-lg lg:text-3xl rounded-full px-3.5 py-0.5 lg:px-6 lg:py-4 border-2 border-gray-400 bg-white text-black font-bold hover:opacity-75 select-none" 
-                    on:click={next_img}>
+                    onclick={next_img}>
                         &gt;
                     </button>
                 {:else}
@@ -113,9 +118,9 @@
         <h1 class="text-xl font-bold pt-2">description</h1>
         <span class="max-h-[30rem] min-h-[24rem] overflow-y-auto border border-gray-600 p-1 rounded-md whitespace-pre-wrap">{market.item_description}</span>
         {#if market.seller != $page.data.session?.user.displayname && data.marketplace_messages.length == 0 && $page.data.session?.user}
-            <button on:click={send_message}>send message</button>
+            <button onclick={send_message}>send message</button>
         {:else if data.marketplace_messages.length > 0 && market.seller != $page.data.session?.user.displayname}
-            <button on:click={() => goto(`/market/chats/${data.marketplace_messages[0].chat_id}`)}>check chat</button>
+            <button onclick={() => goto(`/market/chats/${data.marketplace_messages[0].chat_id}`)}>check chat</button>
         {/if}
         <h1 class="text-xl font-bold pt-10">seller info</h1>
         <section class="flex items-center gap-4 py-1">
@@ -125,7 +130,7 @@
                 <span class="text-xl font-bold">{market.seller}</span>
         </section>
         <span class="text-sm text-gray-500">joined on {user.created.substring(0, 7)}</span>
-        <!-- svelte-ignore a11y-missing-attribute -->
+        <!-- svelte-ignore a11y_missing_attribute -->
         <iframe src="https://maps.google.com/maps?q={market.zip}&output=embed&z=10" width="100%" height="200" frameborder="0" style="border:0" allowfullscreen></iframe>
     </div>
 </div>

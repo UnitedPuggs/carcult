@@ -1,6 +1,6 @@
 <script>
     import SellingItem from '$lib/market/SellingItem.svelte'
-    export let data;
+    let { data } = $props();
 </script>
 
 <a href="/market" class="text-3xl hover:opacity-75 px-2">&lt;-</a>

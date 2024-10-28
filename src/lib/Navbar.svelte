@@ -4,7 +4,7 @@
     import { onMount } from "svelte";
 
     let prev_scroll = 0;
-    let show = "top-0";
+    let show = $state("top-0");
 
     onMount(() => {
         window.onscroll = () => {
@@ -42,7 +42,7 @@
             {#if $page.data.session.user.role > 0 && $page.url.pathname.indexOf("meets") != -1}
                 <a href="/garage/{$page.data.session.user.displayname}/my-meets" class=" hover:opacity-75 border border-black box p-1 rounded-lg active:scale-90 transition-all hover:no-box hover:translate-y-1">ur meets</a>
             {/if}
-                <button on:click={() => signOut()} class="hover:opacity-75 border border-black box p-1 rounded-lg active:scale-90 transition-all hover:no-box hover:translate-y-1">log out</button>
+                <button onclick={() => signOut()} class="hover:opacity-75 border border-black box p-1 rounded-lg active:scale-90 transition-all hover:no-box hover:translate-y-1">log out</button>
             {:else}
                 <a href="/login" class="hover:opacity-80 border border-black box rounded-lg p-1 active:scale-90 transition-all hover:no-box hover:translate-y-1">login</a>
             {/if}

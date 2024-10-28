@@ -1,16 +1,20 @@
 <script>
+    import { run } from 'svelte/legacy';
+
     import { onMount } from "svelte";
     import { page } from '$app/stores';
     import { invalidateAll } from '$app/navigation'
 
-    export let post_id;
-    export let reply_id;
-    export let created_at;
-    export let poster;
-    export let reply;
-    export let reply_num;
+    let {
+        post_id,
+        reply_id,
+        created_at,
+        poster,
+        reply = $bindable(),
+        reply_num
+    } = $props();
 
-    let edit_mode = false;
+    let edit_mode = $state(false);
 
     function linkify(text) {
         return text.replace(/(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig, function(url) {
@@ -45,11 +49,13 @@
         edit_mode = !edit_mode;
     }
 
-    let test;
+    let test = $state();
 
-    $: if (test) {
-        test.style.height = `${test.scrollHeight}px`
-    }
+    run(() => {
+        if (test) {
+            test.style.height = `${test.scrollHeight}px`
+        }
+    });
 </script>
 
 <div class="flex flex-col h-fit">
@@ -72,10 +78,10 @@
             {#if $page.data.session?.user.displayname == poster}
                 <hr class="p-1 mt-2">
                 <div class="flex gap-2">
-                    <button class="border p-1 border-white rounded-sm hover:opacity-75" on:click={toggle_edit_mode}>edit</button>
-                    <button class="border p-1 border-white rounded-sm hover:opacity-75" on:click={delete_reply}>delete</button>
+                    <button class="border p-1 border-white rounded-sm hover:opacity-75" onclick={toggle_edit_mode}>edit</button>
+                    <button class="border p-1 border-white rounded-sm hover:opacity-75" onclick={delete_reply}>delete</button>
                     {#if edit_mode}
-                        <button class="border p-1 border-white bg-white text-gray-800 rounded-sm hover:opacity-75" on:click={edit_reply}>save</button>
+                        <button class="border p-1 border-white bg-white text-gray-800 rounded-sm hover:opacity-75" onclick={edit_reply}>save</button>
                     {/if}
                 </div>
             {/if}

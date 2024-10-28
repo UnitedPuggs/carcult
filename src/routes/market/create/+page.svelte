@@ -1,20 +1,20 @@
 <script>
     import { page } from '$app/stores'
     import { goto } from '$app/navigation'
-    export let data;
+    let { data } = $props();
 
-    let title;
-    let price;
-    let description;
-    let mileage;
-    let title_status;
-    let transmission;
-    let zip;
+    let title = $state();
+    let price = $state();
+    let description = $state();
+    let mileage = $state();
+    let title_status = $state();
+    let transmission = $state();
+    let zip = $state();
 
     let files;
-    let preview_files = [];
+    let preview_files = $state([]);
 
-    let width;
+    let width = $state();
 
     async function create_listing() {
         const form_data = new FormData()
@@ -66,7 +66,7 @@
     <div class="border-2 border-white w-full lg:w-72 min-h-[calc(100vh_-_6rem)] p-2" id="seller-controls">
         <a href="/market" class="text-xl font-bold">&lt;-</a>
         <h1 class="font-bold text-xl mt-2">item for sale</h1>
-        <form class="flex flex-col gap-2" on:submit={create_listing}>
+        <form class="flex flex-col gap-2" onsubmit={create_listing}>
             <input bind:value={title} class="bg-gray-800 border border-white p-2 rounded-sm" placeholder="item name" required>
             <input bind:value={price} type="number" class="bg-gray-800 border border-white p-2 rounded-sm" placeholder="price" required min=0>
             <input bind:value={mileage} type="number" class="bg-gray-800 border border-white p-2 rounded-sm" placeholder="mileage" min=1 max=999999>
@@ -87,7 +87,7 @@
                 type="file" 
                 multiple 
                 accept="image/*" 
-                on:change={upload_images} 
+                onchange={upload_images} 
                 required 
                 class="file:bg-gray-800  file:border-0  file:rounded-full file:p-2 file:hover:opacity-75 file:hover:cursor-pointer file:font-bold"
             >
@@ -132,7 +132,7 @@
                                 <img src={data.garage[0].pfp_url} alt="" class="rounded-full w-16"/>
                                 <span class="text-xl font-bold">{$page.data.session.user.displayname}</span>
                             </section>
-                            <!-- svelte-ignore a11y-missing-attribute -->
+                            <!-- svelte-ignore a11y_missing_attribute -->
                             <iframe src="https://maps.google.com/maps?q={zip}&output=embed&z=11" width="100%" height="150" frameborder="0" style="border:0" allowfullscreen></iframe>
                         </div>
                     </section>

@@ -1,7 +1,7 @@
 <script>
     import FollowCard from '$lib/garage/FollowCard.svelte';
-    export let data;
-    $: short = data.garage;
+    let { data } = $props();
+    let short = $derived(data.garage);
 </script>
 
 <div class="flex flex-col justify-center items-center">

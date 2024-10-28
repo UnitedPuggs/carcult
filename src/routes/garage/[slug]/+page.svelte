@@ -1,22 +1,26 @@
 <script>
+    import { run } from 'svelte/legacy';
+
     import { page } from '$app/stores'
     import { invalidateAll } from '$app/navigation';
     import VehicleBox from '$lib/garage/VehicleBox.svelte'
-    export let data;
+    let { data } = $props();
 
     let file;
-    let bio = data.garage[0].bio; //This shit is jank, but it works
-    let temp_pfp;
-    let edit_mode = false;
+    let bio = $state(data.garage[0].bio); //This shit is jank, but it works
+    let temp_pfp = $state();
+    let edit_mode = $state(false);
 
-    let textarea;
-    $: if(textarea) {
-        textarea.style.height = `${textarea.scrollHeight}px`;
-    }
+    let textarea = $state();
+    run(() => {
+        if(textarea) {
+            textarea.style.height = `${textarea.scrollHeight}px`;
+        }
+    });
 
-    $: follow_status = data.is_following[0];
+    let follow_status = $derived(data.is_following[0]);
 
-    $: short = data.garage[0];
+    let short = $derived(data.garage[0]);
 
     async function toggle_edit() {
         edit_mode = !edit_mode
@@ -79,7 +83,7 @@
             <!-- User profile picture -->
             {#if edit_mode} 
                 <label>
-                    <input type="file" class="hidden" accept="image/*" bind:value={ temp_pfp } on:change={(e) => uploaded_file(e)} />
+                    <input type="file" class="hidden" accept="image/*" bind:value={ temp_pfp } onchange={(e) => uploaded_file(e)} />
                     <img src={temp_pfp ? temp_pfp : '/assets/user_profile.png'} alt="new profile pic" class="rounded-full h-24 w-24 border border-black box cursor-pointer" />
                 </label>
             {:else}
@@ -90,14 +94,14 @@
             {#if $page.data.session?.user.displayname != short.username && $page.data.session?.user && typeof follow_status == 'undefined'} <!-- need to change follow to optimistic rendering -->
                 <button 
                 class="border border-black box p-1 rounded-lg active:scale-90 transition-all hover:no-box hover:translate-y-1 hover:opacity-80"
-                on:click={() => follow_user($page.data.session.user.displayname, $page.params.slug)}
+                onclick={() => follow_user($page.data.session.user.displayname, $page.params.slug)}
                 >
                 follow
                 </button>
             {:else if $page.data.session?.user.displayname != short.username && $page.data.session?.user && typeof follow_status !== 'undefined'}
                 <button 
                 class="border border-black box p-1 rounded-lg active:scale-90 transition-all hover:no-box hover:translate-y-1 hover:opacity-80"
-                on:click={() => unfollow_user(follow_status.id)}
+                onclick={() => unfollow_user(follow_status.id)}
                 >
                 unfollow
                 </button>
@@ -106,13 +110,13 @@
                 <button 
                 class="border {!edit_mode ? 'border-black box p-1' : 'border-red-500 warning-box px-4 py-1'} 
                 rounded-lg active:scale-90 transition-all hover:no-box hover:translate-y-1 hover:opacity-80"
-                on:click={ toggle_edit }
+                onclick={toggle_edit}
                 >
                 {!edit_mode ? "edit" : "x"}
                 </button>
                 {#if edit_mode}
                     <button class="border border-black box p-1 rounded-lg active:scale-90 transition-all hover:no-box hover:translate-y-1 hover:opacity-80"
-                    on:click={ update_profile }
+                    onclick={update_profile}
                     >
                     save
                     </button>

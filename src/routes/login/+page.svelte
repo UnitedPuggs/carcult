@@ -27,13 +27,13 @@
         <span class="text-sm text-gray-400 underline">Sign in with</span>
         <button
         class="h-12 w-52 border border-black font-bold rounded-lg text-lg hover:opacity-80 active:scale-90 box transition-all hover:no-box hover:translate-y-1" 
-        on:click={() => signIn("google")}
+        onclick={() => signIn("google")}
         >
         <span class="text-blue-500">G</span><span class="text-red-500">o</span><span class="text-yellow-500">o</span><span class="text-blue-500">g</span><span class="text-green-500">l</span><span class="text-red-500">e</span>
         </button>
         <button 
         class="h-12 w-52 border border-black font-bold rounded-lg text-lg hover:opacity-80 active:scale-90 box transition-all hover:no-box hover:translate-y-1" 
-        on:click={() => signIn("discord")}
+        onclick={() => signIn("discord")}
         >
         <span class="text-purple-400">Discord</span>
         </button>

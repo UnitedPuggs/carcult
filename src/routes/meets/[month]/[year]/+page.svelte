@@ -1,31 +1,26 @@
 <script>
+    import { run } from 'svelte/legacy';
+
     import { onMount } from "svelte";
     import { goto } from '$app/navigation'
     import { page } from '$app/stores'
     import { swipe } from "svelte-gestures";
     import CalendarEvents from "$lib/meets/CalendarEvents.svelte";
     
-    export let data;
+    let { data = $bindable() } = $props();
 
-    let width = 0;
+    let width = $state(0);
     let radius;
     let user_location;
 
-    $: events = data.events;
 
-    let date;
-    $: month_str = ref_date.toLocaleString(undefined, { month: 'long' });
-    let curr_year;
+    let date = $state();
+    let curr_year = $state();
     let first_day;
     let prev_month_days;
-    $: calendar_days = [];
 
     const today = new Date();
 
-    //Just gets the month from [month] param and year from the [year] param
-    $: curr_month = parseInt($page.params.month) - 1;
-    $: curr_year = parseInt($page.params.year);
-    $: ref_date = new Date(curr_year, curr_month);
 
     const daysInMonth = (year, month) => new Date(year, month, 0).getDate();
     const short_days = ['Sun', 'Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat'];
@@ -137,6 +132,25 @@
     onMount(() => {
         get_current_calendar(curr_month);
     })
+    let events = $derived(data.events);
+    run(() => {
+        curr_year = parseInt($page.params.year);
+    });
+    //Just gets the month from [month] param and year from the [year] param
+    let curr_month;
+    run(() => {
+        curr_month = parseInt($page.params.month) - 1;
+    });
+    let ref_date;
+    run(() => {
+        ref_date = new Date(curr_year, curr_month);
+    });
+    let month_str = $state("");
+    run(() => {
+        month_str = ref_date.toLocaleString(undefined, { month: 'long' });
+    });
+    let calendar_days = $state([]);
+    
 </script>
 
 <svelte:head>
@@ -151,7 +165,7 @@
     <meta property="og:url" content="https://carcult.org/meets/{$page.params.month}/{$page.params.year}">
 </svelte:head>
 
-<div bind:clientWidth={width} use:swipe={{ timeframe: 300, minSwipeDistance: 50, touchAction: 'pan-y'}} on:swipe={handler}>
+<div bind:clientWidth={width} use:swipe={{ timeframe: 300, minSwipeDistance: 50, touchAction: 'pan-y'}} onswipe={handler}>
     {#if $page.data.session?.user.role >= 1}
         <a href="/meets/create" class="border border-black box p-1 m-2 inline-block rounded-lg active:scale-90 transition-all hover:no-box hover:translate-y-1 hover:opacity-80">new meet</a>
     {/if}
@@ -164,7 +178,7 @@
         </form> 
         -->
         <div class="flex flex-row justify-center items-center text-center">
-            <button on:click={() => {
+            <button onclick={() => {
                 calendar_days = [];
                 get_current_calendar(--curr_month);
             }}
@@ -174,7 +188,7 @@
             </button>
             <section>
                 <h1 class="text-2xl p-2 -mb-2 w-52 font-bold select-none">{month_str} {curr_year}</h1>
-                <button on:click={() => {
+                <button onclick={() => {
                     goto_today()
                 }} 
                 class="pb-4 hover:opacity-75 select-none"
@@ -182,7 +196,7 @@
                 today
                 </button>
             </section>
-            <button on:click={() => {
+            <button onclick={() => {
                 calendar_days = [];
                 get_current_calendar(++curr_month);
             }}

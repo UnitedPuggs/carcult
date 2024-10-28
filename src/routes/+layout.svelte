@@ -1,6 +1,13 @@
 <script>
     import "../app.css";
     import Navbar from "../lib/Navbar.svelte";
+    /**
+     * @typedef {Object} Props
+     * @property {import('svelte').Snippet} [children]
+     */
+
+    /** @type {Props} */
+    let { children } = $props();
     
 </script>
 
@@ -8,9 +15,7 @@
 
 <div class="flex flex-col h-screen">
 <Navbar />
-<body>
-    <slot />
-</body>
+{@render children?.()}
 <footer class="w-full mt-auto mb-0">
     <hr class="border-t border-black">
     <div class="flex flex-col my-2 w-fit text-sm text-gray-400">

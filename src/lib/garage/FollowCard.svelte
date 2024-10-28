@@ -1,6 +1,5 @@
 <script>
-    export let pfp_pic;
-    export let username;
+    let { pfp_pic, username } = $props();
 </script>
 
 <!-- We're just wrapping our div in a link to the follower/following user's garage -->

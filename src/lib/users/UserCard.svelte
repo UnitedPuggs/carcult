@@ -1,8 +1,10 @@
 <script>
-    export let username;
-    export let pfp_url;
-    export let followers;
-    export let following;
+    let {
+        username,
+        pfp_url,
+        followers,
+        following
+    } = $props();
 </script>
 
 <a href="/garage/{username}" class="hover:opacity-80 w-fit mx-auto">

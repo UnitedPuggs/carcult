@@ -1,24 +1,29 @@
 <script>
+    import { run } from 'svelte/legacy';
+
     import { page } from '$app/stores'
     import { goto } from '$app/navigation'
     import slugify from 'slugify';
 
-    let date;
-    let end_date;
-    let description;
-    let event_name;
-    let location;
+    let date = $state();
+    let end_date = $state();
+    let description = $state();
+    let event_name = $state();
+    let location = $state();
     
-    let bg_img;
+    let bg_img = $state();
     let meet_slug;
 
     let checked = false;
-    let repeat_week = false;
-    let repeat_month = false;
-    let repeat_year = false;
+    let repeat_week = $state(false);
+    let repeat_month = $state(false);
+    let repeat_year = $state(false);
 
-    $: meet_date = new Date(date)
-    $: end_date_sub = new Date(end_date)
+    let meet_date;
+    run(() => {
+        meet_date = new Date(date)
+    });
+    let end_date_sub = $derived(new Date(end_date))
 
     const min_date = new Date().toLocaleString('sv').slice(0, 10) + "T00:00"
     const max_date = new Date(new Date().setFullYear(new Date().getFullYear() + 5)).toLocaleString('sv').slice(0, 10) + "T23:59";
@@ -101,7 +106,7 @@
 
 <div class="mt-10">
     <h1 class="text-2xl font-bold text-center italic underline">create your meet</h1>
-    <form class="flex flex-col justify-center items-center gap-1 border border-black rounded-xl w-fit mx-auto p-2 offset-box" on:submit={() => {
+    <form class="flex flex-col justify-center items-center gap-1 border border-black rounded-xl w-fit mx-auto p-2 offset-box" onsubmit={() => {
         if(repeat_week || repeat_month || repeat_year)
             create_repeated_meet();
         else
@@ -120,7 +125,7 @@
         accept="image/*" 
         class="file:cursor-pointer"
         bind:value={bg_img} 
-        on:change={(e) => upload_background(e)}
+        onchange={(e) => upload_background(e)}
         >
         <!--
         <label>

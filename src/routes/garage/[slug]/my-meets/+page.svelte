@@ -5,8 +5,8 @@
     import Events from '$lib/garage/Events.svelte';
     import { page }  from '$app/stores'
 
-    export let data;
-    $: short = data.events;
+    let { data } = $props();
+    let short = $derived(data.events);
 </script>
 
 <svelte:head>

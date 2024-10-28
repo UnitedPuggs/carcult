@@ -1,8 +1,8 @@
 <script>
     import { page } from '$app/stores'
-    let file;
-    let model;
-    let description;
+    let file = $state();
+    let model = $state();
+    let description = $state();
 
     const uploaded_file = (e) => {
         let img = e.target.files[0];
@@ -24,7 +24,7 @@
     <div class="border border-black rounded-xl shadow p-2 sticky top-0 w-full">
         <form class="flex flex-col gap-1" method="POST" enctype="multipart/form-data">
             <input type="text" class="text-black border border-black rounded-md p-1 w-74" placeholder="model here" id="car" name="car" required bind:value={model}>
-            <input type="file" accept="image/*" id="file" name="file" class="file:cursor-pointer" bind:value={file} on:change={(e) => uploaded_file(e)} />
+            <input type="file" accept="image/*" id="file" name="file" class="file:cursor-pointer" bind:value={file} onchange={(e) => uploaded_file(e)} />
             <textarea class="text-black border border-black rounded-md p-1 w-74" id="desc" name="desc" placeholder="description here" bind:value={description}></textarea>
             <input type="submit" value="add wheels" class="bg-white text-lg w-28 p-1 mx-auto hover:opacity-80 border border-black rounded-xl box transition-all hover:no-box hover:translate-y-1 cursor-pointer active:scale-90">
         </form>

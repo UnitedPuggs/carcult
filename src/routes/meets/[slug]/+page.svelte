@@ -1,22 +1,26 @@
 <script>
+    import { run } from 'svelte/legacy';
+
     import { page } from '$app/stores'
     import { goto, invalidateAll } from '$app/navigation';
     import { browser } from '$app/environment';
-    export let data;
+    let { data } = $props();
 
-    let edit_mode = false;
+    let edit_mode = $state(false);
     
-    let description = data.events[0].description;
-    let event_name = data.events[0].event_name;
-    let event_date = data.events[0].event_date;
-    let event_location = data.events[0].location;
+    let description = $state(data.events[0].description);
+    let event_name = $state(data.events[0].event_name);
+    let event_date = $state(data.events[0].event_date);
+    let event_location = $state(data.events[0].location);
 
-    $: meets = data.events[0];
+    let meets = $derived(data.events[0]);
 
-    let textarea;
-    $: if(textarea) {
-        textarea.style.height = `${textarea.scrollHeight}px`
-    }
+    let textarea = $state();
+    run(() => {
+        if(textarea) {
+            textarea.style.height = `${textarea.scrollHeight}px`
+        }
+    });
 
     let date = new Date();
 
@@ -59,26 +63,26 @@
 
 <div class="bg-no-repeat bg-center bg-cover bg-scroll border-b border-white" style="background-image: url('{meets.bg_img}')">
     <div class="flex flex-col backdrop-blur py-4 lg:min-h-[40rem]">
-        <button class="text-white text-xl text-left ml-2" on:click={ back }>&lt;--</button>
+        <button class="text-white text-xl text-left ml-2" onclick={back}>&lt;--</button>
         <!-- would it be better to essentially just copy-paste this all into one big if/else instead of littering this with if/else statements? -->
         {#if $page.data.session?.user.displayname == meets.host}
             <div class="flex flex-row gap-1 mx-2 my-2 justify-center lg:justify-normal">
                 <button 
                 class="border border-black box p-1 inline-block rounded-lg active:scale-90 transition-all hover:no-box hover:translate-y-1 hover:opacity-80 bg-white" 
-                on:click={ toggle_edit_mode }
+                onclick={toggle_edit_mode}
                 >
                 {!edit_mode ? "edit" : "close edit"}
                 </button>
                 {#if edit_mode}
                     <button 
                     class="border border-black box p-1 inline-block rounded-lg active:scale-90 transition-all hover:no-box hover:translate-y-1 hover:opacity-80 bg-white" 
-                    on:click={ update_meet }
+                    onclick={update_meet}
                     >
                     save
                     </button>
                 {/if}
                 <!-- probably a good idea to have a double-checker -->
-                <button class="border border-black box p-1 inline-block rounded-lg active:scale-90 transition-all hover:no-box hover:translate-y-1 hover:opacity-80 bg-white" on:click={ delete_meet }>delete meet</button>
+                <button class="border border-black box p-1 inline-block rounded-lg active:scale-90 transition-all hover:no-box hover:translate-y-1 hover:opacity-80 bg-white" onclick={delete_meet}>delete meet</button>
             </div>
         {/if}
         <div class="flex flex-col justify-center items-center h-auto my-auto text-white">
@@ -103,7 +107,7 @@
         </div>
     </div>
 </div>
-<!-- svelte-ignore a11y-missing-attribute -->
+<!-- svelte-ignore a11y_missing_attribute -->
 {#if meets.location}
     <iframe src="https://maps.google.com/maps?q={meets.location}&output=embed" width="100%" height="400" frameborder="0" style="border:0" allowfullscreen></iframe>
 {/if}

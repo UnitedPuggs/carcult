@@ -1,11 +1,11 @@
 <script>
     import UserCard from "$lib/users/UserCard.svelte";
 
-    let username_search;
-    let users_found = [];
+    let username_search = $state();
+    let users_found = $state([]);
 
     //by default we assume users are found
-    let found_flag = true;
+    let found_flag = $state(true);
 
     async function search_users() {
         const req = await fetch(`/api/users/search_users?username=${username_search}`)
@@ -23,7 +23,7 @@
 </svelte:head>
 
 <div class="flex flex-col mt-10 mb-2">
-    <form class="flex flex-row justify-center items-center gap-2 border-2 border-black rounded-xl offset-box p-2 w-fit mx-auto" on:submit={ search_users }>
+    <form class="flex flex-row justify-center items-center gap-2 border-2 border-black rounded-xl offset-box p-2 w-fit mx-auto" onsubmit={search_users}>
         <input type="search" class="text-black p-1 border border-black rounded-md shadow" placeholder="find a carcultist" bind:value={username_search}>
         <input type="submit" class="hover:opacity-80 active:scale-95 cursor-pointer border border-black rounded-lg p-1 box transition-all hover:no-box hover:translate-y-0 -translate-y-1" value="&#128269">
     </form>

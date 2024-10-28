@@ -1,6 +1,6 @@
 <script>
     import { page } from '$app/stores'
-    export let data;
+    let { data } = $props();
     
     //let chats = [...new Set(data.grouped_messages.map(i => JSON.stringify(i)))].map(i => JSON.parse(i))
 </script>

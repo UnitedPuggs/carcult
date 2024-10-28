@@ -1,8 +1,10 @@
 <script>
-    export let event_name;
-    export let event_date;
-    export let slug;
-    export let bg_img;
+    let {
+        event_name,
+        event_date,
+        slug,
+        bg_img
+    } = $props();
 </script>
 
 <a href="/meets/{slug}" class="hover:opacity-75">

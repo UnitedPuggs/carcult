@@ -1,10 +1,12 @@
 <script>
     import { page } from '$app/stores'
-    export let main_image;
-    export let vehicle_name;
-    export let desc;
-    export let info_id;
-    export let vehicle_slug;
+    let {
+        main_image = $bindable(),
+        vehicle_name,
+        desc,
+        info_id,
+        vehicle_slug
+    } = $props();
 
     if(typeof main_image == 'undefined')
         main_image = "https://knnxtkccpetpqxmvcxmu.supabase.co/storage/v1/object/public/garage_photos/Hulk_Hogan.jpg"
