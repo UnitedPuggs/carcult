@@ -52,6 +52,6 @@ export const actions = {
         if(car_error)
             console.log(car_error)
 
-        throw redirect(302, `/garage/${session.user.displayname}`)
+        redirect(302, `/garage/${session.user.displayname}`);
     }
 }

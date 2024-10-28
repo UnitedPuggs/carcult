@@ -8,6 +8,6 @@ export async function load({ fetch, parent }) {
     const res = await req.json();
     let username = res[0].username;
     if(username != null && username != '') {
-        throw redirect(302, '/')
+        redirect(302, '/');
     }
 }

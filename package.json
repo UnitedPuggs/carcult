@@ -9,21 +9,22 @@
 		"lint": "eslint ."
 	},
 	"devDependencies": {
-		"@sveltejs/adapter-auto": "^2.0.0",
-		"@sveltejs/kit": "^1.20.4",
+		"@sveltejs/adapter-auto": "^3.0.0",
+		"@sveltejs/kit": "^2.7.3",
+		"@sveltejs/vite-plugin-svelte": "^3.0.0",
 		"autoprefixer": "^10.4.15",
 		"eslint": "^8.28.0",
 		"eslint-plugin-svelte": "^2.30.0",
 		"postcss": "^8.4.28",
 		"svelte": "^4.0.5",
 		"tailwindcss": "^3.3.3",
-		"vite": "^4.4.2"
+		"vite": "^5.0.0"
 	},
 	"type": "module",
 	"dependencies": {
-		"@auth/core": "^0.14.0",
-		"@auth/supabase-adapter": "^0.1.4",
-		"@auth/sveltekit": "^0.3.9",
+		"@auth/core": "^0.37.2",
+		"@auth/supabase-adapter": "^1.7.2",
+		"@auth/sveltekit": "^1.7.2",
 		"@supabase/auth-helpers-sveltekit": "^0.10.3",
 		"@supabase/supabase-js": "^2.38.0",
 		"jsonwebtoken": "^9.0.2",
