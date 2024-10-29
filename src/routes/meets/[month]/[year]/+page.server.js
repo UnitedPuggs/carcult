@@ -2,7 +2,7 @@ import { supabase } from '$lib/supabase.js'
 
 export async function load({ params }) {
     let date = new Date(params.year, params.month - 1);
-    let start_date = new Date(date.getFullYear(), date.getMonth(), 1).toISOString();
+    let start_date = new Date(date.getFullYear(), date.getMonth() - 1, 1).toISOString();
     let end_date = new Date(date.getFullYear(), date.getMonth() + 1, 1, 0).toISOString();
     
     let { data: events, error } = await supabase
