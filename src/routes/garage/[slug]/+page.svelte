@@ -1,6 +1,4 @@
 <script>
-    import { run } from 'svelte/legacy';
-
     import { page } from '$app/stores'
     import { invalidateAll } from '$app/navigation';
     import VehicleBox from '$lib/garage/VehicleBox.svelte'
@@ -12,7 +10,7 @@
     let edit_mode = $state(false);
 
     let textarea = $state();
-    run(() => {
+    $effect(() => {
         if(textarea) {
             textarea.style.height = `${textarea.scrollHeight}px`;
         }
@@ -107,13 +105,7 @@
                 </button>
             {/if}
             {#if $page.data.session?.user.displayname == short.username}
-                <button 
-                class="border {!edit_mode ? 'border-black box p-1' : 'border-red-500 warning-box px-4 py-1'} 
-                rounded-lg active:scale-90 transition-all hover:no-box hover:translate-y-1 hover:opacity-80"
-                onclick={toggle_edit}
-                >
-                {!edit_mode ? "edit" : "x"}
-                </button>
+                <a href="{short.username}/settings">edit</a>
                 {#if edit_mode}
                     <button class="border border-black box p-1 rounded-lg active:scale-90 transition-all hover:no-box hover:translate-y-1 hover:opacity-80"
                     onclick={update_profile}

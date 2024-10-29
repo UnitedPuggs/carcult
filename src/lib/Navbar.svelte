@@ -39,7 +39,7 @@
 </script>
 
 <Drawer>
-    <div class="flex flex-col text-3xl items-end mr-4 mt-4 gap-2">
+    <div class="flex flex-1 flex-col text-3xl items-end mr-4 mt-4 gap-2">
         <button onclick={() => closeDrawer()} class="text-2xl" aria-label="close menu">
             <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
                 <path fill="none" d="M0 0h24v24H0z"></path><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path>
@@ -67,7 +67,7 @@
         meets
         </a>
         {#if $page.data.session?.user}
-            <button onclick={() => signOut()} class="hover:opacity-75 border border-black box p-1 rounded-lg active:scale-90 transition-all hover:no-box hover:translate-y-1 mt-auto mb-0">log out</button>
+            <button onclick={() => signOut()} class="hover:opacity-75 border border-black box p-1 rounded-lg active:scale-90 transition-all hover:no-box hover:translate-y-1 mt-auto">log out</button>
         {:else}
             <a href="/login" class="hover:opacity-80 border border-black box rounded-lg p-1 active:scale-90 transition-all hover:no-box hover:translate-y-1 mt-2" onclick={() => closeDrawer()}>login</a>
         {/if}
