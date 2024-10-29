@@ -1,4 +1,5 @@
 <script>
+	import { initializeStores } from '@skeletonlabs/skeleton';
     import "../app.css";
     import Navbar from "../lib/Navbar.svelte";
     /**
@@ -8,7 +9,7 @@
 
     /** @type {Props} */
     let { children } = $props();
-    
+    initializeStores();
 </script>
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>  

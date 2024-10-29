@@ -206,12 +206,17 @@
             </button>
         </div>
         <div class="flex flex-col justify-center items-center mx-auto rounded-sm w-full lg:w-[85rem] pb-4 lg:px-0 px-1">
-            <section class="grid grid-cols-7 w-full lg:w-[84.5rem] sticky top-0 border border-black divide-x divide-dotted divide-black z-50 text-center text-xs lg:text-base">
+            <!--<section class="grid grid-cols-7 w-screen lg:w-[84.5rem] sticky top-0 border border-black divide-x divide-dotted divide-black z-50 text-center text-xs lg:text-base">
                 {#each width > 640 ? long_days : short_days as day}
                     <span>{day}</span>
                 {/each}
-            </section>
+            </section>-->
             <div class="grid grid-cols-7 h-auto lg:w-auto w-screen gap-[1px]">
+                {#each width > 640 ? long_days : short_days as day}
+                    <section class="sticky top-0 z-50 text-center outline outline-1 text-sm lg:text-base">
+                        <span class="font-semibold">{day}</span>
+                    </section>
+                {/each}
                 {#each calendar_days as day}
                     <CalendarEvents {day} {date} {events} />
                 {/each}
