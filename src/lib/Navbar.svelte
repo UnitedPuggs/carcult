@@ -25,9 +25,10 @@
     function openDrawer() {
         const drawerSettings = {
 	// Provide your property overrides:
-            bgDrawer: 'bg-white text-blacknp',
+            bgDrawer: 'bg-white text-black',
             bgBackdrop: 'z-[400] backdrop-blur',
-            width: 'w-full',
+            width: 'w-screen',
+            height: 'h-screen',
             position: "right"
         };
         drawerStore.open(drawerSettings);
@@ -80,7 +81,7 @@
                 {#if $page.data.session?.user}
                     <button onclick={() => signOut()} class="hover:opacity-75 border border-black box p-1 rounded-lg active:scale-90 transition-all hover:no-box hover:translate-y-1 mt-auto mb-0">log out</button>
                 {:else}
-                    <a href="/login" class="hover:opacity-80 border border-black box rounded-lg p-1 active:scale-90 transition-all hover:no-box hover:translate-y-1" onclick={() => closeDrawer()}>login</a>
+                    <a href="/login" class="hover:opacity-80 border border-black box rounded-lg p-1 active:scale-90 transition-all hover:no-box hover:translate-y-1 mt-2" onclick={() => closeDrawer()}>login</a>
                 {/if}
             </div>
         </Drawer>
