@@ -10,8 +10,8 @@
     let { data = $bindable() } = $props();
 
     let width = $state(0);
-    let radius;
-    let user_location;
+    let radius = $state(0);
+    let user_location = $state(0);
 
 
     let date = $state();
@@ -70,13 +70,14 @@
             const location_coords = await get_coords(location.location);
 
             const dist = await calculate_distance(user_coords, location_coords);
-            //console.log(dist);
+            console.log(dist);
             if(dist <= radius) {
                 locations_in_rad.push(location);
             }
         }
 
         data.events = data.events.filter((x) => locations_in_rad.find(({ id }) => x.id === id));
+        console.log(date.events);
     }
 
     async function get_current_calendar(month) {
@@ -170,13 +171,12 @@
         <a href="/meets/create" class="border border-black box p-1 m-2 inline-block rounded-lg active:scale-90 transition-all hover:no-box hover:translate-y-1 hover:opacity-80">new meet</a>
     {/if}
     <div class="mt-6">
-        <!--
-        <form class="flex justify-center items-center gap-2 text-black" on:submit={() => search_locations(user_location, radius, data.locations)}>
-            <input type="text" bind:value={user_location} />
+        
+        <form class="flex justify-center items-center gap-2 text-black" onsubmit={() => search_locations(user_location, radius, data.locations)}>
+            <input type="text" class="border border-black" bind:value={user_location} />
             <input type="number" min=1 max=200 bind:value={radius} />
-            <input type="submit" class="text-white" />
+            <input type="submit" />
         </form> 
-        -->
         <div class="flex flex-row justify-center items-center text-center">
             <button onclick={() => {
                 calendar_days = [];

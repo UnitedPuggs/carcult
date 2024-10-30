@@ -61,12 +61,12 @@
     <meta property="og:image:alt" content="Background for {meets.event_name}">
 </svelte:head>
 
-<div class="bg-no-repeat bg-center bg-cover bg-scroll border-b border-white" style="background-image: url('{meets.bg_img}')">
-    <div class="flex flex-col backdrop-blur py-4 lg:min-h-[40rem]">
+<div class="bg-no-repeat bg-center bg-cover bg-scroll border-b border-white h-3/4" style="background-image: url('{meets.bg_img}')">
+    <div class="flex flex-col backdrop-blur py-4 h-full">
         <button class="text-white text-xl text-left ml-2" onclick={back}>&lt;--</button>
         <!-- would it be better to essentially just copy-paste this all into one big if/else instead of littering this with if/else statements? -->
         {#if $page.data.session?.user.displayname == meets.host}
-            <div class="flex flex-row gap-1 mx-2 my-2 justify-center lg:justify-normal">
+            <div class="flex flex-row gap-1 m-2 justify-center lg:justify-normal h-auto">
                 <button 
                 class="border border-black box p-1 inline-block rounded-lg active:scale-90 transition-all hover:no-box hover:translate-y-1 hover:opacity-80 bg-white" 
                 onclick={toggle_edit_mode}
@@ -85,7 +85,7 @@
                 <button class="border border-black box p-1 inline-block rounded-lg active:scale-90 transition-all hover:no-box hover:translate-y-1 hover:opacity-80 bg-white" onclick={delete_meet}>delete meet</button>
             </div>
         {/if}
-        <div class="flex flex-col justify-center items-center h-auto my-auto text-white">
+        <div class="flex grow flex-col justify-center items-center my-auto text-white overflow-auto">
             {#if !edit_mode}
                 <h1 class="text-3xl font-bold text-center">{meets.event_name}</h1>
                 <p class="text-lg">hosted by <strong><a href="/garage/{meets.host}" class="underline hover:no-underline">{meets.host}</a></strong></p>
@@ -94,7 +94,7 @@
                 {/if}
                 <p>on {meets.event_date.substring(5, 7)}/{meets.event_date.substring(8, 10)}/{meets.event_date.substring(0, 4)} @ {meets.event_date.substring(11, 16)}</p>
                 <!-- kinda drunk, but this bind shit is kinda based <-- wtf was I talking about here -->
-                <p class="p-1 whitespace-pre-wrap md:max-w-xl">{meets.description}</p>
+                <p class="p-1 whitespace-pre-wrap lg:max-w-xl overflow-y-auto">{meets.description}</p>
             {:else} <!-- referring to that first comment, yes it's much cleaner -->
                 <input type="text" placeholder={event_name} class="text-3xl font-bold text-black" bind:value={event_name} />
                 <input type="text" placeholder={event_location} class="w-auto font-bold text-black" bind:value={event_location} />
@@ -107,7 +107,14 @@
         </div>
     </div>
 </div>
-<!-- svelte-ignore a11y_missing_attribute -->
-{#if meets.location}
-    <iframe src="https://maps.google.com/maps?q={meets.location}&output=embed" width="100%" height="400" frameborder="0" style="border:0" allowfullscreen></iframe>
-{/if}
+<div>
+    <!-- svelte-ignore a11y_missing_attribute -->
+    {#if meets.location}
+    <iframe src="https://maps.google.com/maps?q={meets.location}&output=embed" width="100%" frameborder="0" class="w-full lg:aspect-[16/4]" style="border: 0;" allowfullscreen></iframe>
+    {/if}
+</div>
+
+<div class="flex flex-col">
+    <div class="flex flex-row h-auto">...</div>
+    <div class="flex grow flex-col h-full">...</div>
+</div>
