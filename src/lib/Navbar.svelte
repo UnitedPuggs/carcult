@@ -46,12 +46,12 @@
             </svg>
         </button>
         {#if $page.data.session?.user}
-            <a href="/garage/{$page.data.session.user.displayname}" class="hover:opacity-80 w-8 active:scale-90 shadow"><img src="/assets/garage.png" alt="garage"></a>
+            <a href="/garage/{$page.data.session.user.displayname}" class="hover:opacity-80 w-8 active:scale-90" onclick={() => closeDrawer()}><img src="/assets/garage.png" alt="garage"></a>
             {#if $page.url.pathname.indexOf("garage") != -1 && !$page.url.pathname.includes(`/garage/${$page.data.session.user.displayname}/my-meets`)}
                 <a href="/garage/{$page.data.session.user.displayname}/add-car" class="hover:opacity-75 border border-black box p-1 rounded-lg transition-all hover:no-box hover:translate-y-1" onclick={() => closeDrawer()}>new wheels</a>
             {/if}
             {#if $page.data.session.user.role > 0 && $page.url.pathname.indexOf("meets") != -1}
-                <a href="/garage/{$page.data.session.user.displayname}/my-meets" class=" hover:opacity-75 border border-black box p-1 rounded-lg active:scale-90 transition-all hover:no-box hover:translate-y-1">ur meets</a>
+                <a href="/garage/{$page.data.session.user.displayname}/my-meets" class=" hover:opacity-75 border border-black box p-1 rounded-lg active:scale-90 transition-all hover:no-box hover:translate-y-1" onclick={() => closeDrawer}>ur meets</a>
             {/if}
         {/if}
         <a href="/users" 
