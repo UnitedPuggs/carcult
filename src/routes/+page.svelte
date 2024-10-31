@@ -46,6 +46,7 @@
     <meta property="og:description" content="Join carcult, the ultimate web app for car enthusiasts! Discover and connect with fellow car lovers at exciting car meets near you." />
     <meta property="og:image" content="/assets/logo-tester.png" />
     <meta property="og:url" content="https://www.carcult.org" />
+    <link rel="icon" href="/assets/logo-tester.png" />
 </svelte:head>
 
 
