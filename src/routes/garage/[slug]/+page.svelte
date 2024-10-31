@@ -4,11 +4,6 @@
     import VehicleBox from '$lib/garage/VehicleBox.svelte'
     let { data } = $props();
 
-    let file;
-    let bio = $state(data.garage[0].bio); //This shit is jank, but it works
-    let temp_pfp = $state();
-    let edit_mode = $state(false);
-
     let textarea = $state();
     $effect(() => {
         if(textarea) {
@@ -19,35 +14,6 @@
     let follow_status = $derived(data.is_following[0]);
 
     let short = $derived(data.garage[0]);
-
-    async function toggle_edit() {
-        edit_mode = !edit_mode
-    }
-
-    async function update_profile() {
-        const form_data = new FormData();
-        form_data.append("bio", bio);
-        form_data.append("file", file)
-
-
-        await fetch("/api/garage/update_profile", {
-            method: "POST",
-            body: form_data,
-        });
-
-        edit_mode = false;
-        invalidateAll();
-    }
-
-    const uploaded_file = (e) => {
-        let img = e.target.files[0];
-        file = img; //since we need to use our "file" value for the endpoint :)
-        let reader = new FileReader();
-        reader.readAsDataURL(img);
-        reader.onload = e => {
-            temp_pfp = e.target.result;
-        };
-    }
 
     async function follow_user(follower, followed) {
         await fetch('/api/garage/follow_user', {
@@ -79,16 +45,10 @@
     <section class="flex flex-row gap-2 py-4 justify-center">
         <div class="flex flex-col gap-2 items-center">
             <!-- User profile picture -->
-            {#if edit_mode} 
-                <label>
-                    <input type="file" class="hidden" accept="image/*" bind:value={ temp_pfp } onchange={(e) => uploaded_file(e)} />
-                    <img src={temp_pfp ? temp_pfp : '/assets/user_profile.png'} alt="new profile pic" class="rounded-full h-24 w-24 border border-black box cursor-pointer" />
-                </label>
-            {:else}
-                <img src={short.pfp_url} alt="{short.username}'s profile picture" class="rounded-full h-24 w-24 border border-black box">
-            {/if}
+            <img src={short.pfp_url} alt="{short.username}'s profile picture" class="rounded-full h-24 w-24 border border-black box">
             <!------------------------->
             <span class="text-sm text-gray-400">Joined {short.created.substring(5, 7)}/{short.created.substring(8, 10)}/{short.created.substring(2, 4)}</span>
+            <!--- FOLLOW LOGIC AND COMPONENTS -->
             {#if $page.data.session?.user.displayname != short.username && $page.data.session?.user && typeof follow_status == 'undefined'} <!-- need to change follow to optimistic rendering -->
                 <button 
                 class="border border-black box p-1 rounded-lg active:scale-90 transition-all hover:no-box hover:translate-y-1 hover:opacity-80"
@@ -104,30 +64,16 @@
                 unfollow
                 </button>
             {/if}
+            <!--------->
             {#if $page.data.session?.user.displayname == short.username}
                 <a href="{short.username}/settings">edit</a>
-                {#if edit_mode}
-                    <button class="border border-black box p-1 rounded-lg active:scale-90 transition-all hover:no-box hover:translate-y-1 hover:opacity-80"
-                    onclick={update_profile}
-                    >
-                    save
-                    </button>
-                {/if}
             {/if}
         </div>
         <div class="flex flex-col">
             <span class="font-semibold text-xl">{short.username}</span>
             <!-- User bio -->
             {#if short.bio}
-                {#if edit_mode}
-                    <textarea class="w-48 lg:w-72 border border-red-500 rounded-lg p-1 max-h-32" bind:value={ bio } bind:this={ textarea }></textarea>
-                {:else}
-                    <p class="w-48 lg:w-72 max-h-32 overflow-y-auto">{short.bio}</p>
-                {/if}
-            {:else}
-                {#if edit_mode}
-                    <textarea class="w-48 lg:w-72 h-full border border-red-500 rounded-lg p-1 max-h-32" bind:value={ bio } bind:this={ textarea }></textarea>
-                {/if}
+                <p class="w-48 lg:w-72 max-h-32 overflow-y-auto">{short.bio}</p>
             {/if}
             <!------------->
             {#await data.streamed.garage_info}
@@ -147,7 +93,6 @@
 
         </div>
     </section>
-
     <!-- Vehicle info/images from garage_vehicle_info table -->
     <section>
         {#await data.streamed.garage_info}
