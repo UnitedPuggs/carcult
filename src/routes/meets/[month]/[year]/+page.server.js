@@ -2,8 +2,9 @@ import { supabase } from '$lib/supabase.js'
 
 export async function load({ params }) {
     let date = new Date(params.year, params.month - 1);
-    let start_date = new Date(date.getFullYear(), date.getMonth() - 1, 1).toISOString();
-    let end_date = new Date(date.getFullYear(), date.getMonth() + 1, 1, 0).toISOString();
+    //Checking for the 8 days before the month and 8 days after the month, but tbh might just need 2 days after the month
+    let start_date = new Date(date.getFullYear(), date.getMonth(), 1 - 8).toISOString();
+    let end_date = new Date(date.getFullYear(), date.getMonth() + 1, 8).toISOString();
     
     let { data: events, error } = await supabase
     .from('meets')

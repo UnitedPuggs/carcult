@@ -171,7 +171,7 @@
 <a href="/garage/{$page.params.slug}" class="text-3xl hover:opacity-80">&lt;-</a>
 <div class="flex flex-col justify-center items-center">
     <!-- Modal for removing vehicle -->
-    <dialog id="delete-prompt" class=" text-center border-2 border-black rounded-lg offset-box">
+    <dialog id="delete-prompt" class=" text-center border-2 border-black rounded-lg">
         <div class="p-10">
             <h1 class="text-xl font-bold">this COMPLETELY removes your vehicle. are you sure?</h1>
             <div class="flex justify-center gap-2 text-lg mt-4">

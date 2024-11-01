@@ -1,5 +1,4 @@
 <script>
-    import { run } from 'svelte/legacy';
 
     import { page } from '$app/stores'
     import { goto } from '$app/navigation'
@@ -20,7 +19,7 @@
     let repeat_year = $state(false);
 
     let meet_date;
-    run(() => {
+    $effect(() => {
         meet_date = new Date(date)
     });
     let end_date_sub = $derived(new Date(end_date))
@@ -33,9 +32,12 @@
     async function create_meet() {
         if(description) {
             let sluggy = `${slugify(event_name)}-${self.crypto.randomUUID().substring(0, 8)}`
+            const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+            let actualDate = new Date(date).toUTCString();
+
             await fetch('/api/meets/create_meet', {
                 method: "POST",
-                body: JSON.stringify({meets: [{host: $page.data.session.user.displayname, location, event_name, slug: sluggy, event_date: date, description}]})
+                body: JSON.stringify({meets: [{host: $page.data.session.user.displayname, location, event_name, slug: sluggy, event_date: actualDate, timezone: tz, description}]})
             })
             .then(meet_data => meet_data.json())
             .then(data => {
@@ -57,43 +59,6 @@
         }
     }
 
-    const replace_str = (index, replacement, string) => {
-        return string.substring(0, index) + replacement + string.substring(index + 1, 16)
-    }
-
-    async function create_repeated_meet() {
-        //yeah, this is pretty fucking horrid. there's probably a better way of doing this, I would think.
-        if(description) {        
-            let meets = [];
-            meets.push({host: $page.data.session.user.displayname, event_name: event_name, event_date: replace_str(10, 'T', meet_date.toLocaleString('sv')), description: description})
-            if(repeat_week || (repeat_week && repeat_month) || (repeat_week && repeat_year) || (repeat_week && repeat_month && repeat_year)) {
-                while(meet_date.toLocaleString('sv').slice(0, 10) < end_date_sub.toLocaleString('sv').slice(0, 10)) {
-                    meet_date.setDate(meet_date.getDate() + 7);
-                    meets.push({host: $page.data.session.user.displayname, event_name: event_name, event_date: replace_str(10, 'T', meet_date.toLocaleString('sv')), description: description})
-                }
-            }
-            if(repeat_month) {
-                while(meet_date.toLocaleString('sv').slice(0, 10) < end_date_sub.toLocaleString('sv').slice(0, 10)) {
-                    meet_date.setMonth(meet_date.getMonth() + 1);
-                    meets.push({host: $page.data.session.user.displayname, event_name: event_name, event_date: replace_str(10, 'T', meet_date.toLocaleString('sv')), description: description})
-                }
-            }
-            if(repeat_year) {
-                while(meet_date < end_date_sub) {
-                    meet_date.setFullYear(meet_date.getFullYear() + 1);
-                    meets.push({host: $page.data.session.user.displayname, event_name: event_name, event_date: replace_str(10, 'T', meet_date.toLocaleString('sv')), description: description})
-                }
-            }
-            meet_date = new Date(date);
-            await fetch('/api/meets/create_meet', {
-                method: "POST",
-                body: JSON.stringify({meets: meets})
-            })
-            let split_date = date.split('-')
-            goto(`/meets/${split_date[1]}/${split_date[0]}`)
-        }
-    }
-
     const upload_background = (e) => {
         let img = e.target.files[0];
         bg_img = img;
@@ -106,12 +71,7 @@
 
 <div class="mt-10">
     <h1 class="text-2xl font-bold text-center italic underline">create your meet</h1>
-    <form class="flex flex-col justify-center items-center gap-1 border border-black rounded-xl w-fit mx-auto p-2 offset-box" onsubmit={() => {
-        if(repeat_week || repeat_month || repeat_year)
-            create_repeated_meet();
-        else
-            create_meet();
-        }}>
+    <form class="flex flex-col justify-center items-center gap-1 border border-black rounded-xl w-fit mx-auto p-2 offset-box" onsubmit={() => { create_meet() }}>
         <label for="event_name">meet name</label>
         <input name="event_name" type="text" bind:value={event_name} maxlength="255" required class="text-black p-1 border border-black rounded-md shadow" placeholder="ur cool meet here">
         <label for="location" >location</label>
