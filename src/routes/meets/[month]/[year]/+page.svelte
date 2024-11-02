@@ -12,7 +12,8 @@
     let width = $state(0);
     let radius = $state(0);
     let user_location = $state(0);
-
+   
+    let events = $derived(data.events);
 
     let date = $state();
     let curr_year = $state();
@@ -26,7 +27,25 @@
     const short_days = ['Sun', 'Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat'];
     const long_days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
-    async function get_coords(address) {
+    run(() => {
+        curr_year = parseInt($page.params.year);
+    });
+    //Just gets the month from [month] param and year from the [year] param
+    let curr_month;
+    run(() => {
+        curr_month = parseInt($page.params.month) - 1;
+    });
+    let ref_date;
+    run(() => {
+        ref_date = new Date(curr_year, curr_month);
+    });
+    let month_str = $state("");
+    run(() => {
+        month_str = ref_date.toLocaleString(undefined, { month: 'long' });
+    });
+    let calendar_days = $state([]);
+
+    async function getCoords(address) {
         const req = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(address)}`);
         const res = await req.json();
 
@@ -62,15 +81,23 @@
     }
 
     async function search_locations(user_location, radius, all_locations) {
-        const user_coords = await get_coords(user_location);
+        let user_coords = null;
+        if(localStorage.getItem("user_coords")) {
+            console.log("got from local storage")
+            user_coords = JSON.parse(localStorage.getItem("user_coords"));
+        } else {
+            user_coords = await getCoords(user_location);
+            localStorage.setItem("user_coords", JSON.stringify(user_coords));
+        }
 
         const locations_in_rad = [];
 
         for(const location of all_locations) {
-            const location_coords = await get_coords(location.location);
+            const location_coords = { lat: location.latitude, lon: location.longitude }
+           
 
             const dist = await calculate_distance(user_coords, location_coords);
-            console.log(dist);
+            console.log(`${dist}km away from user`);
             if(dist <= radius) {
                 locations_in_rad.push(location);
             }
@@ -79,8 +106,11 @@
         for(let i = 0; i < locations_in_rad.length; ++i) {
             console.log(locations_in_rad[i]);
         }
-        data.events = data.events.filter((x) => locations_in_rad.find(({ id }) => x.id === id));
-        console.log(date.events);
+        data.events = data.events.filter((x) => 
+            locations_in_rad.find(({ id }) => x.id === id)
+        );  
+        data.events = data.events;
+        console.log(data.events)
     }
 
     async function get_current_calendar(month) {
@@ -135,26 +165,7 @@
 
     onMount(() => {
         get_current_calendar(curr_month);
-    })
-    let events = $derived(data.events);
-    run(() => {
-        curr_year = parseInt($page.params.year);
     });
-    //Just gets the month from [month] param and year from the [year] param
-    let curr_month;
-    run(() => {
-        curr_month = parseInt($page.params.month) - 1;
-    });
-    let ref_date;
-    run(() => {
-        ref_date = new Date(curr_year, curr_month);
-    });
-    let month_str = $state("");
-    run(() => {
-        month_str = ref_date.toLocaleString(undefined, { month: 'long' });
-    });
-    let calendar_days = $state([]);
-    
 </script>
 
 <svelte:head>
@@ -174,13 +185,13 @@
         <a href="/meets/create" class="border border-black box p-1 m-2 inline-block rounded-lg active:scale-90 transition-all hover:no-box hover:translate-y-1 hover:opacity-80">new meet</a>
     {/if}
     <div class="mt-6">
-        <!--
         <form class="flex justify-center items-center gap-2 text-black" onsubmit={() => search_locations(user_location, radius, data.locations)}>
+            <label>location</label>
             <input type="text" class="border border-black" bind:value={user_location} />
-            <input type="number" min=1 max=200 bind:value={radius} />
+            <label>radius (in km)</label>
+            <input type="number" class="border border-black" min=1 max=200 bind:value={radius} />
             <input type="submit" />
         </form> 
-        -->
         <div class="flex flex-row justify-center items-center text-center">
             <button onclick={() => {
                 calendar_days = [];

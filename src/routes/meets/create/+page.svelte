@@ -28,16 +28,49 @@
     const max_date = new Date(new Date().setFullYear(new Date().getFullYear() + 5)).toLocaleString('sv').slice(0, 10) + "T23:59";
     
     //Kinda wondering why I didn't just use form actions for this...
+    async function getCoords(address) {
+        const req = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(address)}`);
+        const res = await req.json();
 
+        if(res.length > 0) {
+            const location = res[0];
+            return {
+                lat: parseFloat(location.lat), 
+                lon: parseFloat(location.lon)
+            };
+        } else {
+            return {
+                lat: parseFloat(41.84201),
+                lon: parseFloat(-89.485937)
+            };
+        }
+    }
     async function create_meet() {
         if(description) {
             let sluggy = `${slugify(event_name)}-${self.crypto.randomUUID().substring(0, 8)}`
             const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
             let actualDate = new Date(date).toUTCString();
 
+            let coords = await getCoords(location);
+
             await fetch('/api/meets/create_meet', {
                 method: "POST",
-                body: JSON.stringify({meets: [{host: $page.data.session.user.displayname, location, event_name, slug: sluggy, event_date: actualDate, timezone: tz, description}]})
+                body: JSON.stringify({
+                    meets: 
+                    [
+                        {
+                            host: $page.data.session.user.displayname, 
+                            location, 
+                            event_name, 
+                            slug: sluggy, 
+                            event_date: actualDate, 
+                            timezone: tz, 
+                            description, 
+                            longitude: coords.lon, 
+                            latitude: coords.lat
+                        }
+                    ]}
+                )
             })
             .then(meet_data => meet_data.json())
             .then(data => {

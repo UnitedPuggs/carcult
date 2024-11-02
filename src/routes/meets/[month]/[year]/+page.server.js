@@ -20,7 +20,7 @@ export async function load({ params }) {
 
     let { data: locations, loc_error } = await supabase
     .from('meets')
-    .select('id, location')
+    .select('id, location, latitude, longitude')
     .lte('event_date', end_date)
     .gte('event_date', start_date)
     .neq('location', null)

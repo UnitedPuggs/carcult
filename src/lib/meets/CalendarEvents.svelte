@@ -1,6 +1,8 @@
 <script>
     let { day, date, events } = $props();
 
+    //console.log(events)
+
     let today_events = $derived(events.filter(event => {
         let event_date = $derived(new Date(date.getFullYear(), day.month, day.curr_day).toLocaleDateString('en-US', { timeZone: event.timezone})); //This is the date coming in
         let temp_date = new Date(event.event_date).toLocaleDateString('en-US', { timeZone: event.timezone}) //This is the event date
