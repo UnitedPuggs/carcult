@@ -12,8 +12,15 @@
     let width = $state(0);
     let radius = $state(0);
     let user_location = $state(0);
-   
-    let events = $derived(data.events);
+    
+    let setEvent = $state(data.events)
+    let events = $derived(setEvent)
+
+    $effect(() => {
+        data.events;
+
+        setEvent = data.events;
+    })
 
     let date = $state();
     let curr_year = $state();
@@ -106,10 +113,9 @@
         for(let i = 0; i < locations_in_rad.length; ++i) {
             console.log(locations_in_rad[i]);
         }
-        data.events = data.events.filter((x) => 
+        setEvent = data.events.filter((x) => 
             locations_in_rad.find(({ id }) => x.id === id)
-        );  
-        data.events = data.events;
+        ); 
         console.log(data.events)
     }
 
