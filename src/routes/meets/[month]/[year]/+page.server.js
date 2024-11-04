@@ -1,9 +1,10 @@
 import { supabase } from '$lib/supabase.js'
 
 export async function load({ params }) {
-    let date = new Date(`${params.year}-${params.month}`);
-    let start_date = new Date(date.getFullYear(), date.getMonth() - 1, 1).toISOString();
-    let end_date = new Date(date.getFullYear(), date.getMonth() + 1, 1, 0).toISOString();
+    let date = new Date(params.year, params.month - 1);
+    //Checking for the 8 days before the month and 8 days after the month, but tbh might just need 2 days after the month
+    let start_date = new Date(date.getFullYear(), date.getMonth(), 1 - 8).toISOString();
+    let end_date = new Date(date.getFullYear(), date.getMonth() + 1, 8).toISOString();
     
     let { data: events, error } = await supabase
     .from('meets')
@@ -19,7 +20,7 @@ export async function load({ params }) {
 
     let { data: locations, loc_error } = await supabase
     .from('meets')
-    .select('id, location')
+    .select('id, location, latitude, longitude')
     .lte('event_date', end_date)
     .gte('event_date', start_date)
     .neq('location', null)
@@ -29,5 +30,5 @@ export async function load({ params }) {
         return {};
     }
 
-    return { events: events, locations }
+    return { events, locations }
 }

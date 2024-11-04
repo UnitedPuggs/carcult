@@ -1,11 +1,13 @@
 <script>
-    export let cover_pic;
-    export let item_name;
-    export let price;
-    export let slug;
-    export let transmission;
-    export let title_status;
-    export let mileage;
+    let {
+        cover_pic,
+        item_name,
+        price,
+        slug,
+        transmission,
+        title_status,
+        mileage
+    } = $props();
 </script>
 
 <!-- need to wrap this in an anchor once I've got slug pages -->

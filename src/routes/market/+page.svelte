@@ -1,22 +1,16 @@
 <script>
+    import { run } from 'svelte/legacy';
+
     import { page } from '$app/stores'
     import MarketItem from '$lib/market/MarketItem.svelte';
-    export let data;
+    let { data = $bindable() } = $props();
 
-    let search_term;
+    let search_term = $state();
     //funny little workaround, but it stays 0 once the user starts touching stuff
-    let min_price = 0 ? min_price : "";
-    let max_price = 0 ? max_price : "";
+    let min_price = $state(0 ? min_price : "");
+    let max_price = $state(0 ? max_price : "");
     let timer;
 
-    $: {
-        if(search_term == "") {
-            //this is so janky
-            min_price = ""
-            max_price = ""
-            search_market()
-        }
-    }
 
     async function search_market() {
         clearTimeout(timer)
@@ -45,6 +39,14 @@
         let day_diff = Math.round(time_diff / (1000 * 3600 * 24));
         return day_diff;
     }
+    run(() => {
+        if(search_term == "") {
+            //this is so janky
+            min_price = ""
+            max_price = ""
+            search_market()
+        }
+    });
 </script>
 
 <svelte:head>
@@ -54,8 +56,8 @@
 <div class="flex lg:flex-row flex-col">
     <div class="flex flex-col border-2 border-white lg:min-h-[calc(100vh_-_6rem)] w-wo-scroll lg:w-64 p-2">
         <h1 class="font-bold text-2xl">marketplace</h1>
-        <form on:submit={search_market}>
-            <input type="input" class="bg-gray-800 border border-white px-0.5 py-1 mb-4 w-full" placeholder="search marketplace" bind:value={search_term} on:input={debounce}>
+        <form onsubmit={search_market}>
+            <input type="input" class="bg-gray-800 border border-white px-0.5 py-1 mb-4 w-full" placeholder="search marketplace" bind:value={search_term} oninput={debounce}>
         </form>
 
         <h1 class="font-bold text-xl">price</h1>

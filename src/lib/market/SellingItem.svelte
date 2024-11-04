@@ -1,11 +1,13 @@
 <script>
     import { invalidateAll } from '$app/navigation'
-    export let id;
-    export let cover_pic;
-    export let item_name;
-    export let price;
-    export let is_live;
-    export let created_at;
+    let {
+        id,
+        cover_pic,
+        item_name,
+        price,
+        is_live,
+        created_at
+    } = $props();
 
     const date = new Date(created_at);
 
@@ -45,13 +47,13 @@
         {/if}
         <div class="flex flex-wrap gap-4 my-2 lg:mt-auto mb-2 justify-center items-center">
             {#if is_live}
-                <button class="hover:opacity-75 border border-gray-400 bg-gray-600 p-2 rounded-md" on:click={change_mark}>mark as sold</button>
+                <button class="hover:opacity-75 border border-gray-400 bg-gray-600 p-2 rounded-md" onclick={change_mark}>mark as sold</button>
             {:else}
-                <button class="hover:opacity-75 border border-gray-400 bg-gray-600 p-2 rounded-md" on:click={change_mark}>mark as unsold</button>
+                <button class="hover:opacity-75 border border-gray-400 bg-gray-600 p-2 rounded-md" onclick={change_mark}>mark as unsold</button>
             {/if}
             <a href="/market/edit/{id}" class="hover:opacity-75">edit</a>
             <a href="/market/{id}" class="hover:opacity-75">view listing</a>
-            <button class="hover:opacity-75" on:click={delete_listing}>delete</button>
+            <button class="hover:opacity-75" onclick={delete_listing}>delete</button>
         </div>
     </div>
 </div>

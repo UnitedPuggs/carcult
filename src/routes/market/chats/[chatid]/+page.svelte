@@ -4,19 +4,19 @@
     import { onDestroy, onMount } from 'svelte';
     import ChatMessage from '$lib/market/ChatMessage.svelte';
 
-    export let data;
+    let { data } = $props();
     let channel;
-    let message;
-    let input_ref;
+    let message = $state();
+    let input_ref = $state();
 
-    $: listing_data = data.marketplace_listings[0]
+    let listing_data = $derived(data.marketplace_listings[0])
 
-    $: chat_data = data.marketplace_messages[0]
+    let chat_data = $derived(data.marketplace_messages[0])
 
     //Can map this so an object with chat_data, then maybe push some stuff on the subscription thing to differentiate chats
-    let chat_messages = data.marketplace_messages.reverse().map(message => {
+    let chat_messages = $state(data.marketplace_messages.reverse().map(message => {
         return { send_user: message.send_user, message_content: message.message_content }
-    });
+    }));
     
     onMount(async() => {   
         const supabase = await client(data.session)
@@ -87,7 +87,7 @@
             {/if}
         {/each}
     </div>
-    <form on:submit={send_message} class="flex flex-col mt-4">
+    <form onsubmit={send_message} class="flex flex-col mt-4">
         <input class="p-2 lg:w-[40rem] w-full bg-gray-800" bind:value={message} placeholder="message here" bind:this={input_ref} />
         <input type="submit" value="send" class="hover:opacity-75 hover:cursor-pointer" />
     </form> 

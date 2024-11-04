@@ -1,8 +1,10 @@
 <script>
-    export let message_content;
-    export let send_user;
-    export let chat_style;
-    export let div_style;
+    let {
+        message_content,
+        send_user,
+        chat_style,
+        div_style
+    } = $props();
 </script>
 
 <div class="flex flex-col {div_style}">

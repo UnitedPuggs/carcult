@@ -1,20 +1,26 @@
 <script>
     import { page } from '$app/stores'
-    /* seller - item_name - price - listing_pics */
-    export let data;
     
-    let width;
+    /**
+     * @typedef {Object} Props
+     * @property {any} data - seller - item_name - price - listing_pics
+     */
 
-    let title = data.marketplace_listings[0].item_name;
-    let price = data.marketplace_listings[0].price;
-    let description = data.marketplace_listings[0].item_description;
-    let zip = data.marketplace_listings[0].zip;
-    let title_status = data.marketplace_listings[0].title_status;
-    let transmission = data.marketplace_listings[0].transmission;
-    let mileage = data.marketplace_listings[0].mileage;
+    /** @type {Props} */
+    let { data } = $props();
+    
+    let width = $state();
+
+    let title = $state(data.marketplace_listings[0].item_name);
+    let price = $state(data.marketplace_listings[0].price);
+    let description = $state(data.marketplace_listings[0].item_description);
+    let zip = $state(data.marketplace_listings[0].zip);
+    let title_status = $state(data.marketplace_listings[0].title_status);
+    let transmission = $state(data.marketplace_listings[0].transmission);
+    let mileage = $state(data.marketplace_listings[0].mileage);
 
     let files = [];
-    let preview_files = Array.from(data.marketplace_listings[0].listing_pics);
+    let preview_files = $state(Array.from(data.marketplace_listings[0].listing_pics));
     let filtering_files = data.marketplace_listings[0].listing_pics;
     //don't wanna reupload images that already exist on the listing, but we do wanna display them
 
@@ -74,7 +80,7 @@
     <div class="border-2 border-white w-full lg:w-72 min-h-[calc(100vh_-_6rem)] p-2" id="seller-controls">
         <a href="/market/selling" class="text-xl font-bold">&lt;-</a>
         <h1 class="font-bold text-xl mt-2">item for sale</h1>
-        <form class="flex flex-col gap-2" on:submit={update_listing}>
+        <form class="flex flex-col gap-2" onsubmit={update_listing}>
             <input bind:value={title} class="bg-gray-800 border border-white p-2 rounded-sm" placeholder="item name" required>
             <input bind:value={price} type="number" class="bg-gray-800 border border-white p-2 rounded-sm" placeholder="price" required min=0>
             <input bind:value={mileage} type="number" class="bg-gray-800 border border-white p-2 rounded-sm" placeholder="mileage" min=1 max=999999>
@@ -95,8 +101,8 @@
                 type="file" 
                 multiple 
                 accept="image/*" 
-                on:change={upload_images} 
-                class="file:bg-gray-800 file:text-white file:border-0  file:rounded-full file:p-2 file:hover:opacity-75 file:hover:cursor-pointer file:font-bold"
+                onchange={upload_images} 
+                class="file:bg-gray-800 file:border-0  file:rounded-full file:p-2 file:hover:opacity-75 file:hover:cursor-pointer file:font-bold"
             >
             <input type="submit" value="update listing" class="bg-gray-700 border border-white p-2 rounded-sm hover:opacity-80 hover:cursor-pointer">
         </form>
@@ -130,7 +136,7 @@
                                 <img src={data.garage[0].pfp_url} alt="" class="rounded-full w-16"/>
                                 <span class="text-xl font-bold">{$page.data.session.user.displayname}</span>
                             </section>
-                            <!-- svelte-ignore a11y-missing-attribute -->
+                            <!-- svelte-ignore a11y_missing_attribute -->
                             <iframe src="https://maps.google.com/maps?q={zip}&output=embed&z=11" width="100%" height="150" frameborder="0" style="border:0" allowfullscreen></iframe>
                         </div>
                     </section>

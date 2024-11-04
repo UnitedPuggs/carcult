@@ -1,37 +1,58 @@
 <script>
+    import { run } from 'svelte/legacy';
+
     import { onMount } from "svelte";
     import { goto } from '$app/navigation'
     import { page } from '$app/stores'
     import { swipe } from "svelte-gestures";
     import CalendarEvents from "$lib/meets/CalendarEvents.svelte";
     
-    export let data;
+    let { data = $bindable() } = $props();
 
-    let width = 0;
-    let radius;
-    let user_location;
+    let width = $state(0);
+    let radius = $state(0);
+    let user_location = $state(0);
+    
+    let setEvent = $state(data.events)
+    let events = $derived(setEvent)
 
-    $: events = data.events;
+    $effect(() => {
+        data.events;
 
-    let date;
-    $: month_str = ref_date.toLocaleString(undefined, { month: 'long' });
-    let curr_year;
+        setEvent = data.events;
+    })
+
+    let date = $state();
+    let curr_year = $state();
     let first_day;
     let prev_month_days;
-    $: calendar_days = [];
 
     const today = new Date();
 
-    //Just gets the month from [month] param and year from the [year] param
-    $: curr_month = parseInt($page.params.month) - 1;
-    $: curr_year = parseInt($page.params.year);
-    $: ref_date = new Date(curr_year, curr_month);
 
     const daysInMonth = (year, month) => new Date(year, month, 0).getDate();
     const short_days = ['Sun', 'Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat'];
     const long_days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
-    async function get_coords(address) {
+    run(() => {
+        curr_year = parseInt($page.params.year);
+    });
+    //Just gets the month from [month] param and year from the [year] param
+    let curr_month;
+    run(() => {
+        curr_month = parseInt($page.params.month) - 1;
+    });
+    let ref_date;
+    run(() => {
+        ref_date = new Date(curr_year, curr_month);
+    });
+    let month_str = $state("");
+    run(() => {
+        month_str = ref_date.toLocaleString(undefined, { month: 'long' });
+    });
+    let calendar_days = $state([]);
+
+    async function getCoords(address) {
         const req = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(address)}`);
         const res = await req.json();
 
@@ -67,21 +88,35 @@
     }
 
     async function search_locations(user_location, radius, all_locations) {
-        const user_coords = await get_coords(user_location);
+        let user_coords = null;
+        if(localStorage.getItem("user_coords")) {
+            console.log("got from local storage")
+            user_coords = JSON.parse(localStorage.getItem("user_coords"));
+        } else {
+            user_coords = await getCoords(user_location);
+            localStorage.setItem("user_coords", JSON.stringify(user_coords));
+        }
 
         const locations_in_rad = [];
 
         for(const location of all_locations) {
-            const location_coords = await get_coords(location.location);
+            const location_coords = { lat: location.latitude, lon: location.longitude }
+           
 
             const dist = await calculate_distance(user_coords, location_coords);
-            //console.log(dist);
+            console.log(`${dist}km away from user`);
             if(dist <= radius) {
                 locations_in_rad.push(location);
             }
         }
-
-        data.events = data.events.filter((x) => locations_in_rad.find(({ id }) => x.id === id));
+        //console.log(`rad ${locations_in_rad}`)
+        for(let i = 0; i < locations_in_rad.length; ++i) {
+            console.log(locations_in_rad[i]);
+        }
+        setEvent = data.events.filter((x) => 
+            locations_in_rad.find(({ id }) => x.id === id)
+        ); 
+        console.log(data.events)
     }
 
     async function get_current_calendar(month) {
@@ -136,7 +171,7 @@
 
     onMount(() => {
         get_current_calendar(curr_month);
-    })
+    });
 </script>
 
 <svelte:head>
@@ -151,20 +186,21 @@
     <meta property="og:url" content="https://carcult.org/meets/{$page.params.month}/{$page.params.year}">
 </svelte:head>
 
-<div bind:clientWidth={width} use:swipe={{ timeframe: 300, minSwipeDistance: 50, touchAction: 'pan-y'}} on:swipe={handler}>
+<div bind:clientWidth={width} use:swipe={{ timeframe: 300, minSwipeDistance: 50, touchAction: 'pan-y'}} onswipe={handler}>
     {#if $page.data.session?.user.role >= 1}
-        <a href="/meets/create" class="m-2 inline-block hover:opacity-75 border border-white p-1 rounded-sm active:scale-95">create meet</a>
+        <a href="/meets/create" class="border border-black box p-1 m-2 inline-block rounded-lg active:scale-90 transition-all hover:no-box hover:translate-y-1 hover:opacity-80">new meet</a>
     {/if}
     <div class="mt-6">
-        <!--
-        <form class="flex justify-center items-center gap-2 text-black" on:submit={() => search_locations(user_location, radius, data.locations)}>
-            <input type="text" bind:value={user_location} />
-            <input type="number" min=1 max=200 bind:value={radius} />
-            <input type="submit" class="text-white" />
-        </form> 
-        -->
+        <!--<form class="flex justify-center items-center gap-2 text-black" onsubmit={() => search_locations(user_location, radius, data.locations)}>
+            <label>location</label>
+            <input type="text" class="border border-black" bind:value={user_location} />
+            <label>radius (in km)</label>
+            <input type="number" class="border border-black" min=1 max=200 bind:value={radius} />
+            <input type="submit" />
+        </form>
+        wip location shit -->
         <div class="flex flex-row justify-center items-center text-center">
-            <button on:click={() => {
+            <button onclick={() => {
                 calendar_days = [];
                 get_current_calendar(--curr_month);
             }}
@@ -174,7 +210,7 @@
             </button>
             <section>
                 <h1 class="text-2xl p-2 -mb-2 w-52 font-bold select-none">{month_str} {curr_year}</h1>
-                <button on:click={() => {
+                <button onclick={() => {
                     goto_today()
                 }} 
                 class="pb-4 hover:opacity-75 select-none"
@@ -182,7 +218,7 @@
                 today
                 </button>
             </section>
-            <button on:click={() => {
+            <button onclick={() => {
                 calendar_days = [];
                 get_current_calendar(++curr_month);
             }}
@@ -191,13 +227,13 @@
             -&gt;
             </button>
         </div>
-        <div class="flex flex-col justify-center items-center mx-auto rounded-sm w-full lg:w-[85rem] p-1">
-            <section class="grid grid-cols-7 mx-auto border border-white w-full lg:w-[84rem] sticky top-0 bg-black z-50 text-center text-xs lg:text-base">
+        <div class="flex flex-col justify-center items-center mx-auto rounded-sm w-full lg:w-[85rem] pb-4 lg:px-0 px-1">
+            <div class="grid grid-cols-7 h-auto lg:w-auto w-screen gap-[1px]">
                 {#each width > 640 ? long_days : short_days as day}
-                    <span>{day}</span>
+                    <section class="sticky top-0 z-50 text-center outline outline-1 text-sm lg:text-base">
+                        <span class="font-semibold">{day}</span>
+                    </section>
                 {/each}
-            </section>
-            <div class={`grid grid-cols-7 px-1 h-auto ${width > 640 ? "" : "w-screen"}`}>
                 {#each calendar_days as day}
                     <CalendarEvents {day} {date} {events} />
                 {/each}
