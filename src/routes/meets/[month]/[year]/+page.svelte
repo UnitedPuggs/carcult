@@ -191,13 +191,14 @@
         <a href="/meets/create" class="border border-black box p-1 m-2 inline-block rounded-lg active:scale-90 transition-all hover:no-box hover:translate-y-1 hover:opacity-80">new meet</a>
     {/if}
     <div class="mt-6">
-        <form class="flex justify-center items-center gap-2 text-black" onsubmit={() => search_locations(user_location, radius, data.locations)}>
+        <!--<form class="flex justify-center items-center gap-2 text-black" onsubmit={() => search_locations(user_location, radius, data.locations)}>
             <label>location</label>
             <input type="text" class="border border-black" bind:value={user_location} />
             <label>radius (in km)</label>
             <input type="number" class="border border-black" min=1 max=200 bind:value={radius} />
             <input type="submit" />
-        </form> 
+        </form>
+        wip location shit -->
         <div class="flex flex-row justify-center items-center text-center">
             <button onclick={() => {
                 calendar_days = [];
