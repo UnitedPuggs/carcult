@@ -17,6 +17,7 @@
     });
 
     const MEET_TIME = new Date(data.events[0].event_date).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit'});
+    const MEET_DATE = new Date(data.events[0].event_date).toLocaleDateString('en-US');
 
     let event_location = $state(data.events[0].location);
 
@@ -112,7 +113,7 @@
                     {#if meets.location} <!-- just so we don't have to remove meets without locations -->
                         <a href="https://www.google.com/maps?q={meets.location}" class="text-stroke">{meets.location}</a>
                     {/if}
-                    <p class="text-stroke">on {meets.event_date.substring(5, 7)}/{meets.event_date.substring(8, 10)}/{meets.event_date.substring(0, 4)} @ {MEET_TIME}</p>
+                    <p class="text-stroke">on {MEET_DATE} @ {MEET_TIME}</p>
                     <!-- kinda drunk, but this bind shit is kinda based <-- wtf was I talking about here -->
                     <p class="p-1 whitespace-pre-wrap lg:max-w-xl overflow-y-auto text-stroke">{meets.description}</p>
                 {:else} <!-- referring to that first comment, yes it's much cleaner -->
