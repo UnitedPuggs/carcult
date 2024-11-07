@@ -8,7 +8,7 @@
         let temp_date = new Date(event.event_date).toLocaleDateString('en-US', { timeZone: event.timezone}) //This is the event date
         return temp_date == event_date;
     }).map(event => {
-        let temp_date = new Date(event.event_date).toLocaleTimeString('en-US');
+        let temp_date = new Date(event.event_date).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit'});
         return { event: event.event_name, slug: event.slug, time: temp_date }
     }))
 </script>

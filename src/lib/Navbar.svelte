@@ -104,7 +104,7 @@
         </div>
         <div class="flex items-center gap-4 lg:mr-1 lg:ml-auto h-full lg:pl-4">
             {#if $page.data.session?.user}
-                <a href="/garage/{$page.data.session.user.displayname}" class="hover:opacity-80 w-8 active:scale-90 shadow"><img src="/assets/garage.png" alt="garage"></a>
+                <a href="/garage/{$page.data.session.user.displayname}" class="hover:opacity-80 w-8 active:scale-90"><img src="/assets/garage.png" alt="garage"></a>
                 {#if $page.url.pathname.indexOf("garage") != -1 && !$page.url.pathname.includes(`/garage/${$page.data.session.user.displayname}/my-meets`)}
                     <a href="/garage/{$page.data.session.user.displayname}/add-car" class="hover:opacity-75 border border-black box p-1 rounded-lg transition-all hover:no-box hover:translate-y-1">new wheels</a>
                 {/if}

@@ -1,6 +1,4 @@
 <script>
-    import { run } from 'svelte/legacy';
-
     import { page } from '$app/stores'
     import { goto, invalidateAll } from '$app/navigation';
     import { browser } from '$app/environment';
@@ -10,16 +8,22 @@
     
     let description = $state(data.events[0].description);
     let event_name = $state(data.events[0].event_name);
-    let event_date = $state(data.events[0].event_date);
 
-    const MEET_TIME = new Date(data.events[0].event_date).toLocaleTimeString('en-US');
+    let event_date = $state(new Date(data.events[0].event_date));
+    let dateToday;
+
+    $effect(() => {
+        dateToday = new Date(event_date);
+    });
+
+    const MEET_TIME = new Date(data.events[0].event_date).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit'});
 
     let event_location = $state(data.events[0].location);
 
     let meets = $derived(data.events[0]);
 
     let textarea = $state();
-    run(() => {
+    $effect(() => {
         if(textarea) {
             textarea.style.height = `${textarea.scrollHeight}px`
         }
@@ -45,10 +49,17 @@
     }
 
     async function update_meet() {
+        const ACTUAL_DATE = new Date(event_date).toUTCString();
         await fetch('/api/meets/update_meet', {
             method: "PATCH",
-            body: JSON.stringify({ id: meets.id, event_name, description, event_date, location: event_location })
-        })
+            body: JSON.stringify({ 
+                id: meets.id, 
+                event_name, 
+                description, 
+                event_date: ACTUAL_DATE, 
+                location: event_location 
+            })
+        });
         edit_mode = false;
         invalidateAll();
     }
@@ -96,22 +107,22 @@
             {/if}
             <div class="flex grow flex-col justify-center items-center my-auto text-white overflow-auto">
                 {#if !edit_mode}
-                    <h1 class="text-3xl font-bold text-center">{meets.event_name}</h1>
-                    <p class="text-lg">hosted by <strong><a href="/garage/{meets.host}" class="underline hover:no-underline">{meets.host}</a></strong></p>
+                    <h1 class="text-3xl font-bold text-center text-stroke">{meets.event_name}</h1>
+                    <p class="text-lg text-stroke">hosted by <strong><a href="/garage/{meets.host}" class="underline hover:no-underline">{meets.host}</a></strong></p>
                     {#if meets.location} <!-- just so we don't have to remove meets without locations -->
-                        <a href="https://www.google.com/maps?q={meets.location}">{meets.location}</a>
+                        <a href="https://www.google.com/maps?q={meets.location}" class="text-stroke">{meets.location}</a>
                     {/if}
-                    <p>on {meets.event_date.substring(5, 7)}/{meets.event_date.substring(8, 10)}/{meets.event_date.substring(0, 4)} @ {MEET_TIME}</p>
+                    <p class="text-stroke">on {meets.event_date.substring(5, 7)}/{meets.event_date.substring(8, 10)}/{meets.event_date.substring(0, 4)} @ {MEET_TIME}</p>
                     <!-- kinda drunk, but this bind shit is kinda based <-- wtf was I talking about here -->
-                    <p class="p-1 whitespace-pre-wrap lg:max-w-xl overflow-y-auto">{meets.description}</p>
+                    <p class="p-1 whitespace-pre-wrap lg:max-w-xl overflow-y-auto text-stroke">{meets.description}</p>
                 {:else} <!-- referring to that first comment, yes it's much cleaner -->
-                    <input type="text" placeholder={event_name} class="text-3xl font-bold text-black" bind:value={event_name} />
-                    <input type="text" placeholder={event_location} class="w-auto font-bold text-black" bind:value={event_location} />
-                    <p class="text-lg">hosted by <strong><a href="/garage/{meets.host}" class="underline hover:no-underline">{meets.host}</a></strong></p>
-                    <div class="flex">
+                    <input type="text" placeholder={event_name} class="text-3xl font-bold text-black border border-black rounded-lg p-1" bind:value={event_name} />
+                    <input type="text" placeholder={event_location} class="w-auto font-bold text-black border border-black rounded-lg p-1" bind:value={event_location} />
+                    <p class="text-lg text-stroke">hosted by <strong><a href="/garage/{meets.host}" class="underline hover:no-underline">{meets.host}</a></strong></p>
+                    <div class="flex text-stroke">
                     on&nbsp;<input type="datetime-local" bind:value={event_date} class="text-black">
                     </div>
-                    <textarea id="test" class="text-black w-[36rem]" bind:value={description} bind:this={textarea}></textarea>
+                    <textarea id="test" class="text-black w-[36rem] border border-black rounded-lg p-1" bind:value={description} bind:this={textarea}></textarea>
                 {/if}
             </div>
         </div>

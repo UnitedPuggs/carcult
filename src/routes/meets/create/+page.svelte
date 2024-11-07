@@ -11,7 +11,7 @@
     let location = $state();
     
     let bg_img = $state();
-    let meet_slug;
+    let meet_slug = $state();
 
     let checked = false;
     let repeat_week = $state(false);
@@ -49,7 +49,7 @@
         if(description) {
             let sluggy = `${slugify(event_name)}-${self.crypto.randomUUID().substring(0, 8)}`
             const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
-            let actualDate = new Date(date).toUTCString();
+            const ACTUAL_DATE = new Date(date).toUTCString();
 
             let coords = await getCoords(location);
 
@@ -63,7 +63,7 @@
                             location, 
                             event_name, 
                             slug: sluggy, 
-                            event_date: actualDate, 
+                            event_date: ACTUAL_DATE, 
                             timezone: tz, 
                             description, 
                             longitude: coords.lon, 
