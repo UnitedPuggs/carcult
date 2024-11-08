@@ -113,14 +113,16 @@
     }
 
     async function set_main_img() {
-        let temp = data.garage_info[0].image_urls[0]; //why did I not use short here?
-        short.image_urls[0] = short.image_urls[curr_gallery_idx];
-        short.image_urls[curr_gallery_idx] = temp;
-        console.log(short.image_urls)
+        const GARAGE_INFO = data.garage_info[0];
+        let temp = GARAGE_INFO.image_urls[0]; //why did I not use short here?
+        GARAGE_INFO.image_urls[0] = GARAGE_INFO.image_urls[curr_gallery_idx];
+        GARAGE_INFO.image_urls[curr_gallery_idx] = temp;
+        console.log(`ur urls ${GARAGE_INFO.image_urls}`)
         await fetch('/api/garage/update_main_img', {
             method: "PATCH",
-            body: JSON.stringify({id: short.id, img_urls: short.image_urls})
+            body: JSON.stringify({id: short.id, img_urls: GARAGE_INFO.image_urls})
         });
+        invalidateAll();
     }
 
     async function save_desc() {

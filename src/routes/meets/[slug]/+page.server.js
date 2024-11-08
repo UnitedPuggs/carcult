@@ -7,7 +7,7 @@ export async function load({ params }) {
     .eq('slug', params.slug)
 
     if(error)
-        return { loaderr: error }
+        return { error }
 
     return { events: events }
 }
