@@ -9,8 +9,8 @@
     .text-stroke {
         text-shadow: 0 0 4px #000000
     }
-    .box-shadow:hover {
-        box-shadow: 5px 5px 0px white;
+    .box-shadow {
+        box-shadow: 5px 5px 0px black;
     }
     .offset-box {
         box-shadow: 15px 15px 0px black;
@@ -26,6 +26,9 @@
     }
     .no-box {
         box-shadow: 0px 0px 0px black;
+    }
+    .btn { 
+        @apply border-2 border-black box p-1 rounded-md active:scale-90 transition-all hover:no-box hover:translate-y-1 hover:opacity-80;
     }
 }
 

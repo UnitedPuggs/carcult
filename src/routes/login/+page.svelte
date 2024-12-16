@@ -8,7 +8,7 @@
 </svelte:head>
 
 {#if !$page.data.session?.user}
-    <div class="border-2 border-black rounded-xl offset-box flex flex-col gap-4 justify-center items-center mt-10  w-fit mx-auto p-4">
+    <div class="border-2 border-black rounded-lg offset-box flex flex-col gap-4 justify-center items-center mt-10  w-fit mx-auto p-4">
         <!--<input type="text" placeholder="email" class="px-2 py-1 text-black" bind:value={email}>
         <input type="password" placeholder="password" class="px-2 py-1 text-black" bind:value={password}>
         <button 
@@ -26,13 +26,13 @@
         <hr class="border border-black w-full">
         <span class="text-sm text-gray-400 underline">Sign in with</span>
         <button
-        class="h-12 w-52 border border-black font-bold rounded-lg text-lg hover:opacity-80 active:scale-90 box transition-all hover:no-box hover:translate-y-1" 
+        class="h-12 w-52 border-2 border-black font-bold rounded-lg text-lg hover:opacity-80 active:scale-90 box transition-all hover:no-box hover:translate-y-1" 
         onclick={() => signIn("google")}
         >
         <span class="text-blue-500">G</span><span class="text-red-500">o</span><span class="text-yellow-500">o</span><span class="text-blue-500">g</span><span class="text-green-500">l</span><span class="text-red-500">e</span>
         </button>
         <button 
-        class="h-12 w-52 border border-black font-bold rounded-lg text-lg hover:opacity-80 active:scale-90 box transition-all hover:no-box hover:translate-y-1" 
+        class="h-12 w-52 border-2 border-black font-bold rounded-lg text-lg hover:opacity-80 active:scale-90 box transition-all hover:no-box hover:translate-y-1" 
         onclick={() => signIn("discord")}
         >
         <span class="text-purple-400">Discord</span>

@@ -148,6 +148,6 @@
         {/if}
         <label for="desc">description</label>
         <textarea name="desc" class="text-black p-1 w-96 h-48 border border-black rounded-lg shadow" bind:value={description} placeholder="write your descriptive description here" required></textarea>
-        <input type="submit" class="border border-black box p-1 rounded-lg active:scale-90 transition-all hover:no-box hover:translate-y-1 hover:opacity-80 cursor-pointer" value="create">
+        <input type="submit" class="btn cursor-pointer" value="create">
     </form>
 </div>

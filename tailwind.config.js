@@ -9,7 +9,11 @@ export default {
     join(resolve('@skeletonlabs/skeleton'), '../**/*.{html,js,svelte,ts}')
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        archivo: ["Archivo", "sans-serif"],
+      },
+    },
   },
   plugins: [
     skeleton({ 
