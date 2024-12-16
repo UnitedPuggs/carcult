@@ -25,7 +25,7 @@
     function openDrawer() {
         const drawerSettings = {
 	// Provide your property overrides:
-            bgDrawer: 'bg-white text-black',
+            bgDrawer: 'bg-white text-black dark:bg-[#272933]',
             bgBackdrop: 'z-[400] backdrop-blur h-screen w-screen',
             width: 'w-screen',
             height: 'h-screen',
@@ -39,7 +39,7 @@
 </script>
 
 <Drawer>
-    <div class="flex flex-1 flex-col text-3xl items-end mr-4 mt-4 gap-2">
+    <div class="flex flex-1 flex-col text-3xl items-end mr-4 mt-4 gap-2 dark:bg-[#272933]">
         <button onclick={() => closeDrawer()} class="text-2xl" aria-label="close menu">
             <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
                 <path fill="none" d="M0 0h24v24H0z"></path><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path>
@@ -73,7 +73,7 @@
         {/if}
     </div>
 </Drawer>
-<nav class="sticky {show} z-[100] max-w-full transition-all ease-in-out duration-300 border-b-2 border-b-black shadow bg-white">
+<nav class="sticky {show} z-[100] max-w-full transition-all ease-in-out duration-300 border-b-2 border-b-black shadow bg-white dark:bg-[#272933]">
     <!--- MOBILE NAVBAR -->
     <div class="flex flex-row lg:hidden">
         <div>

@@ -80,14 +80,14 @@
             {#if $page.data.session?.user.displayname == meets.host}
                 <div class="flex flex-row gap-1 m-2 justify-center lg:justify-normal h-auto">
                     <button 
-                    class="btn bg-white" 
+                    class="btn bg-white dark:bg-[#272933]" 
                     onclick={ toggle_edit_mode }
                     >
                     {!edit_mode ? "edit" : "close edit"}
                     </button>
                     {#if edit_mode}
                         <button 
-                        class="btn bg-white" 
+                        class="btn bg-white dark:bg-[#272933]" 
                         onclick={ update_meet }
                         >
                         save
@@ -95,7 +95,7 @@
                     {/if}
                     <!-- probably a good idea to have a double-checker -->
                     <button 
-                    class="btn bg-white" 
+                    class="btn bg-white dark:bg-[#272933]" 
                     onclick={ delete_meet }
                     >
                     delete meet

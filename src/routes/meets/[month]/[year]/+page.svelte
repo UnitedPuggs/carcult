@@ -229,7 +229,7 @@
         <div class="flex flex-col justify-center items-center mx-auto rounded-sm w-full lg:w-[85rem] pb-4 lg:px-0 px-1">
             <div class="grid grid-cols-7 h-auto lg:w-auto w-screen gap-[1px]">
                 {#each days as day}
-                    <section class="sticky top-0 z-50 text-center outline outline-1 text-sm lg:text-base bg-white">
+                    <section class="sticky top-0 z-50 text-center outline outline-1 text-sm lg:text-base bg-white dark:bg-[#272933]">
                         <span class="font-semibold">{width > 640 ? day : day.substring(0, 3) }</span>
                     </section>
                 {/each}

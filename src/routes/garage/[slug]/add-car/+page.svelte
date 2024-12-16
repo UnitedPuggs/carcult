@@ -27,7 +27,7 @@
             <input type="text" class="text-black border border-black rounded-md p-1 w-74" placeholder="model here" id="car" name="car" required bind:value={model}>
             <input type="file" accept="image/*" id="file" name="file" class="file:cursor-pointer" bind:value={file} onchange={(e) => uploaded_file(e)} />
             <textarea class="text-black border border-black rounded-md p-1 w-74" id="desc" name="desc" placeholder="description here" bind:value={description}></textarea>
-            <input type="submit" value="add wheels" class="bg-white text-lg w-28 p-1 mx-auto hover:opacity-80 border-2 border-black rounded-md box transition-all hover:no-box hover:translate-y-1 cursor-pointer active:scale-90">
+            <input type="submit" value="add wheels" class="bg-white dark:bg-[#272933] text-lg w-28 p-1 mx-auto hover:opacity-80 border-2 border-black rounded-md box transition-all hover:no-box hover:translate-y-1 cursor-pointer active:scale-90">
         </form>
         <!------------------------>
     </div>

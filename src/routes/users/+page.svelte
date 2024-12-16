@@ -23,9 +23,9 @@
 </svelte:head>
 
 <div class="flex flex-col mt-10 mb-2">
-    <form class="flex flex-row justify-center items-center gap-2 border-2 border-black rounded-xl offset-box p-2 w-fit mx-auto" onsubmit={search_users}>
+    <form class="flex flex-row justify-center items-center gap-2 border-2 border-black rounded-lg offset-box p-2 w-fit mx-auto" onsubmit={search_users}>
         <input type="search" class="text-black p-1 border border-black rounded-md shadow" placeholder="find a carcultist" bind:value={username_search}>
-        <input type="submit" class="hover:opacity-80 active:scale-95 cursor-pointer border border-black rounded-lg p-1 box transition-all hover:no-box hover:translate-y-0 -translate-y-1" value="&#128269">
+        <input type="submit" class="btn cursor-pointer hover:translate-y-0 -translate-y-1" value="&#128269">
     </form>
     {#if users_found.length > 0}
         <div class="flex flex-col mt-4 gap-2">

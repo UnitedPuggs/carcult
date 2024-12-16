@@ -19,7 +19,7 @@
 {@render children?.()}
 <footer class="w-full mt-auto mb-0">
     <hr class="border-t border-black">
-    <div class="flex flex-col my-2 w-fit text-sm text-gray-400">
+    <div class="flex flex-col my-2 w-fit text-sm text-gray-400 pl-2">
         <h3>copyright © 2024 carcult. All rights reserved.</h3>
         <a href="/contact-us">contact us</a>
     </div>

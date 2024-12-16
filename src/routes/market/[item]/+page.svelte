@@ -62,7 +62,7 @@
             {#if width > 700}
                 {#if curr_img_idx > 0}
                     <button
-                    class="w-4 lg:w-20 ml-0 mr-auto text-lg lg:text-3xl rounded-full px-3.5 py-0.5 lg:px-6 lg:py-4 border-2 border-gray-400 bg-white text-black font-bold hover:opacity-75 select-none" 
+                    class="w-4 lg:w-20 ml-0 mr-auto text-lg lg:text-3xl rounded-full px-3.5 py-0.5 lg:px-6 lg:py-4 border-2 border-gray-400 bg-white dark:bg-[#272933] text-black font-bold hover:opacity-75 select-none" 
                     onclick={prev_img}>
                         &lt
                     </button>
@@ -92,7 +92,7 @@
             {#if width > 700}
                 {#if curr_img_idx < market.listing_pics.length - 1}
                     <button 
-                    class="w-4 lg:w-20 mr-0 ml-auto text-lg lg:text-3xl rounded-full px-3.5 py-0.5 lg:px-6 lg:py-4 border-2 border-gray-400 bg-white text-black font-bold hover:opacity-75 select-none" 
+                    class="w-4 lg:w-20 mr-0 ml-auto text-lg lg:text-3xl rounded-full px-3.5 py-0.5 lg:px-6 lg:py-4 border-2 border-gray-400 bg-white dark:bg-[#272933] text-black font-bold hover:opacity-75 select-none" 
                     onclick={next_img}>
                         &gt;
                     </button>
@@ -106,7 +106,7 @@
         <section class="flex">
             <h1 class="text-2xl font-bold break-words">{market.item_name}</h1>
             <section class="ml-auto mr-2 mt-0.5">
-                <a href="/market" class="text-2xl border-2 border-black bg-white text-black font-bold rounded-full px-2.5 py-0.5 text-center hover:opacity-75">x</a>
+                <a href="/market" class="text-2xl border-2 border-black bg-white dark:bg-[#272933] text-black font-bold rounded-full px-2.5 py-0.5 text-center hover:opacity-75">x</a>
             </section>
         </section>
         <h2 class="text-lg">${market.price}</h2>
