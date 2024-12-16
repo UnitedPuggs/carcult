@@ -4,7 +4,7 @@
     import { goto } from '$app/navigation'
     import slugify from 'slugify';
 
-    let date = $state();
+    let date = $state(new Date($page.url.searchParams.get("date")).toLocaleString('sv').slice(0, 10) + "T00:00");
     let end_date = $state();
     let description = $state();
     let event_name = $state();
@@ -18,10 +18,6 @@
     let repeat_month = $state(false);
     let repeat_year = $state(false);
 
-    let meet_date;
-    $effect(() => {
-        meet_date = new Date(date)
-    });
     let end_date_sub = $derived(new Date(end_date))
 
     const min_date = new Date().toLocaleString('sv').slice(0, 10) + "T00:00"
@@ -103,6 +99,7 @@
 </svelte:head>
 
 <div class="mt-10">
+    {end_date}
     <h1 class="text-2xl font-bold text-center italic underline">create your meet</h1>
     <form class="flex flex-col justify-center items-center gap-1 border border-black rounded-xl w-fit mx-auto p-2 offset-box" onsubmit={() => { create_meet() }}>
         <label for="event_name">meet name</label>

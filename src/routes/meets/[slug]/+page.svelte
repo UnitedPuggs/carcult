@@ -10,8 +10,7 @@
     let event_name = $state(data.events[0].event_name);
 
     let event_date = $state(new Date(data.events[0].event_date).toLocaleString('sv'))
-
-
+    
     const MEET_TIME = new Date(data.events[0].event_date).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit'});
     const MEET_DATE = new Date(data.events[0].event_date).toLocaleDateString('en-US');
 
@@ -81,14 +80,14 @@
             {#if $page.data.session?.user.displayname == meets.host}
                 <div class="flex flex-row gap-1 m-2 justify-center lg:justify-normal h-auto">
                     <button 
-                    class="border border-black box p-1 inline-block rounded-lg active:scale-90 transition-all hover:no-box hover:translate-y-1 hover:opacity-80 bg-white" 
+                    class="btn bg-white" 
                     onclick={ toggle_edit_mode }
                     >
                     {!edit_mode ? "edit" : "close edit"}
                     </button>
                     {#if edit_mode}
                         <button 
-                        class="border border-black box p-1 inline-block rounded-lg active:scale-90 transition-all hover:no-box hover:translate-y-1 hover:opacity-80 bg-white" 
+                        class="btn bg-white" 
                         onclick={ update_meet }
                         >
                         save
@@ -96,7 +95,7 @@
                     {/if}
                     <!-- probably a good idea to have a double-checker -->
                     <button 
-                    class="border border-black box p-1 inline-block rounded-lg active:scale-90 transition-all hover:no-box hover:translate-y-1 hover:opacity-80 bg-white" 
+                    class="btn bg-white" 
                     onclick={ delete_meet }
                     >
                     delete meet

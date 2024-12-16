@@ -21,7 +21,7 @@
     <hr class="border-t border-black">
     <div class="flex flex-col my-2 w-fit text-sm text-gray-400">
         <h3>copyright © 2024 carcult. All rights reserved.</h3>
-        <a href="/">contact us</a>
+        <a href="/contact-us">contact us</a>
     </div>
 </footer>
 </div>

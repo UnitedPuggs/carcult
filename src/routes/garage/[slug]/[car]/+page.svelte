@@ -202,8 +202,8 @@
         <!-- Modal to upload new photos -->
         <dialog id="upload-photo" class="bg-transparent text-center backdrop:backdrop-blur-sm">
             <div class="flex flex-col m-20">
-                <div class="mr-auto ml-0">
-                    <button class="text-2xl text-white hover:opacity-80" onclick={close_modal}>x</button>
+                <div class="mr-auto ml-0 border-2 border-black box-shadow mb-2 p-1 h-fit w-8 bg-white active:scale-90 transition-all hover:opacity-80 hover:translate-x-1 hover:translate-y-1 hover:no-box rounded-sm">
+                    <button class="text-2xl hover:opacity-80" onclick={close_modal}>x</button>
                 </div>
                 <div>
                     <label>
@@ -214,13 +214,13 @@
                         >
                             <img 
                             src={file ? file : "/assets/image_upload.png"} 
-                            alt="upload your car" 
+                            alt="upload your car"
                             class="backdrop-blur-md w-96 h-96 cursor-pointer object-scale-down {file ? "bg-none" : "bg-white"}"
                             />
                         </div>
                     </label>
                     <button 
-                    class="text-xl font-semibold border border-black box p-1 rounded-lg active:scale-90 transition-all hover:no-box hover:translate-y-1 hover:opacity-80 bg-white mt-4" 
+                    class="text-xl font-semibold btn bg-white mt-4" 
                     onclick={upload_image}>
                     upload
                     </button>
@@ -231,13 +231,13 @@
         <div class="flex flex-col gap-2 py-1">
             <div class="flex gap-1 justify-center items-center">
                 <button 
-                class="border border-black box p-1 rounded-lg active:scale-90 transition-all hover:no-box hover:translate-y-1 hover:opacity-80" 
+                class="btn" 
                 onclick={open_modal}
                 >
                 add image
                 </button>
                 <button 
-                class="{!edit_mode ? "border-black box p-1 ": "border-red-500 warning-box px-4 py-1"} border rounded-lg active:scale-90 transition-all hover:no-box hover:translate-y-1 hover:opacity-80" 
+                class="{!edit_mode ? "border-black box p-1 ": "border-red-500 warning-box px-4 py-1"} btn" 
                 onclick={toggle_edit}
                 >
                 {!edit_mode ? "edit": "x"}
