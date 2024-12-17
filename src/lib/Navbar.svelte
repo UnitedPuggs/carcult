@@ -39,14 +39,25 @@
 </script>
 
 <Drawer>
-    <div class="flex flex-1 flex-col text-3xl items-end mr-4 mt-4 gap-2 dark:bg-[#272933]">
+    <div class="flex flex-1 flex-col text-3xl items-end mr-4 mt-4 gap-2 dark:bg-[#272933] dark:text-white">
         <button onclick={() => closeDrawer()} class="text-2xl" aria-label="close menu">
             <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
                 <path fill="none" d="M0 0h24v24H0z"></path><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path>
             </svg>
         </button>
+        <a href="/" class="underline" onclick={ closeDrawer }>home</a>
         {#if $page.data.session?.user}
-            <a href="/garage/{$page.data.session.user.displayname}" class="hover:opacity-80 w-8 active:scale-90" onclick={() => closeDrawer()}><img src="/assets/garage.png" alt="garage"></a>
+            <a href="/garage/{$page.data.session.user.displayname}" class="hover:opacity-80 w-12 active:scale-90 border-2 border-black box-shadow transition-all hover:translate-x-1 hover:translate-y-1 hover:no-box" onclick={() => closeDrawer()} aria-label="garage icon">
+                <svg fill="currentColor" version="1.1" class="p-1.5" viewBox="0 0 512 512">
+                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                <g id="SVGRepo_iconCarrier"> 
+                    <g> <g> 
+                        <path d="M500.379,137.725L267.652,3.128c-7.208-4.17-16.094-4.17-23.304,0L11.621,137.725C4.43,141.883,0,149.561,0,157.87 v330.858C0,501.58,10.42,512,23.273,512h93.091h279.273h93.091C501.58,512,512,501.58,512,488.727V157.87 C512,149.561,507.572,141.883,500.379,137.725z M372.364,465.455H139.636v-46.545h232.727V465.455z M372.364,372.364H139.636 v-46.545h232.727V372.364z M372.364,279.273H139.636v-46.545h232.727V279.273z M465.455,465.455h-46.545v-256 c0-12.853-10.42-23.273-23.273-23.273H116.364c-12.853,0-23.273,10.42-23.273,23.273v256H46.545V171.294L256,50.157 l209.455,121.136V465.455z"></path> 
+                    </g> </g> 
+                </g>
+                </svg>
+            </a>
             {#if $page.url.pathname.indexOf("garage") != -1 && !$page.url.pathname.includes(`/garage/${$page.data.session.user.displayname}/my-meets`)}
                 <a href="/garage/{$page.data.session.user.displayname}/add-car" class="hover:opacity-80 border-2 border-black box p-1 rounded-md transition-all hover:no-box hover:translate-y-1" onclick={() => closeDrawer()}>new wheels</a>
             {/if}

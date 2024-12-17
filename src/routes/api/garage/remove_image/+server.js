@@ -6,8 +6,6 @@ export async function DELETE({ request, locals }) {
     const { id, url, imgs } = await request.json();
 
     let stringy_url = [String(url.substring(80))]
-
-    console.log(stringy_url)
     
     const { delete_error } = await supabase
     .storage
