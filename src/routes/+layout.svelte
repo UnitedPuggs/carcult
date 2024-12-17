@@ -1,6 +1,7 @@
 <script>
 	import { initializeStores } from '@skeletonlabs/skeleton';
     import "../app.css";
+    import { browser } from '$app/environment';
     import Navbar from "../lib/Navbar.svelte";
     /**
      * @typedef {Object} Props
@@ -10,6 +11,21 @@
     /** @type {Props} */
     let { children } = $props();
     initializeStores();
+
+    let darkMode = $state(false);
+
+    if (browser) {
+        if (
+            localStorage.theme === 'dark' ||
+            (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)
+        ) {
+            document.documentElement.classList.add('dark');
+            darkMode = true;
+        } else {
+            document.documentElement.classList.remove('dark');
+            darkMode = false;
+        }
+    }
 </script>
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>  
