@@ -4,7 +4,7 @@
     import { goto } from '$app/navigation'
     import slugify from 'slugify';
 
-    let date = $state(new Date($page.url.searchParams.get("date")).toLocaleString('sv').slice(0, 10) + "T00:00");
+    let date = $state(new Date($page.url.searchParams.get("date")).toISOString().slice(0, 10) + " 00:00:00"); //wtf is this shit
     let end_date = $state();
     let description = $state();
     let event_name = $state();

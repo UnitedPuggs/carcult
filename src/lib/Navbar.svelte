@@ -105,8 +105,18 @@
         <div class="flex items-center gap-4 lg:mr-1 lg:ml-auto h-full lg:pl-4">
             {#if $page.data.session?.user}
                 <a href="/garage/{$page.data.session.user.displayname}" 
-                class="hover:opacity-80 w-12 active:scale-90 border-2 border-black box-shadow transition-all hover:translate-x-1 hover:translate-y-1 hover:no-box">
-                    <img src="/assets/garage.png" alt="garage" class="p-2">
+                aria-label="garage icon"
+                class="hover:opacity-80 w-12 active:scale-90 border-2 border-black box-shadow transition-all hover:translate-x-1 hover:translate-y-1 hover:no-box"
+                >
+                <svg fill="currentColor" version="1.1" class="p-1.5" viewBox="0 0 512 512">
+                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                    <g id="SVGRepo_iconCarrier"> 
+                        <g> <g> 
+                            <path d="M500.379,137.725L267.652,3.128c-7.208-4.17-16.094-4.17-23.304,0L11.621,137.725C4.43,141.883,0,149.561,0,157.87 v330.858C0,501.58,10.42,512,23.273,512h93.091h279.273h93.091C501.58,512,512,501.58,512,488.727V157.87 C512,149.561,507.572,141.883,500.379,137.725z M372.364,465.455H139.636v-46.545h232.727V465.455z M372.364,372.364H139.636 v-46.545h232.727V372.364z M372.364,279.273H139.636v-46.545h232.727V279.273z M465.455,465.455h-46.545v-256 c0-12.853-10.42-23.273-23.273-23.273H116.364c-12.853,0-23.273,10.42-23.273,23.273v256H46.545V171.294L256,50.157 l209.455,121.136V465.455z"></path> 
+                        </g> </g> 
+                    </g>
+                </svg>
                 </a>
                 {#if $page.url.pathname.indexOf("garage") != -1 && !$page.url.pathname.includes(`/garage/${$page.data.session.user.displayname}/my-meets`)}
                     <a href="/garage/{$page.data.session.user.displayname}/add-car" class="btn text-lg">new wheels</a>

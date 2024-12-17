@@ -112,7 +112,7 @@
                 </label>
                 <span class="text-gray-400 text-xl">{trunc.username}</span>
                 <label for="bio" class="text-lg font-semibold">bio</label>
-                <textarea class="border border-black rounded-lg p-1 lg:w-60 max-h-40" bind:value={ bio } bind:this={ textarea }></textarea>
+                <textarea class="border border-black dark:border-white rounded-lg p-1 lg:w-60 max-h-40 dark:bg-[#272933]" bind:value={ bio } bind:this={ textarea }></textarea>
                 <div class="mt-auto mb-0">
                     <button onclick={ updateProfile } class="hover:opacity-80 border-2 border-black p-1 rounded-md box active:scale-90 transition-all hover:no-box hover:translate-y-1 lg:w-60">save</button>
                 </div>
