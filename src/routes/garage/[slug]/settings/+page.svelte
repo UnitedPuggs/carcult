@@ -1,6 +1,4 @@
 <script>
-    import { page } from "$app/stores";
-    import { goto } from "$app/navigation";
     import { browser } from "$app/environment";
     
     let activeTab = $state("about")
@@ -37,19 +35,6 @@
         reader.onload = e => {
             uploadedPfp = e.target.result;
         };
-    }
-
-    async function updateProfile() {
-        const formData = new FormData();
-        formData.append("bio", bio);
-        formData.append("file", file);
-
-        await fetch("/api/garage/update_profile", {
-            method: "POST",
-            body: formData,
-        });
-
-        goto(`/garage/${$page.data.session?.user.displayname}`);
     }
 
     function themeSwitch() {
@@ -104,19 +89,20 @@
     </section>
     <section class="flex flex-col p-2 w-full">
         {#if activeTab == "about"}
-            <div class="flex flex-1 flex-col justify-center items-center">
+            {bio}
+            <form class="flex flex-1 flex-col justify-center items-center" method="post" action="?/updateProfile" enctype="multipart/form-data">
                 <label>
                     click to change
-                    <input type="file" class="hidden" accept="image/*" bind:value={ uploadedPfp } onchange={(e) => uploadedImg(e)} />
+                    <input name="pfp" type="file" class="hidden" accept="image/*" bind:value={ uploadedPfp } onchange={(e) => uploadedImg(e)} />
                     <img src={uploadedPfp ? uploadedPfp : trunc.pfp_url} alt="temp's avatar" class="rounded-full h-24 w-24 border border-black box cursor-pointer" />
                 </label>
                 <span class="text-gray-400 text-xl">{trunc.username}</span>
                 <label for="bio" class="text-lg font-semibold">bio</label>
-                <textarea class="border border-black dark:border-white rounded-lg p-1 lg:w-60 max-h-40 dark:bg-[#272933]" bind:value={ bio } bind:this={ textarea }></textarea>
+                <textarea name="bio" class="border border-black dark:border-white rounded-lg p-1 lg:w-60 max-h-40 dark:bg-[#272933]" bind:value={ bio } bind:this={ textarea }></textarea>
                 <div class="mt-auto mb-0">
-                    <button onclick={ updateProfile } class="hover:opacity-80 border-2 border-black p-1 rounded-md box active:scale-90 transition-all hover:no-box hover:translate-y-1 lg:w-60">save</button>
+                    <input type="submit" value="save" class="hover:opacity-80 border-2 border-black p-1 rounded-md box active:scale-90 transition-all hover:no-box hover:translate-y-1 lg:w-60 cursor-pointer">
                 </div>
-            </div>
+            </form>
         {:else if activeTab == "appearance"}
             <div class="flex flex-col">
                 <label for="dark mode" class="font-semibold">toggle dark mode</label>
