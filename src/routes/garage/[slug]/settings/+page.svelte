@@ -89,7 +89,6 @@
     </section>
     <section class="flex flex-col p-2 w-full">
         {#if activeTab == "about"}
-            {bio}
             <form class="flex flex-1 flex-col justify-center items-center" method="post" action="?/updateProfile" enctype="multipart/form-data">
                 <label>
                     click to change
