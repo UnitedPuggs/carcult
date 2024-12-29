@@ -1,5 +1,4 @@
 <script>
-	import { initializeStores } from '@skeletonlabs/skeleton';
     import "../app.css";
     import { browser } from '$app/environment';
     import Navbar from "../lib/Navbar.svelte";
@@ -10,7 +9,6 @@
 
     /** @type {Props} */
     let { children } = $props();
-    initializeStores();
 
     let darkMode = $state(false);
 

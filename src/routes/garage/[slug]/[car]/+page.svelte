@@ -6,6 +6,9 @@
     import { swipe } from "svelte-gestures";
     import { enhance } from '$app/forms';
 
+    import * as Card from "$lib/components/ui/card/index.js";
+    import * as Carousel from "$lib/components/ui/carousel/index.js";
+
     let { data } = $props();
 
     let file = $state();
@@ -29,12 +32,12 @@
         goto(`/garage/${short.username}`)
     }
 
-    async function remove_image() {
-        let img_to_remove = curr_gallery_img;
+    async function remove_image(index) {
+        const REMOVE_IMG = short.image_urls[index];
         await fetch('/api/garage/remove_image', {
             method: "DELETE",
-            body: JSON.stringify({id: short.id, url: img_to_remove, imgs: short.image_urls})
-        })
+            body: JSON.stringify({id: short.id, url: REMOVE_IMG, imgs: short.image_urls})
+        });
         close_gallery();
         invalidateAll();
     }
@@ -95,11 +98,11 @@
         }
     }
 
-    async function set_main_img() {
+    async function set_main_img(index) {
         const GARAGE_INFO = data.garage_info[0];
         let temp = GARAGE_INFO.image_urls[0]; //why did I not use short here?
-        GARAGE_INFO.image_urls[0] = GARAGE_INFO.image_urls[curr_gallery_idx];
-        GARAGE_INFO.image_urls[curr_gallery_idx] = temp;
+        GARAGE_INFO.image_urls[0] = GARAGE_INFO.image_urls[index];
+        GARAGE_INFO.image_urls[index] = temp;
         console.log(`ur urls ${GARAGE_INFO.image_urls}`)
         await fetch('/api/garage/update_main_img', {
             method: "PATCH",
@@ -271,42 +274,46 @@
     </section>
     <!----------------->
     <!-- Modal for 'expanded' gallery photo-->
-    <dialog id="gallery" class="bg-transparent text-center backdrop:backdrop-blur-sm" bind:clientWidth={width} use:swipe={{ timeframe: 300, minSwipeDistance: 50, touchAction: 'pan-y'}} onswipe={handler}>
+    <dialog id="gallery" class="bg-transparent text-center backdrop:backdrop-blur-sm">
         {#if show_gallery_modal}
-            <div class="m-2" use:clickOutside onoutclick={() => close_gallery()} bind:clientWidth={width} use:swipe={{ timeframe: 300, minSwipeDistance: 50, touchAction: 'pan-y'}} onswipe={handler}>
+            <div class="m-2" use:clickOutside onoutclick={() => close_gallery()}>
                 <div class="justify-start text-left">
                     <button class="text-2xl hover:opacity-75" onclick={close_gallery}>x</button>
                 </div>
-                <div class="flex">
-                {#if curr_gallery_idx > 0}
-                    <button class="text-2xl px-4 hover:opacity-80" onclick={prev_image}>&lt;</button>
-                {:else}
-                    <span class="invisible text-2xl px-4">!</span>
-                {/if} <!-- I think there's an issue with the swipe library and select-none lol -->
-                <div style="background-image: url('{curr_gallery_img}');" class="bg-cover bg-no-repeat border-2 border-black rounded-lg select-none overflow-clip">
-                    <img src={curr_gallery_img} alt="" class="lg:w-[1296px] h-72 lg:h-[732px] object-contain backdrop-blur-md"/>
-                </div>
-                {#if curr_gallery_idx < short.image_urls.length - 1}
-                    <button class="text-2xl px-4 hover:opacity-80" onclick={next_image}>&gt;</button>
-                {:else}
-                    <span class="invisible text-2xl px-4">!</span>
-                {/if}
-                </div>
-                {#if $page.data.session?.user.displayname == short.username}
-                <section class="flex flex-col gap-2 mt-1">
-                    <button 
-                    class="bg-white dark:bg-[#272933] border border-black box p-1 rounded-lg active:scale-90 transition-all hover:no-box hover:translate-y-1 hover:opacity-80 w-fit mx-auto" 
-                    onclick={set_main_img}>
-                    set as main
-                    </button>
-                    <button 
-                    class="bg-white dark:bg-[#272933] border border-red-500 warning-box p-1 rounded-lg active:scale-90 transition-all hover:no-box hover:translate-y-1 hover:opacity-80 w-fit mx-auto" 
-                    onclick={remove_image}
-                    >
-                    remove image
-                    </button>
-                </section>
-                {/if}
+                <Carousel.Root class="w-full max-w-6xl" opts={{ align: "start", loop: true }}>
+                    <Carousel.Content>
+                        {#each short.image_urls as pic, index}
+                            <Carousel.Item>
+                                <div class="p-1 max-h-full">
+                                    <Card.Root>
+                                        <Card.Content class="flex items-center justify-center p-6">
+                                            <img src={pic} alt="gallery" class="lg:w-[1296px] h-72 lg:h-[732px] object-contain backdrop-blur-md">
+                                        </Card.Content>
+                                        <Card.Footer>
+                                            {#if $page.data.session?.user.displayname == short.username}
+                                            <section class="flex flex-row gap-2">
+                                                <button 
+                                                class="bg-white dark:bg-[#272933] border border-black box p-1 rounded-lg active:scale-90 transition-all hover:no-box hover:translate-y-1 hover:opacity-80 w-fit mx-auto" 
+                                                onclick={() => set_main_img(index)}>
+                                                set as main
+                                                </button>
+                                                <button 
+                                                class="bg-white dark:bg-[#272933] border border-red-500 warning-box p-1 rounded-lg active:scale-90 transition-all hover:no-box hover:translate-y-1 hover:opacity-80 w-fit mx-auto" 
+                                                onclick={() => remove_image(index)}
+                                                >
+                                                remove image
+                                                </button>
+                                            </section>
+                                            {/if}
+                                        </Card.Footer>
+                                    </Card.Root>
+                                </div>
+                            </Carousel.Item>
+                        {/each}
+                        <Carousel.Previous />
+                        <Carousel.Next />
+                    </Carousel.Content>
+                </Carousel.Root>
             </div>
         {/if}
     </dialog>

@@ -13,7 +13,7 @@
 </script>
 
 <a href="{$page.url.pathname}/{vehicle_slug}" class="transition-all active:scale-90">
-    <div class="group flex flex-col lg:justify-normal lg:items-start justify-center items-center lg:flex-row flex-wrap hover:opacity-80 border border-black rounded-lg pb-3 pt-2 px-1" id={info_id}>
+    <div class="group flex flex-col lg:justify-normal lg:items-start justify-center items-center lg:flex-row flex-wrap hover:opacity-80 border-2 border-black rounded-lg pb-3 pt-2 px-1" id={info_id}>
         <div class="border-2 border-black rounded-md overflow-clip less-offset-box transition-all hover:no-box hover:translate-x-1 hover:translate-y-1 bg-cover bg-no-repeat -translate-y-1 lg:-translate-y-0 w-fit" style="background-image: url('{main_image}')">
             <img src={main_image} alt="cars" class="w-72 h-72 lg:w-80 lg:h-80 object-scale-down backdrop-blur" loading="lazy">
         </div>
