@@ -280,7 +280,7 @@
                 <div class="justify-start text-left">
                     <button class="text-2xl hover:opacity-75" onclick={close_gallery}>x</button>
                 </div>
-                <Carousel.Root class="w-full max-w-6xl" opts={{ align: "start", loop: true }}>
+                <Carousel.Root class="w-full" opts={{ align: "start", loop: true }}>
                     <Carousel.Content>
                         {#each short.image_urls as pic, index}
                             <Carousel.Item>
@@ -310,9 +310,9 @@
                                 </div>
                             </Carousel.Item>
                         {/each}
-                        <Carousel.Previous />
-                        <Carousel.Next />
                     </Carousel.Content>
+                    <Carousel.Previous />
+                    <Carousel.Next />
                 </Carousel.Root>
             </div>
         {/if}
