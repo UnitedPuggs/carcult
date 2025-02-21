@@ -3,11 +3,7 @@
 
     import { page } from '$app/stores'
     import { invalidateAll, goto } from '$app/navigation';
-    import { swipe } from "svelte-gestures";
     import { enhance } from '$app/forms';
-
-    import * as Card from "$lib/components/ui/card/index.js";
-    import * as Carousel from "$lib/components/ui/carousel/index.js";
 
     let { data } = $props();
 
@@ -18,9 +14,7 @@
     let width = $state(0);
     let desc = $state(data.garage_info[0].description);
 
-    let curr_gallery_img = $state("");
-
-    let show_gallery_modal = $state(false);
+    let short = $derived(data.garage_info[0]);
 
     let textarea = $state();
 
@@ -54,18 +48,6 @@
         document.getElementById("upload-photo").close();
     }
 
-    async function open_gallery() {
-        document.getElementById("gallery").showModal();
-        show_gallery_modal = true;
-        show_gallery_modal = show_gallery_modal;
-    }
-
-    async function close_gallery() {
-        document.getElementById("gallery").close();
-        show_gallery_modal = false;
-        show_gallery_modal = show_gallery_modal;
-    }
-
     async function open_delete_prompt() {
         document.getElementById("delete-prompt").showModal();
     }
@@ -81,20 +63,6 @@
         reader.readAsDataURL(img);
         reader.onload = e => {
             file = e.target.result;
-        }
-    }
-
-    async function prev_image() {
-        if(curr_gallery_idx - 1 >= 0) {
-            curr_gallery_img = short.image_urls[curr_gallery_idx - 1];
-            curr_gallery_img = curr_gallery_img;
-        }
-    }
-
-    async function next_image() {
-        if(curr_gallery_idx + 1 < short.image_urls.length) {
-            curr_gallery_img = short.image_urls[curr_gallery_idx + 1];
-            curr_gallery_img = curr_gallery_img;
         }
     }
 
@@ -120,6 +88,10 @@
         invalidateAll();
     }
 
+    function get_image() {
+
+    }
+
     function clickOutside(node) {
         const handleClick = (event) => {
             if (!node.contains(event.target)) {
@@ -135,16 +107,7 @@
             }
 	    };
     }
-    
-    async function handler() {
-        if(event.detail.direction == "left") {
-            await next_image();
-        } else if (event.detail.direction == "right") {
-            await prev_image();
-        }
-    }
-    let short = $derived(data.garage_info[0]);
-    let curr_gallery_idx = $derived(short.image_urls.indexOf(curr_gallery_img));
+
     run(() => {
         if(textarea) {
             textarea.style.height = `${textarea.scrollHeight}px`;
@@ -156,7 +119,7 @@
     <title>{$page.params.slug}'s {short.vehicle_name}</title>
 </svelte:head>
 
-<a href="/garage/{$page.params.slug}" class="text-3xl hover:opacity-80">&lt;-</a>
+<a href="/garage/{$page.params.slug}" class="text-3xl hover:opacity-80">&lt;--</a>
 <div class="flex flex-col justify-center items-center">
     <!-- Modal for removing vehicle -->
     <dialog id="delete-prompt" class=" text-center border-2 border-black rounded-lg">
@@ -260,62 +223,14 @@
     <h2 class="font-bold text-xl">gallery</h2>
     <section class="p-2 flex justify-center gap-4">
         {#each short.image_urls as pic}
-            <button 
-            onclick={() => { 
-                open_gallery()
-                curr_gallery_img = pic;
-            }} 
+            <a 
+            href="{$page.params.car}/image/{pic.substring(pic.lastIndexOf("/") + 1)}"
             class=" bg-cover bg-no-repeat border border-black rounded-lg box transition-all hover:no-box hover:translate-y-1 overflow-clip"
             style="background-image: url('{pic}')"
             >
                 <img src={pic} alt="gallery" class="w-48 h-32 lg:w-80 lg:h-68 object-scale-down backdrop-blur-md" />
-            </button>
+            </a>
         {/each}
     </section>
     <!----------------->
-    <!-- Modal for 'expanded' gallery photo-->
-    <dialog id="gallery" class="bg-transparent text-center backdrop:backdrop-blur-sm">
-        {#if show_gallery_modal}
-            <div class="m-2" use:clickOutside onoutclick={() => close_gallery()}>
-                <div class="justify-start text-left">
-                    <button class="text-2xl hover:opacity-75" onclick={close_gallery}>x</button>
-                </div>
-                <Carousel.Root class="w-full" opts={{ align: "start", loop: true }}>
-                    <Carousel.Content>
-                        {#each short.image_urls as pic, index}
-                            <Carousel.Item>
-                                <div class="p-1 max-h-full">
-                                    <Card.Root>
-                                        <Card.Content class="flex items-center justify-center p-6">
-                                            <img src={pic} alt="gallery" class="lg:w-[1296px] h-72 lg:h-[732px] object-contain backdrop-blur-md">
-                                        </Card.Content>
-                                        <Card.Footer>
-                                            {#if $page.data.session?.user.displayname == short.username}
-                                            <section class="flex flex-row gap-2">
-                                                <button 
-                                                class="bg-white dark:bg-[#272933] border border-black box p-1 rounded-lg active:scale-90 transition-all hover:no-box hover:translate-y-1 hover:opacity-80 w-fit mx-auto" 
-                                                onclick={() => set_main_img(index)}>
-                                                set as main
-                                                </button>
-                                                <button 
-                                                class="bg-white dark:bg-[#272933] border border-red-500 warning-box p-1 rounded-lg active:scale-90 transition-all hover:no-box hover:translate-y-1 hover:opacity-80 w-fit mx-auto" 
-                                                onclick={() => remove_image(index)}
-                                                >
-                                                remove image
-                                                </button>
-                                            </section>
-                                            {/if}
-                                        </Card.Footer>
-                                    </Card.Root>
-                                </div>
-                            </Carousel.Item>
-                        {/each}
-                    </Carousel.Content>
-                    <Carousel.Previous />
-                    <Carousel.Next />
-                </Carousel.Root>
-            </div>
-        {/if}
-    </dialog>
-    <!------------------------------------->
 </div>

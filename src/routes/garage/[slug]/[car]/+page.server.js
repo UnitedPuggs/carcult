@@ -1,4 +1,5 @@
 import { supabase } from '$lib/supabase'
+import slugify from 'slugify';
 
 export const actions = {
     updateDesc: async({ request }) => {
@@ -9,9 +10,9 @@ export const actions = {
         const data = Object.fromEntries([...formData]);
         const session = await locals.getSession();
 
-        console.log(data);
+        const name = `${slugify(data.image.name)}-${crypto.randomUUID().substring(0, 8)}`
 
-        const url = `${session.user.displayname}/${params.car}/${data.image.name}-${crypto.randomUUID()}`
+        const url = `${session.user.displayname}/${params.car}/${name}`
 
         if (data.image && data.image.size > 0) {
             //UPLOADING NEW IMAGE TO BUCKET
