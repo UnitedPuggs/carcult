@@ -1,7 +1,21 @@
+import { supabase } from '$lib/supabase.js';
+
 export async function load({ params }) {
-    const url = `https://knnxtkccpetpqxmvcxmu.supabase.co/storage/v1/object/public/garage_photos/${params.slug}/${params.car}/${params.image}`
+    let { data: image_urls, error } = await supabase
+    .from('garage_vehicle_info')
+    .select('id, image_urls')
+    .eq('short_vehicle_name', params.car);
+
+    const id = image_urls[0].id;
+
+    let { data: stats, stats_error } = await supabase
+    .from('garage_images')
+    .select('*')
+    .eq('vehicle_id', id)
+    .eq('slug', params.image);
 
     return {
-        url
+        image_urls,
+        stats
     };
 }

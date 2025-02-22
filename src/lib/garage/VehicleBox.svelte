@@ -9,7 +9,7 @@
     } = $props();
 
     if(typeof main_image == 'undefined')
-        main_image = "https://knnxtkccpetpqxmvcxmu.supabase.co/storage/v1/object/public/garage_photos/Hulk_Hogan.jpg"
+        main_image = "https://knnxtkccpetpqxmvcxmu.supabase.co/storage/v1/object/public/garage_photos/default.jpg"
 </script>
 
 <a href="{$page.url.pathname}/{vehicle_slug}" class="transition-all active:scale-90">

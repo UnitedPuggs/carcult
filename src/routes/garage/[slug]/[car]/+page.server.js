@@ -61,8 +61,25 @@ export const actions = {
                 return `Error getting gv info urls: ${image_error}`;
             }
 
+            const publicUrl = img_url.publicUrl;
+
+            const { data: garage_image, error: gi_error } = await supabase
+            .from('garage_images')
+            .insert([
+                { 
+                    vehicle_id: id,
+                    slug: publicUrl.substring(publicUrl.lastIndexOf("/") + 1),
+                    image_url: publicUrl,
+                    caption: "Test"
+                }
+            ]);
+
+            if (gi_error) {
+                return `Error inserting to garage_image: ${gi_error}`
+            }
+
             let img_urls = image_data[0].image_urls;
-            img_urls.push(img_url.publicUrl);
+            img_urls.push(publicUrl);
 
             const { error: update_error } = await supabase
             .from('garage_vehicle_info')
