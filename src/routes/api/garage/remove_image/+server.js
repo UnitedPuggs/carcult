@@ -3,10 +3,9 @@ import { client } from '$lib/public_supabase.js'
 export async function DELETE({ request, locals }) {
     const session = await locals.getSession()
     const supabase = await client(session)
-    const { id, url, imgs } = await request.json();
+    const { id, url, images } = await request.json();
 
-    let stringy_url = [String(url.substring(80))]
-    
+    /**
     const { delete_error } = await supabase
     .storage
     .from('garage_photos')
@@ -26,4 +25,6 @@ export async function DELETE({ request, locals }) {
         return new Response(JSON.stringify(error))
 
     return new Response(JSON.stringify({message: "deleted image"}))
+    THIS NEEDS TO BE REWORKED
+    */
 }

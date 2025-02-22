@@ -108,6 +108,8 @@
 	    };
     }
 
+    const MAIN_IMG = $derived(short.using_main ? short.main_image : short.image_urls[0]);
+
     run(() => {
         if(textarea) {
             textarea.style.height = `${textarea.scrollHeight}px`;
@@ -133,8 +135,8 @@
     </dialog>
     <!----------------------------->
     <h1 class="text-2xl font-bold italic">{short.vehicle_name}</h1>
-    <div class="bg-cover bg-no-repeat overflow-clip border-2 border-black rounded-lg less-offset-box w-72 h-72 lg:h-[30rem] lg:w-[30rem]" style="background-image: url('{short.image_urls[0]}')">
-        <img src={short.image_urls[0]} alt="your cool car" class="overflow-clip object-scale-down backdrop-blur-md h-full w-full"/>
+    <div class="bg-cover bg-no-repeat overflow-clip border-2 border-black rounded-lg less-offset-box w-72 h-72 lg:h-[30rem] lg:w-[30rem]" style="background-image: url('{MAIN_IMG}')">
+        <img src={MAIN_IMG} alt="your cool car" class="overflow-clip object-scale-down backdrop-blur-md h-full w-full"/>
     </div>
     <div class="flex flex-col justify-center items-center text-"> <!-- description stuff -->
         <h2 class="font-bold text-xl mt-2">description</h2>

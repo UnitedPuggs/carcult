@@ -101,7 +101,7 @@
             {#if garage_info.length > 0}
                 <div class="flex flex-col gap-2 p-1 lg:w-3/4 mx-auto">
                     {#each garage_info as info}
-                        <VehicleBox main_image={info.image_urls[0]} vehicle_name={info.vehicle_name} vehicle_slug={info.short_vehicle_name} desc={info.description} info_id={info.id}/>
+                        <VehicleBox main_image={info.using_main ? info.main_image : info.image_urls[0]} vehicle_name={info.vehicle_name} vehicle_slug={info.short_vehicle_name} desc={info.description} info_id={info.id}/>
                     {/each}
                 </div>
             {:else}

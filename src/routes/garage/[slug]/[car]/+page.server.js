@@ -79,7 +79,7 @@ export const actions = {
             }
 
             let img_urls = image_data[0].image_urls;
-            img_urls.push(publicUrl);
+            img_urls.unshift(publicUrl);
 
             const { error: update_error } = await supabase
             .from('garage_vehicle_info')
