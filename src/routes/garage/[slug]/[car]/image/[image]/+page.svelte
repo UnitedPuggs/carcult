@@ -1,5 +1,6 @@
 <script>
     import { page } from "$app/state";
+    import { goto } from "$app/navigation";
 
     let { data } = $props();
 
@@ -23,6 +24,7 @@
                 images: image_urls.image_urls
             })
         });
+        goto(`/garage/${page.params.slug}/${page.params.car}`)
     }
     function next_image_linker() {
         let next = index - 1;
@@ -39,7 +41,9 @@
 <div class="flex flex-col justify-center items-center h-auto my-4 lg:w-96 w-72 mx-auto">
     <div class="flex justify-between w-full">
         <form method="post" action="?/setMain">
-            <input type="submit" value="set main" />
+            <input type="submit" value="set main" class="cursor-pointer" />
+            <input type="text" name="url" value={stats.image_url} class="hidden" />
+            <input type="number" name="id" value={image_urls.id} class="hidden" />
         </form>
         <button onclick={() => delete_image()}>delete</button>
     </div>
@@ -49,16 +53,21 @@
     <div class="flex flex-col w-full">
         <p>{stats.caption}</p>
         <p class="text-sm text-gray-400">{stats.created_at}</p>
-        <div class="flex justify-between"> 
-            {#if index == 0} <!-- if start of image array-->
+        <div class="flex justify-between">
+            {#if image_urls.image_urls.length > 1}
+                {#if index == 0} <!-- if start of image array-->
+                    <span class="text-gray-300">← next</span>
+                    <a href="{ previous_image_linker() }" class="text-end">prev →</a>
+                {:else if index == image_urls.image_urls.length - 1} <!-- if end of image array -->
+                    <a href="{ next_image_linker() }" class="text-start">← next</a>
+                    <span class="text-gray-300">prev →</span>
+                {:else} <!-- between start and end-->
+                    <a href="{ next_image_linker() }">← next</a>
+                    <a href="{ previous_image_linker() }">prev →</a>
+                {/if}
+            {:else}
                 <span class="text-gray-300">← next</span>
-                <a href="{ previous_image_linker() }" class="text-end">prev →</a>
-            {:else if index == image_urls.image_urls.length - 1} <!-- if end of image array -->
-                <a href="{ next_image_linker() }" class="text-start">← next</a>
                 <span class="text-gray-300">prev →</span>
-            {:else} <!-- between start and end-->
-                <a href="{ next_image_linker() }">← next</a>
-                <a href="{ previous_image_linker() }">prev →</a>
             {/if}
         </div>
         <hr class="border border-gray-400 mt-2 w-full"/>

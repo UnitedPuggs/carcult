@@ -5,6 +5,18 @@ export const actions = {
     updateDesc: async({ request }) => {
 
     },
+    useMain: async({ request }) => {
+        const formData = await request.formData();
+        const data = Object.fromEntries([...formData]);
+
+        const { data: gv_data, error } = await supabase
+        .from('garage_vehicle_info')
+        .update({
+            using_main: data.using == "on" ? true : false
+        })
+        .eq('id', data.id)
+        .select();
+    },
     addImage: async({ request, locals, params }) => {
         const formData = await request.formData();
         const data = Object.fromEntries([...formData]);

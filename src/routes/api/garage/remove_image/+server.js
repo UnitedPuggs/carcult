@@ -5,26 +5,38 @@ export async function DELETE({ request, locals }) {
     const supabase = await client(session)
     const { id, url, images } = await request.json();
 
-    /**
-    const { delete_error } = await supabase
+    console.log(images);
+
+    const { storage_error } = await supabase
     .storage
     .from('garage_photos')
-    .remove(stringy_url)
+    .remove([String(url.substring(80))]); // Because supabase sdk is retarded and needs [folder/filename] and can't use URL wtf
 
-    if(delete_error)
-        return new Response(JSON.stringify(delete_error))
+    if(storage_error) {
+        return new Response(JSON.stringify({ error: storage_error}, { status: 400 }));
+    }
 
-    const fixed_array = imgs.filter(e => e !== url)
-    
-    const { error } = await supabase
+    const FIXED_ARRAY = images.filter(e => e !== url);
+    console.log(FIXED_ARRAY);
+
+    const { gv_error } = await supabase
     .from('garage_vehicle_info')
-    .update({ image_urls: fixed_array })
-    .eq('id', id)
+    .update({ image_urls: FIXED_ARRAY })
+    .eq('id', id);
 
-    if(error)
-        return new Response(JSON.stringify(error))
+    if(gv_error) {
+        return new Response(JSON.stringify({ error: gv_error }, { status: 400 }));
+    }
 
-    return new Response(JSON.stringify({message: "deleted image"}))
-    THIS NEEDS TO BE REWORKED
-    */
+    const { gi_error } = await supabase
+    .from('garage_images')
+    .delete()
+    .eq('vehicle_id', id)
+    .eq('image_url', url);
+
+    if(gi_error) {
+        return new Response(JSON.stringify({ error: gi_error }, { status: 400 }));
+    }
+
+    return new Response(JSON.stringify({ status: 200 }));
 }

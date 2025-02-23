@@ -18,6 +18,8 @@
 
     let textarea = $state();
 
+    const MAIN_IMG = $derived(short.using_main ? short.main_image : short.image_urls[0]);
+
     async function delete_vehicle(id) {
         await fetch('/api/garage/delete_vehicle', {
             method: "DELETE",
@@ -25,33 +27,18 @@
         })
         goto(`/garage/${short.username}`)
     }
-
-    async function remove_image(index) {
-        const REMOVE_IMG = short.image_urls[index];
-        await fetch('/api/garage/remove_image', {
-            method: "DELETE",
-            body: JSON.stringify({id: short.id, url: REMOVE_IMG, imgs: short.image_urls})
-        });
-        close_gallery();
-        invalidateAll();
-    }
-
     async function toggle_edit() {
         edit_mode = !edit_mode;
     }
-
     async function open_modal() {
         document.getElementById("upload-photo").showModal();
     }
-
     async function close_modal() {
         document.getElementById("upload-photo").close();
     }
-
     async function open_delete_prompt() {
         document.getElementById("delete-prompt").showModal();
     }
-
     async function close_delete_prompt() {
         document.getElementById("delete-prompt").close();
     }
@@ -65,20 +52,6 @@
             file = e.target.result;
         }
     }
-
-    async function set_main_img(index) {
-        const GARAGE_INFO = data.garage_info[0];
-        let temp = GARAGE_INFO.image_urls[0]; //why did I not use short here?
-        GARAGE_INFO.image_urls[0] = GARAGE_INFO.image_urls[index];
-        GARAGE_INFO.image_urls[index] = temp;
-        console.log(`ur urls ${GARAGE_INFO.image_urls}`)
-        await fetch('/api/garage/update_main_img', {
-            method: "PATCH",
-            body: JSON.stringify({id: short.id, img_urls: GARAGE_INFO.image_urls})
-        });
-        invalidateAll();
-    }
-
     async function save_desc() {
         await fetch('/api/garage/update_vehc_desc', {
             method: "PATCH",
@@ -87,11 +60,9 @@
         edit_mode = false;
         invalidateAll();
     }
-
-    function get_image() {
+    async function use_main() {
 
     }
-
     function clickOutside(node) {
         const handleClick = (event) => {
             if (!node.contains(event.target)) {
@@ -107,8 +78,6 @@
             }
 	    };
     }
-
-    const MAIN_IMG = $derived(short.using_main ? short.main_image : short.image_urls[0]);
 
     run(() => {
         if(textarea) {
@@ -217,6 +186,11 @@
                     >
                     save
                     </button>
+                </form>
+                <form method="post" action="?/useMain">
+                    <input type="submit" value="use main" />
+                    <input type="checkbox" name="using" checked={short.using_main} />
+                    <input type="number" name="id" class="hidden" value={short.id} />
                 </form>
             {/if}
         </div>
