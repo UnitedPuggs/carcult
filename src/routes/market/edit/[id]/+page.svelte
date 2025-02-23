@@ -78,7 +78,7 @@
 
 <div class="flex" bind:clientWidth={width}>
     <div class="border-2 border-white w-full lg:w-72 min-h-[calc(100vh_-_6rem)] p-2" id="seller-controls">
-        <a href="/market/selling" class="text-xl font-bold">&lt;-</a>
+        <a href="/market/selling" class="text-xl font-bold">&lt;--</a>
         <h1 class="font-bold text-xl mt-2">item for sale</h1>
         <form class="flex flex-col gap-2" onsubmit={update_listing}>
             <input bind:value={title} class="bg-gray-800 border border-white p-2 rounded-sm" placeholder="item name" required>

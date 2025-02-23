@@ -31,8 +31,7 @@
 
 
     const daysInMonth = (year, month) => new Date(year, month, 0).getDate();
-    const short_days = ['Sun', 'Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat'];
-    const long_days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
     run(() => {
         curr_year = parseInt($page.params.year);
@@ -188,7 +187,7 @@
 
 <div bind:clientWidth={width} use:swipe={{ timeframe: 300, minSwipeDistance: 50, touchAction: 'pan-y'}} onswipe={handler}>
     {#if $page.data.session?.user.role >= 1}
-        <a href="/meets/create" class="border border-black box p-1 m-2 inline-block rounded-lg active:scale-90 transition-all hover:no-box hover:translate-y-1 hover:opacity-80">new meet</a>
+        <a href="/meets/create" class="border-2 border-black box p-1 m-2 inline-block rounded-md active:scale-90 transition-all hover:no-box hover:translate-y-1 hover:opacity-80">new meet</a>
     {/if}
     <div class="mt-6">
         <!--<form class="flex justify-center items-center gap-2 text-black" onsubmit={() => search_locations(user_location, radius, data.locations)}>
@@ -229,9 +228,9 @@
         </div>
         <div class="flex flex-col justify-center items-center mx-auto rounded-sm w-full lg:w-[85rem] pb-4 lg:px-0 px-1">
             <div class="grid grid-cols-7 h-auto lg:w-auto w-screen gap-[1px]">
-                {#each width > 640 ? long_days : short_days as day}
-                    <section class="sticky top-0 z-50 text-center outline outline-1 text-sm lg:text-base">
-                        <span class="font-semibold">{day}</span>
+                {#each days as day}
+                    <section class="sticky top-0 z-50 text-center outline outline-1 text-sm lg:text-base bg-white dark:bg-[#272933]">
+                        <span class="font-semibold">{width > 640 ? day : day.substring(0, 3) }</span>
                     </section>
                 {/each}
                 {#each calendar_days as day}

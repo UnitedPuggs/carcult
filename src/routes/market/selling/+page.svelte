@@ -3,7 +3,7 @@
     let { data } = $props();
 </script>
 
-<a href="/market" class="text-3xl hover:opacity-75 px-2">&lt;-</a>
+<a href="/market" class="text-3xl hover:opacity-75 px-2">&lt;--</a>
 <div>
     {#await data.streamed.marketplace_listings}
         <p>loading marketplace listings...</p>
