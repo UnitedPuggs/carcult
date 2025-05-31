@@ -1,11 +1,17 @@
 <script>
 
-    import { page } from '$app/stores'
-    import { goto } from '$app/navigation'
+    import { page } from '$app/stores';
+    import { browser } from '$app/environment';
+    import { goto } from '$app/navigation';
     import slugify from 'slugify';
 
-    let date = $state(new Date($page.url.searchParams.get("date")).toISOString().slice(0, 10) + " 00:00:00"); //wtf is this shit
-    let end_date = $state();
+    const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    let date = $state(
+        $page.url.searchParams.get("date") 
+        ? new Date($page.url.searchParams.get("date")).toISOString().slice(0, 10) + " 00:00:00" 
+        : new Date().toLocaleDateString('sv', { timezone: tz, hour: '2-digit', minute: '2-digit' }).slice(0, 10) + " 00:00:00"
+    ) // Get date from url if we use the [ + ] else default to today
+
     let description = $state();
     let event_name = $state();
     let location = $state();
@@ -18,10 +24,8 @@
     let repeat_month = $state(false);
     let repeat_year = $state(false);
 
-    let end_date_sub = $derived(new Date(end_date))
-
-    const min_date = new Date().toLocaleString('sv').slice(0, 10) + "T00:00"
-    const max_date = new Date(new Date().setFullYear(new Date().getFullYear() + 5)).toLocaleString('sv').slice(0, 10) + "T23:59";
+    const MIN_DATE = new Date().toLocaleString('sv').slice(0, 10) + "T00:00"
+    const MAX_DATE = new Date(new Date().setFullYear(new Date().getFullYear() + 5)).toLocaleString('sv').slice(0, 10) + "T23:59";
     
     //Kinda wondering why I didn't just use form actions for this...
     async function getCoords(address) {
@@ -92,14 +96,19 @@
         let img = e.target.files[0];
         bg_img = img;
     }
+
+    function back() {
+        if(browser)
+            window.history.back();
+    }
 </script>
 
 <svelte:head>
     <title>creating {$page.data.session.user.displayname}'s meet</title>
 </svelte:head>
 
+<button onclick={ back } class="text-start ml-2 mt-2 text-2xl">&lt;--</button>
 <div class="mt-10">
-    {end_date}
     <h1 class="text-2xl font-bold text-center italic underline">create your meet</h1>
     <form class="flex flex-col justify-center items-center gap-1 border border-black rounded-xl w-fit mx-auto p-2 offset-box" onsubmit={() => { create_meet() }}>
         <label for="event_name">meet name</label>
@@ -107,7 +116,7 @@
         <label for="location" >location</label>
         <input name="location" type="text" bind:value={location} required class="text-black p-1 border border-black rounded-md shadow" placeholder="where's it at?">
         <label for="date" class="">date</label>
-        <input name="date" type="datetime-local" bind:value={date} required class="text-black p-1 border border-black rounded-md shadow" max={max_date}>
+        <input name="date" type="datetime-local" bind:value={date} required class="text-black p-1 border border-black rounded-md shadow" max={MAX_DATE}>
         <label for="bg_image">(optional) background</label>
         <input 
         type="file"
@@ -122,12 +131,10 @@
             repeat?
             <input type="checkbox" bind:checked={checked}>
         </label>
-        need to look over the logic for this shit again
-        -->
+        !!! need to look over the logic for this shit again !!!
         {#if checked}
-            <!-- repeat every week -->
             <label for="end-date" class="">end date</label>
-            <input type="datetime-local" class="text-black" name="end-date" min={min_date} max={max_date} bind:value={end_date} required>
+            <input type="datetime-local" class="text-black" name="end-date" min={MIN_DATE} max={MAX_DATE} bind:value={end_date} required>
             <div class="flex flex-rows gap-4">
                 <label>
                     repeat weekly
@@ -143,6 +150,7 @@
                 </label>
             </div>
         {/if}
+        -->
         <label for="desc">description</label>
         <textarea name="desc" class="text-black p-1 w-96 h-48 border border-black rounded-lg shadow" bind:value={description} placeholder="write your descriptive description here" required></textarea>
         <input type="submit" class="btn cursor-pointer" value="create">

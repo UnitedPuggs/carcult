@@ -5,7 +5,7 @@ export async function DELETE({ request, locals }) {
     const supabase = await client(session)
     const { id, url, images } = await request.json();
 
-    console.log(images);
+    //console.log(images);
 
     const { storage_error } = await supabase
     .storage
@@ -17,7 +17,7 @@ export async function DELETE({ request, locals }) {
     }
 
     const FIXED_ARRAY = images.filter(e => e !== url);
-    console.log(FIXED_ARRAY);
+    //console.log(FIXED_ARRAY);
 
     const { gv_error } = await supabase
     .from('garage_vehicle_info')

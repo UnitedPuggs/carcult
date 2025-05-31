@@ -27,19 +27,19 @@
         })
         goto(`/garage/${short.username}`)
     }
-    async function toggle_edit() {
+    function toggle_edit() {
         edit_mode = !edit_mode;
     }
-    async function open_modal() {
+    function open_modal() {
         document.getElementById("upload-photo").showModal();
     }
-    async function close_modal() {
+    function close_modal() {
         document.getElementById("upload-photo").close();
     }
-    async function open_delete_prompt() {
+    function open_delete_prompt() {
         document.getElementById("delete-prompt").showModal();
     }
-    async function close_delete_prompt() {
+    function close_delete_prompt() {
         document.getElementById("delete-prompt").close();
     }
 
