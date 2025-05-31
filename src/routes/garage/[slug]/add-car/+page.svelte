@@ -1,5 +1,7 @@
 <script>
-    import { page } from '$app/stores'
+    import { page } from "$app/stores";
+    import { browser } from "$app/environment";
+
     let file = $state();
     let model = $state();
     let description = $state();
@@ -12,6 +14,11 @@
             file = e.target.result;
         }
     }
+
+    function back() {
+        if(browser)
+            window.history.back();
+    }
 </script>
 
 <svelte:head>
@@ -19,8 +26,9 @@
 </svelte:head>
 
 {#if $page.data.session?.user.displayname == $page.params.slug}
+<button onclick={ back } class="text-start ml-2 mt-2 text-2xl">&lt;--</button>
 <h1 class="text-2xl font-bold text-center italic underline mt-10">add your wheels</h1>
-<div class="flex flex-col lg:flex-row gap-4 justify-center items-center border border-black rounded-lg offset-box lg:w-fit mx-auto p-4 w-full">
+<div class="flex flex-col lg:flex-row gap-4 justify-center items-center border border-black rounded-lg box lg:offset-box lg:w-fit mx-auto p-4 w-full mb-10">
     <div class="border-2 border-black rounded-lg shadow p-2 sticky top-0 w-full">
         <!-- ADDING OF SHIT HERE -->
         <form class="flex flex-col gap-1" method="POST" enctype="multipart/form-data">
@@ -32,7 +40,7 @@
         <!------------------------>
     </div>
     <!-- PREVIEW BOX SECTION -->
-    <div class="flex flex-col text-center gap-1">   
+    <div class="flex flex-col text-center gap-1 w-full">   
         <span class="text-xl font-bold break-all max-w-lg">{model ? model : "your vehicle"}</span>
         <div 
         class="border-2 border-black rounded-sm w-full lg:w-96 h-96 overflow-clip bg-cover bg-no-repeat {file ? "p-0 transition-all less-offset-box -translate-x-1 -translate-y-1" : "p-2"}" 

@@ -1,6 +1,7 @@
 <script>
     import { page } from "$app/state";
     import { goto } from "$app/navigation";
+    import { browser } from "$app/environment";
 
     let { data } = $props();
 
@@ -36,9 +37,16 @@
         let pic = image_urls.image_urls[prev];
         return pic.substring(pic.lastIndexOf("/") + 1)
     }
+    function back() {
+        if(browser)
+            window.history.back();
+    }
 </script>
 
+
+<a href="/garage/{page.params.slug}/{page.params.car}" class="text-start ml-2 mt-2 text-2xl">&lt;--</a>
 <div class="flex flex-col justify-center items-center h-auto my-4 lg:w-96 w-72 mx-auto">
+    {#if page.data.session?.user.displayname == page.params.slug}
     <div class="flex justify-between w-full">
         <form method="post" action="?/setMain">
             <input type="submit" value="set main" class="cursor-pointer" />
@@ -47,12 +55,13 @@
         </form>
         <button onclick={() => delete_image()}>delete</button>
     </div>
+    {/if}
     <div class="flex flex-col justify-center border border-black rounded-lg bg-cover w-full h-96 bg-no-repeat overflow-clip" style="background-image: url('{stats.image_url}')">
         <img src={stats.image_url} alt="car" class="max-h-96 backdrop-blur-md overflow-clip object-scale-down w-full h-full rounded-lg" />
     </div>
     <div class="flex flex-col w-full">
         <p>{stats.caption}</p>
-        <p class="text-sm text-gray-400">{stats.created_at}</p>
+        <p class="text-sm text-gray-400">posted on {stats.created_at.substring(5, 7)}/{stats.created_at.substring(8, 10)}/{stats.created_at.substring(0, 4)}</p>
         <div class="flex justify-between">
             {#if image_urls.image_urls.length > 1}
                 {#if index == 0} <!-- if start of image array-->
