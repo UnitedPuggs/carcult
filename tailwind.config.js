@@ -1,5 +1,5 @@
 import { fontFamily } from "tailwindcss/defaultTheme";
-import tailwindcssAnimate from "tailwindcss-animate";
+import { animatePlugin } from "tw-animate-css";
 
 /** @type {import('tailwindcss').Config} */
 const config = {
@@ -90,7 +90,7 @@ const config = {
       		},
 		},
 	},
-	plugins: [tailwindcssAnimate],
+	plugins: [animatePlugin()],
 };
 
 export default config;

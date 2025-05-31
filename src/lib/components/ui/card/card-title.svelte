@@ -1,7 +1,13 @@
 <script>
 	import { cn } from "$lib/utils.js";
 
-	let { ref = $bindable(null), class: className, level = 3, children, ...restProps } = $props();
+	let {
+		ref = $bindable(null),
+		class: className,
+		level = 3,
+		children,
+		...restProps
+	} = $props();
 </script>
 
 <div

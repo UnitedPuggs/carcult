@@ -73,7 +73,7 @@
 </svelte:head>
 
 <div class="flex flex-col">
-    <div class="bg-no-repeat bg-center bg-cover bg-scroll border-b border-black h-[40rem]" style="background-image: url('{meets.bg_img}')">
+    <div class="bg-no-repeat bg-center bg-cover bg-scroll border-b border-black h-160" style="background-image: url('{meets.bg_img}')">
         <div class="flex flex-col backdrop-blur py-4 h-full">
             <button class="text-white text-xl text-left ml-2" onclick={back}>&lt;--</button>
             <!-- would it be better to essentially just copy-paste this all into one big if/else instead of littering this with if/else statements? -->
@@ -119,7 +119,7 @@
                     <div class="flex text-stroke">
                     on&nbsp;<input type="datetime-local" bind:value={event_date} class="text-black">
                     </div>
-                    <textarea id="test" class="text-black w-[36rem] border border-black rounded-lg p-1" bind:value={description} bind:this={textarea}></textarea>
+                    <textarea id="test" class="text-black w-xl border border-black rounded-lg p-1" bind:value={description} bind:this={textarea}></textarea>
                 {/if}
             </div>
         </div>

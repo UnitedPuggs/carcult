@@ -20,7 +20,7 @@
         <section class="flex flex-col text-left ml-2 text-ellipsis overflow-x-hidden h-36">
             <span class="font-bold text-xl">${price}</span>
             <span class="lg:text-lg break-words">{item_name}</span>
-            <div class="flex flex-col [&>*]:text-gray-400 [&>*]:text-sm">
+            <div class="flex flex-col *:text-gray-400 *:text-sm">
                 {#if mileage > 0}
                     <span>{mileage} miles</span>
                 {/if}

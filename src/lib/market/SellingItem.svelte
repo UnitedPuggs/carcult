@@ -33,7 +33,7 @@
     <title>carcult marketplace | your listings</title>
 </svelte:head>
 
-<div class="flex border border-white w-96 lg:w-[45rem] bg-gray-800 rounded-sm">
+<div class="flex border border-white w-96 lg:w-180 bg-gray-800 rounded-sm">
     <div class="flex p-2 border-collapse w-full justify-center items-center">
         <img src={cover_pic} alt="" class="w-40 h-40 lg:w-64 lg:h-64 object-cover rounded-md" />
     </div>

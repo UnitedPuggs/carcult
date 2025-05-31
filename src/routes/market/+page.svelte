@@ -54,7 +54,7 @@
 </svelte:head>
 
 <div class="flex lg:flex-row flex-col">
-    <div class="flex flex-col border-2 border-white lg:min-h-[calc(100vh_-_6rem)] w-wo-scroll lg:w-64 p-2">
+    <div class="flex flex-col border-2 border-white lg:min-h-[calc(100vh-6rem)] w-wo-scroll lg:w-64 p-2">
         <h1 class="font-bold text-2xl">marketplace</h1>
         <form onsubmit={search_market}>
             <input type="input" class="bg-gray-800 border border-white px-0.5 py-1 mb-4 w-full" placeholder="search marketplace" bind:value={search_term} oninput={debounce}>

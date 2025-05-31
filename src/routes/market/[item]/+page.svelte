@@ -73,7 +73,7 @@
             <!-- this is/was div hell -->
             <div class="flex flex-col h-96 lg:h-full items-center justify-center">
                 <div class="flex justify-center items-center h-full">
-                    <img src={curr_img} alt="listing" class="rounded-sm w-fit lg:max-w-4xl max-h-72 lg:max-h-[40rem] select-none" loading="lazy">
+                    <img src={curr_img} alt="listing" class="rounded-sm w-fit lg:max-w-4xl max-h-72 lg:max-h-160 select-none" loading="lazy">
                 </div>
                 <section class="flex justify-center gap-4 p-4 w-full mt-auto mb-0">
                     {#each market.listing_pics as pic}
@@ -102,7 +102,7 @@
             {/if}
         </div>
     </div>
-    <div class="flex flex-col border-l border-gray-600 w-full lg:w-[30rem] min-h-[calc(100vh_-_6rem)] ml-auto mr-0 bg-gray-800 p-2">
+    <div class="flex flex-col border-l border-gray-600 w-full lg:w-120 min-h-[calc(100vh-6rem)] ml-auto mr-0 bg-gray-800 p-2">
         <section class="flex">
             <h1 class="text-2xl font-bold break-words">{market.item_name}</h1>
             <section class="ml-auto mr-2 mt-0.5">
@@ -116,7 +116,7 @@
         <span class="text-sm text-gray-500">listed on {market.created_at.substring(0, 10)}</span>
         <!-- would probably want to include message buttons here -->
         <h1 class="text-xl font-bold pt-2">description</h1>
-        <span class="max-h-[30rem] min-h-[24rem] overflow-y-auto border border-gray-600 p-1 rounded-md whitespace-pre-wrap">{market.item_description}</span>
+        <span class="max-h-120 min-h-96 overflow-y-auto border border-gray-600 p-1 rounded-md whitespace-pre-wrap">{market.item_description}</span>
         {#if market.seller != $page.data.session?.user.displayname && data.marketplace_messages.length == 0 && $page.data.session?.user}
             <button onclick={send_message}>send message</button>
         {:else if data.marketplace_messages.length > 0 && market.seller != $page.data.session?.user.displayname}

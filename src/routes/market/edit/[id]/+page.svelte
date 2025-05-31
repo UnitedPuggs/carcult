@@ -77,7 +77,7 @@
 </svelte:head>
 
 <div class="flex" bind:clientWidth={width}>
-    <div class="border-2 border-white w-full lg:w-72 min-h-[calc(100vh_-_6rem)] p-2" id="seller-controls">
+    <div class="border-2 border-white w-full lg:w-72 min-h-[calc(100vh-6rem)] p-2" id="seller-controls">
         <a href="/market/selling" class="text-xl font-bold">&lt;--</a>
         <h1 class="font-bold text-xl mt-2">item for sale</h1>
         <form class="flex flex-col gap-2" onsubmit={update_listing}>
@@ -109,10 +109,10 @@
     </div>
     {#if width > 640}
         <div class="flex justify-center items-center mx-auto" id="seller-preview">
-            <div class="border-2 border-white w-[46rem] lg:h-[45rem] p-4">
+            <div class="border-2 border-white w-184 lg:h-180 p-4">
                 <h1 class="font-bold text-lg pb-2">preview</h1>
                 <div class="flex border-2 border-white rounded-md">
-                    <section class="border-r border-gray-400 w-[24rem] h-[40rem] rounded-l-md bg-gray-800 text-center flex flex-col items-center justify-center">
+                    <section class="border-r border-gray-400 w-[24rem] h-160 rounded-l-md bg-gray-800 text-center flex flex-col items-center justify-center">
                         {#if preview_files.length > 0}
                             <div class="flex justify-center items-center h-full">
                                 <img src={preview_files[0]} alt="" />

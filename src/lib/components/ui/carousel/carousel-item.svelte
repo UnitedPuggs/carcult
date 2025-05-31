@@ -2,7 +2,12 @@
 	import { getEmblaContext } from "./context.js";
 	import { cn } from "$lib/utils.js";
 
-	let { ref = $bindable(null), class: className, children, ...restProps } = $props();
+	let {
+		ref = $bindable(null),
+		class: className,
+		children,
+		...restProps
+	} = $props();
 
 	const emblaCtx = getEmblaContext("<Carousel.Item/>");
 </script>

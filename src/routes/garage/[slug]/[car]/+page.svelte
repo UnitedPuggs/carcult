@@ -104,7 +104,7 @@
     </dialog>
     <!----------------------------->
     <h1 class="text-2xl font-bold italic">{short.vehicle_name}</h1>
-    <div class="bg-cover bg-no-repeat overflow-clip border-2 border-black rounded-lg less-offset-box w-72 h-72 lg:h-[30rem] lg:w-[30rem]" style="background-image: url('{MAIN_IMG}')">
+    <div class="bg-cover bg-no-repeat overflow-clip border-2 border-black rounded-lg less-offset-box w-72 h-72 lg:h-120 lg:w-120" style="background-image: url('{MAIN_IMG}')">
         <img src={MAIN_IMG} alt="your cool car" class="overflow-clip object-scale-down backdrop-blur-md h-full w-full"/>
     </div>
     <div class="flex flex-col justify-center items-center text-"> <!-- description stuff -->

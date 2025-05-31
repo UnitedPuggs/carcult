@@ -26,7 +26,7 @@
     }
 </script>
 
-<nav class="sticky {show} z-[100] max-w-full border-b-2 border-b-black shadow bg-white dark:bg-[#272933]">
+<nav class="sticky {show} z-100 max-w-full border-b-2 border-b-black shadow bg-white dark:bg-[#272933]">
     <!--- MOBILE NAVBAR -->
     <Sheet.Root bind:open>
         <div class="flex flex-row justify-between lg:hidden p-1">
