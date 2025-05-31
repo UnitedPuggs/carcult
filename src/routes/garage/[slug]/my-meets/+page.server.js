@@ -1,7 +1,7 @@
 import { supabase } from '$lib/supabase'
 
 export async function load({ params }) {
-    let { data: events, error } = await supabase
+    let { data: meets, error } = await supabase
     .from('meets')
     .select('slug, event_name, event_date, bg_img')
     .eq('host', params.slug)
@@ -10,5 +10,5 @@ export async function load({ params }) {
     if(error)
         return { error };
         
-    return { events };
+    return { meets };
 }
